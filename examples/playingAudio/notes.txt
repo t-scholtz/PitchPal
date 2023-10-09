@@ -1,0 +1,5 @@
+Was taken from the first example from this video: https://www.youtube.com/watch?v=UN9XPWHamHw
+
+Connect pin 3 and ground to speaker
+
+Lets you play specific frequencys for specific periods of time

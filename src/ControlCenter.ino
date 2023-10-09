@@ -1,4 +1,13 @@
-This
+//TODO - UPDATE HEADER
+
+/*********************************************/
+/* Name of the program: */
+/* Author: Timothy Scholtz */
+/* C program file name: */
+/* Compile command: gcc TimothyScholtz_FuncCE.c -o run */
+/* Run using: ./run */
+/* Date: 10/6/2023 */
+/*********************************************/
 
 
 
