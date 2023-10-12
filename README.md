@@ -32,8 +32,8 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 * Phase 3 (Due date: 12/2/2023 by 5 pm) 
 
 ## Technical Details
-- **Microcontroller:** Arduino [Specify the model or board you're using]
-- **Pins Used:**
+**Microcontroller:** Arduino Uno
+**Pins Used:**
 - **JANALOG**
 
 | Pin | Function    | Type          | Usage                               
@@ -57,24 +57,24 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 
 | Pin | Function    | Type          | Usage                            
 | --- | ----------- | ------------- | ------------------------------------------ 
-| 1   | D0          | Digital/GPIO  | Digital pin 0/GPIO                         |
-| 2   | D1          | Digital/GPIO  | Digital pin 1/GPIO                         |
-| 3   | D2          | Digital/GPIO  | Digital pin 2/GPIO                         |
-| 4   | D3          | Digital/GPIO  | Digital pin 3/GPIO                         |
-| 5   | D4          | Digital/GPIO  | Digital pin 4/GPIO                         |
-| 6   | D5          | Digital/GPIO  | Digital pin 5/GPIO                         |
-| 7   | D6          | Digital/GPIO  | Digital pin 6/GPIO                         |
-| 8   | D7          | Digital/GPIO  | Digital pin 7/GPIO                         |
-| 9   | D8          | Digital/GPIO  | Digital pin 8/GPIO                         |
-| 10  | D9          | Digital/GPIO  | Digital pin 9/GPIO                         |
-| 11  | SS          | Digital       | SPI Chip Select                            |
-| 12  | MOSI        | Digital       | SPI1 Main Out Secondary In                |
-| 13  | MISO        | Digital       | SPI Main In Secondary Out                  |
-| 14  | SCK         | Digital       | SPI serial clock output                    |
-| 15  | GND Power   | Ground        | Ground                                     |
-| 16  | AREF        | Digital       | Analog reference voltage                   |
-| 17  | A4/SD4      | Digital       | Analog input 4/I2C Data line (duplicated)  |
-| 18  | A5/SD5      | Digital       | Analog input 5/I2C Clock line (duplicated) |
+| 1   | D0          | Digital/GPIO  |   |
+| 2   | D1          | Digital/GPIO  |   |
+| 3   | D2          | Digital/GPIO  |   |
+| 4   | D3          | Digital/GPIO  |   |
+| 5   | D4          | Digital/GPIO  |   |
+| 6   | D5          | Digital/GPIO  |   |
+| 7   | D6          | Digital/GPIO  |   |
+| 8   | D7          | Digital/GPIO  |   |
+| 9   | D8          | Digital/GPIO  |   |
+| 10  | D9          | Digital/GPIO  |   |
+| 11  | SS          | Digital       |   |  
+| 12  | MOSI        | Digital       |   |
+| 13  | MISO        | Digital       |   |
+| 14  | SCK         | Digital       |   |
+| 15  | GND Power   | Ground        |   |
+| 16  | AREF        | Digital       |   |
+| 17  | A4/SD4      | Digital       |   |
+| 18  | A5/SD5      | Digital       |   |
 
 
 ## File Structure
@@ -101,19 +101,12 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 Follow these steps to set up the Pitch Tuner Arduino Project:
 
 1. **Hardware Assembly:**
-   - Connect the components as specified in the [Technical Details](#technical-details) section.
-   - Ensure that all connections are secure and correctly wired.
+   - stuff
+   - plug in
 
-2. **Arduino IDE:**
-   - Install the Arduino IDE if not already installed.
+2. **Usage**
+   - turn on
 
-3. **Upload Code:**
-   - Open `PitchTuner.ino` in the Arduino IDE.
-   - Select the appropriate Arduino board and port in the IDE.
-   - Upload the code to the Arduino board.
-
-4. **Power On:**
-   - Power on the device and follow the [Usage](#usage) instructions to start using the Pitch Tuner.
 
 ## Miscellaneous
 Random stuff goes here
