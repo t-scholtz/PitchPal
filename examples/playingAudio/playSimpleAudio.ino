@@ -1,11 +1,8 @@
 /*
   Melody
-
   Plays a melody
-
   circuit:
   - 8 ohm speaker on digital pin 8
-
   created 21 Jan 2010
   modified 30 Aug 2011
   by Tom Igoe
@@ -14,7 +11,6 @@
 
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/toneMelody
 */
-
 #include "pitches.h"
 
 // notes in the melody:
