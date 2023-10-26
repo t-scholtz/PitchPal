@@ -1,6 +1,7 @@
-#ifndef input_h
-#define input_h
+// input.h
+#ifndef INPUT_H
+#define INPUT_H
 
-float readMux(int channel);
+float getMuxInput(int channel);
 
-#endif 
+#endif

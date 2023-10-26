@@ -1,24 +1,13 @@
-#include "input.h"  /* Include the header (not strictly necessary here) */
+#include "input.h"  
 #include "pinlayout.h" 
 
-
-
-void loop(){
-
-  //Loop through and read all 16 values
-  for(int i = 0; i < 16; i ++){
-    Serial.print("Value at channel ");
-    Serial.print(i);
-    Serial.print("is : ");
-    Serial.println(readMux(i));
-    delay(1000);
-  }
-
-}
-
-
-float readMux(int channel){
-  int controlPin[] = {s0, s1, s2, s3};
+ /* 
+Modified on Nov 28, 2020
+Modified by MehranMaleki from Arduino Examples
+Home
+*/
+float getMuxInput(int channel){
+  int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
 
   int muxChannel[16][4]={
     {0,0,0,0}, //channel 0
@@ -45,7 +34,7 @@ float readMux(int channel){
   }
 
   //read the value at the SIG pin
-  int val = analogRead(SIG_pin);
+  int val = analogRead(SIG_PIN);
 
   //return the value
   float voltage = (val * 5.0) / 1024.0;

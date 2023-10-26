@@ -1,5 +1,3 @@
-//TODO - UPDATE HEADER
-
 /*********************************************/
 /* Name of the program: */
 /* Author: Timothy Scholtz ; Thomoas Mahok */
@@ -14,26 +12,33 @@
 #include "input.h" 
 #include "output.h" 
 
-void setup() {
-  pinMode(MUX0, OUTPUT);
-  pinMode(MUX1, OUTPUT);
-  pinMode(MUX2, OUTPUT);
-  pinMode(MUX3, OUTPUT);
+int SIG_PIN = 0;
+int SPEAKER = 3;
+int MUX_PIN0 = 8;
+int MUX_PIN1 = 9;
+int MUX_PIN2 = 10;
+int MUX_PIN3 = 11;
 
-  digitalWrite(MUX0, LOW);
-  digitalWrite(MUX1, LOW);
-  digitalWrite(MUX2, LOW);
-  digitalWrite(MUX3, LOW);
+void setup() {
+  pinMode(MUX_PIN0, OUTPUT);
+  pinMode(MUX_PIN1, OUTPUT);
+  pinMode(MUX_PIN2, OUTPUT);
+  pinMode(MUX_PIN3, OUTPUT);
+
+  digitalWrite(MUX_PIN0, LOW);
+  digitalWrite(MUX_PIN1, LOW);
+  digitalWrite(MUX_PIN2, LOW);
+  digitalWrite(MUX_PIN3, LOW);
 
   Serial.begin(9600);
 }
 
 void loop() {
  for(int i = 0; i < 16; i ++){
-    Serial.print("Value at channel ");
+    Serial.print("Button value ");
     Serial.print(i);
     Serial.print("is : ");
-    Serial.println(readMux(i));
+    Serial.println(getMuxInput(i));
     delay(1000);
   }
 }
