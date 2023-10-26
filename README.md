@@ -46,12 +46,12 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 | 6   | GND Power   | Ground        | 
 | 7   | GND Power   | Ground        |
 | 8   | VIN Power   | Voltage Input | 
-| 9   | A0          | Analog/GPIO   | 
+| 9   | A0          | Analog/GPIO   | Microphone
 | 10  | A1          | Analog/GPIO   | 
 | 11  | A2          | Analog/GPIO   | 
 | 12  | A3          | Analog/GPIO   | 
-| 13  | A4/SDA      | Analog in/I2C | 
-| 14  | A5/SCL      | Analog in/I2C | 
+| 13  | A4/SDA      | Analog in/I2C | LCD Screen
+| 14  | A5/SCL      | Analog in/I2C | LCD Screen
 
 - **JDIGITAL**
 
@@ -60,13 +60,13 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 | 1   | D0          | Digital/GPIO  |   |
 | 2   | D1          | Digital/GPIO  |   |
 | 3   | D2          | Digital/GPIO  |   |
-| 4   | D3          | Digital/GPIO  |   |
-| 5   | D4          | Digital/GPIO  |   |
-| 6   | D5          | Digital/GPIO  |   |
-| 7   | D6          | Digital/GPIO  |   |
-| 8   | D7          | Digital/GPIO  |   |
-| 9   | D8          | Digital/GPIO  |   |
-| 10  | D9          | Digital/GPIO  |   |
+| 4   | D3          | Digital/GPIO  |   Used for Speaker
+| 5   | D4          | Digital/GPIO  |   mux - s0
+| 6   | D5          | Digital/GPIO  |   mux - s1
+| 7   | D6          | Digital/GPIO  |   mux - s2
+| 8   | D7          | Digital/GPIO  |   mux - s3
+| 9   | D8          | Digital/GPIO  |   mux - E
+| 10  | D9          | Digital/GPIO  |   mux -sig
 | 11  | SS          | Digital       |   |  
 | 12  | MOSI        | Digital       |   |
 | 13  | MISO        | Digital       |   |

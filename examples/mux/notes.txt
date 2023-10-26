@@ -1,0 +1,1 @@
+https://forum.arduino.cc/t/using-the-cd74hc4067-multiplexer-with-push-buttons/636536
