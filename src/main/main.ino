@@ -7,7 +7,7 @@
 
 // To play from speaker use tone(SPEAKER, melody[thisNote], noteDuration);
 // stop the tone playing: noTone(SPEAKER)
-
+#include <Arduino.h>
 #include "pinlayout.h" 
 #include "input.h" 
 #include "output.h" 
@@ -31,9 +31,14 @@ void setup() {
   digitalWrite(MUX_PIN3, LOW);
 
   Serial.begin(9600);
+
+  initializeLCD();
+
 }
 
 void loop() {
+  testProcedure();
+
  for(int i = 0; i < 16; i ++){
     Serial.print("Button value ");
     Serial.print(i);
