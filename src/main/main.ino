@@ -38,6 +38,7 @@ void setup() {
 
 void loop() {
   testProcedure();
+  lcd_update();
 
  for(int i = 0; i < 16; i ++){
     Serial.print("Button value ");

@@ -8,16 +8,16 @@
 //LCD will be a 16 by 2 line display
 LiquidCrystal_I2C lcd( 0x27, 16, 2);
 
-void initializeLCD(){
+void initializeLCD(){ //This function turns on the LCD and gives the welcome message
   lcd.begin();
-}
-
-void toggleBackligh(){
-  //This use to turn on backlight, not sure if calling twice will turn on then off
   lcd.backlight();
+  lcd.print("  Welcome to");
+  lcd.setCursor(0,1);
+  lcd.print("  Pitch Pale");
+  lcd.delay(500) //gives 5 seconds before the system will start the button options
 }
 
-void testProcedure(){
+void testProcedure(){ //This function is meant to test the functionality of the LCD
   lcd.clear();
   lcd.print("robojax");
   lcd.setCursor(0,1); //goes to the start of the 2nd line //PLAY AROUND WITH THIS ONE
@@ -25,5 +25,9 @@ void testProcedure(){
   delay(500);
   lcd.clear();
   delay(500);
+}
+
+void lcd_update(){ //This function will update our current frequency and prompt them to hit something to reset
+  lcd.clear();//TEMP
 }
 
