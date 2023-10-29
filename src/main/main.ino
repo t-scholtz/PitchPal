@@ -34,6 +34,7 @@ void setup() {
 
   initializeLCD();
 
+
 }
 
 void loop() {
@@ -42,7 +43,7 @@ void loop() {
 
  for(int i = 0; i < 16; i ++){
     Serial.print("Button value ");
-    Serial.print(i);
+    Serial.print(i);           
     Serial.print("is : ");
     Serial.println(getMuxInput(i));
     delay(1000);

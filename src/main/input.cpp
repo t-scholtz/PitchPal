@@ -41,3 +41,11 @@ float getMuxInput(int channel){
   float voltage = (val * 5.0) / 1024.0;
   return voltage;
 }
+
+float microphone_freq(float voltage){
+  delay(10);
+}
+
+String microphone_note(float freq){
+  delay(10);
+}

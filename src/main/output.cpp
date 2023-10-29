@@ -31,3 +31,6 @@ void lcd_update(){ //This function will update our current frequency and prompt 
   lcd.clear();//TEMP
 }
 
+void speaker_example(){ //this one should be relitivly simple 
+  delay(10);
+}
