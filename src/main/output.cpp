@@ -14,7 +14,7 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
   lcd.print("  Welcome to");
   lcd.setCursor(0,1);
   lcd.print("  Pitch Pale");
-  lcd.delay(500) //gives 5 seconds before the system will start the button options
+  delay(500); //gives 5 seconds before the system will start the button options
 }
 
 void testProcedure(){ //This function is meant to test the functionality of the LCD
