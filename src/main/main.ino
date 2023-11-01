@@ -10,6 +10,7 @@
 #include "input.h" 
 #include "output.h" 
 
+
 int SIG_PIN = 0;
 int SPEAKER = 3;
 int MUX_PIN0 = 8;
@@ -31,12 +32,17 @@ void setup() {
 
   Serial.begin(SERIAL_RATE);
 
-  mic_setup();
+  micSetup();
   initializeLCD();
 }
 
 void loop() {
   double freq = getMicFrequency();
   printFreq(freq);
+  delay(2000);
+  int buttonPressed =  checkForButtonPress();
+  String text = String(buttonPressed);
+  lcdPrint(text);
+  delay(2000);
 }
 

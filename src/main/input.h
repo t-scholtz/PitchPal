@@ -3,7 +3,8 @@
 #define INPUT_H
 
 float getMuxInput(int channel);
-void mic_setup();
+void micSetup();
 double getMicFrequency();
+int checkForButtonPress();
 
 #endif

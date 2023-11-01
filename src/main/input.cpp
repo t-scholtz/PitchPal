@@ -1,14 +1,34 @@
 #include <Arduino.h>
-#include <ArduinoFFT.h>
+#include <arduinoFFT.h>
 
 #include "input.h"  
 #include "pinlayout.h" 
+
+#define LOW 1.0
 
 arduinoFFT FFT = arduinoFFT();
 unsigned int samplingPeriod;
 unsigned long microSeconds;
 double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
 double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+int muxChannel[16][4]={
+  {0,0,0,0}, //channel 0
+  {1,0,0,0}, //channel 1
+  {0,1,0,0}, //channel 2
+  {1,1,0,0}, //channel 3
+  {0,0,1,0}, //channel 4
+  {1,0,1,0}, //channel 5
+  {0,1,1,0}, //channel 6
+  {1,1,1,0}, //channel 7
+  {0,0,0,1}, //channel 8
+  {1,0,0,1}, //channel 9
+  {0,1,0,1}, //channel 10
+  {1,1,0,1}, //channel 11
+  {0,0,1,1}, //channel 12
+  {1,0,1,1}, //channel 13
+  {0,1,1,1}, //channel 14
+  {1,1,1,1}  //channel 15
+};
 
 void micSetup(){
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
@@ -41,24 +61,6 @@ Home
 */
 float getMuxInput(int channel){
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
-  int muxChannel[16][4]={
-    {0,0,0,0}, //channel 0
-    {1,0,0,0}, //channel 1
-    {0,1,0,0}, //channel 2
-    {1,1,0,0}, //channel 3
-    {0,0,1,0}, //channel 4
-    {1,0,1,0}, //channel 5
-    {0,1,1,0}, //channel 6
-    {1,1,1,0}, //channel 7
-    {0,0,0,1}, //channel 8
-    {1,0,0,1}, //channel 9
-    {0,1,0,1}, //channel 10
-    {1,1,0,1}, //channel 11
-    {0,0,1,1}, //channel 12
-    {1,0,1,1}, //channel 13
-    {0,1,1,1}, //channel 14
-    {1,1,1,1}  //channel 15
-  };
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
     digitalWrite(controlPin[i], muxChannel[channel][i]);
@@ -70,3 +72,30 @@ float getMuxInput(int channel){
   return voltage;
 }
 
+
+//Will return an number -1 to 15 with -1 meaning 2 or buttons were detected being pressed at the same
+int checkForButtonPress(){
+  int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
+  float buttons[16];
+  //Read from every channel and grab the value at that point of time
+  for(int i = 0; i<16 ; i++){
+    for(int j = 0; j < 4; j ++){
+      digitalWrite(controlPin[j], muxChannel[i][j]);
+    }
+    buttons[i] = analogRead(SIG_PIN);
+
+  }
+
+  //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
+  int flag = 0;
+  int output = -1;
+  for(int i = 0; i<16 ; i++){
+    if (buttons[i] > LOW ){
+      flag++;
+      output = i;
+    }
+  }
+  
+  if (flag != 1) return -1;
+  return output;
+}

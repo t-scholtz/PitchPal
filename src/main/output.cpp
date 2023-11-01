@@ -22,8 +22,9 @@ void printFreq(double freq){
   lcd.print("Freq is: ");
   lcd.print(freq);
   lcd.print("Hz");
+  lcd.setCursor(0,1);
+  lcd.print("*\(^o^)/*");
 }
-
 // void testProcedure(){ //This function is meant to test the functionality of the LCD
 //   lcd.clear();
 //   lcd.print("robojax");
@@ -33,6 +34,10 @@ void printFreq(double freq){
 //   lcd.clear();
 //   delay(500);
 // }
+void lcdPrint(String input){
+  lcd.clear();
+  lcd.print(input);
+}
 
 void lcdClear(){ 
   lcd.clear();
