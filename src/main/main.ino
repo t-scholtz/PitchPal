@@ -5,8 +5,6 @@
 /* Date: 10/6/2023 */
 /*********************************************/
 
-// To play from speaker use tone(SPEAKER, melody[thisNote], noteDuration);
-// stop the tone playing: noTone(SPEAKER)
 #include <Arduino.h>
 #include "pinlayout.h" 
 #include "input.h" 
@@ -18,6 +16,7 @@ int MUX_PIN0 = 8;
 int MUX_PIN1 = 9;
 int MUX_PIN2 = 10;
 int MUX_PIN3 = 11;
+int MICROPHONE  = 14;
 
 void setup() {
   pinMode(MUX_PIN0, OUTPUT);
@@ -30,23 +29,14 @@ void setup() {
   digitalWrite(MUX_PIN2, LOW);
   digitalWrite(MUX_PIN3, LOW);
 
-  Serial.begin(9600);
+  Serial.begin(SERIAL_RATE);
 
+  mic_setup();
   initializeLCD();
-
-
 }
 
 void loop() {
-  testProcedure();
-  lcd_update();
-
- for(int i = 0; i < 16; i ++){
-    Serial.print("Button value ");
-    Serial.print(i);           
-    Serial.print("is : ");
-    Serial.println(getMuxInput(i));
-    delay(1000);
-  }
+  double freq = getMicFrequency();
+  printFreq(freq);
 }
 

@@ -1,6 +1,38 @@
 #include <Arduino.h>
+#include <ArduinoFFT.h>
+
 #include "input.h"  
 #include "pinlayout.h" 
+
+arduinoFFT FFT = arduinoFFT();
+unsigned int samplingPeriod;
+unsigned long microSeconds;
+double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
+double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+
+void micSetup(){
+  samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
+}
+
+double getMicFrequency(){
+  for(int i = 0; i<SAMPLES; i++){
+    microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
+    vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
+    vImag[i] = 0; //Makes imaginary term 0 always
+    //remaining wait time between samples if necessary
+    while(micros() < (microSeconds+samplingPeriod)){
+      //do nothing !!!!!!! may need to optimise !!!!!!!!!
+    }
+  }
+  //THESE three lines of code are completing the FFT calculations for us
+  FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+  FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
+  FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
+
+  //Find prak frequency and print peak
+  double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
+  return(peak);   
+}
 
  /* 
 Modified on Nov 28, 2020
@@ -9,7 +41,6 @@ Home
 */
 float getMuxInput(int channel){
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
-
   int muxChannel[16][4]={
     {0,0,0,0}, //channel 0
     {1,0,0,0}, //channel 1
@@ -28,24 +59,14 @@ float getMuxInput(int channel){
     {0,1,1,1}, //channel 14
     {1,1,1,1}  //channel 15
   };
-
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
     digitalWrite(controlPin[i], muxChannel[channel][i]);
   }
-
   //read the value at the SIG pin
   int val = analogRead(SIG_PIN);
-
   //return the value
   float voltage = (val * 5.0) / 1024.0;
   return voltage;
 }
 
-float microphone_freq(float voltage){
-  delay(10);
-}
-
-String microphone_note(float freq){
-  delay(10);
-}

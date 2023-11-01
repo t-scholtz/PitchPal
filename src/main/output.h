@@ -3,7 +3,8 @@
 
 void initializeLCD();
 void toggleBackligh();
-void testProcedure();
-void lcd_update();
+void printFreq(double freq);
+void lcdClear();
+
 
 #endif 

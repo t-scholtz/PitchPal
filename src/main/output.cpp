@@ -17,18 +17,25 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
   delay(500); //gives 5 seconds before the system will start the button options
 }
 
-void testProcedure(){ //This function is meant to test the functionality of the LCD
+void printFreq(double freq){
   lcd.clear();
-  lcd.print("robojax");
-  lcd.setCursor(0,1); //goes to the start of the 2nd line //PLAY AROUND WITH THIS ONE
-  lcd.print("Hello World!");
-  delay(500);
-  lcd.clear();
-  delay(500);
+  lcd.print("Freq is: ");
+  lcd.print(freq);
+  lcd.print("Hz");
 }
 
-void lcd_update(){ //This function will update our current frequency and prompt them to hit something to reset
-  lcd.clear();//TEMP
+// void testProcedure(){ //This function is meant to test the functionality of the LCD
+//   lcd.clear();
+//   lcd.print("robojax");
+//   lcd.setCursor(0,1); //goes to the start of the 2nd line //PLAY AROUND WITH THIS ONE
+//   lcd.print("Hello World!");
+//   delay(500);
+//   lcd.clear();
+//   delay(500);
+// }
+
+void lcdClear(){ 
+  lcd.clear();
 }
 
 void speaker_example(){ //this one should be relitivly simple 
