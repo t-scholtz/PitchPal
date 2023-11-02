@@ -1,22 +1,21 @@
 #include <Arduino.h>
-#include <Wire.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
 #include "output.h"  
 #include "pinlayout.h" 
-#include "LiquidCrystal_I2C.h"
-
 
 //setting up and testing LCD to have it's strings stored in specific adress
 //LCD will be a 16 by 2 line display
-LiquidCrystal_I2C lcd( 0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x27,20,4); 
 
 void initializeLCD(){ //This function turns on the LCD and gives the welcome message
-  lcd.begin();
+  lcd.init();                      // initialize the lcd 
   lcd.backlight();
-  lcd.print("  Welcome to");
+  lcd.print("Welcome to");
   lcd.setCursor(0,1);
-  lcd.print("  Pitch Pale");
+  lcd.print("Pitch Pale");
   delay(500); //gives 5 seconds before the system will start the button options
-   Serial.println("LCD setup done");
+  Serial.println("LCD setup done");
 }
 
 void printFreq(double freq){
@@ -27,15 +26,7 @@ void printFreq(double freq){
   lcd.setCursor(0,1);
   lcd.print("*\(^o^)/*");
 }
-// void testProcedure(){ //This function is meant to test the functionality of the LCD
-//   lcd.clear();
-//   lcd.print("robojax");
-//   lcd.setCursor(0,1); //goes to the start of the 2nd line //PLAY AROUND WITH THIS ONE
-//   lcd.print("Hello World!");
-//   delay(500);
-//   lcd.clear();
-//   delay(500);
-// }
+
 void lcdPrint(String input){
   lcd.clear();
   lcd.print(input);
