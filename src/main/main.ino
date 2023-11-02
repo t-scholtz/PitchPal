@@ -9,15 +9,7 @@
 #include "pinlayout.h" 
 #include "input.h" 
 #include "output.h" 
-
-
-int SIG_PIN = 0;
-int SPEAKER = 3;
-int MUX_PIN0 = 8;
-int MUX_PIN1 = 9;
-int MUX_PIN2 = 10;
-int MUX_PIN3 = 11;
-int MICROPHONE  = 14;
+#include "pitches.h"
 
 void setup() {
   pinMode(MUX_PIN0, OUTPUT);
@@ -37,6 +29,9 @@ void setup() {
 }
 
 void loop() {
+  playNote(NOTE_C4,4);
+  delay(2000);
+  playNote(NOTE_G3,4);
   double freq = getMicFrequency();
   printFreq(freq);
   delay(2000);
