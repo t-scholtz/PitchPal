@@ -41,7 +41,7 @@ double getMicFrequency(){
     vImag[i] = 0; //Makes imaginary term 0 always
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
-      //do nothing !!!!!!! may need to optimise !!!!!!!!!
+      //do nothing ----------------- may need to optimise later 
     }
   }
   //THESE three lines of code are completing the FFT calculations for us
@@ -92,7 +92,6 @@ int checkForButtonPress(){
       output = i;
     }
   }
-  
   if (flag != 1) return -1;
   return output;
 }

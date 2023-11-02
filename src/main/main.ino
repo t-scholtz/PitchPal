@@ -12,6 +12,8 @@
 #include "pitches.h"
 
 void setup() {
+  Serial.begin(SERIAL_RATE);
+  Serial.println("Initializing PitchPal");
   pinMode(MUX_PIN0, OUTPUT);
   pinMode(MUX_PIN1, OUTPUT);
   pinMode(MUX_PIN2, OUTPUT);
@@ -21,14 +23,22 @@ void setup() {
   digitalWrite(MUX_PIN1, LOW);
   digitalWrite(MUX_PIN2, LOW);
   digitalWrite(MUX_PIN3, LOW);
-
-  Serial.begin(SERIAL_RATE);
+  Serial.println("Pin layout - Set!");
 
   micSetup();
-  initializeLCD();
+  Serial.println("Mic - Set");
+  //initializeLCD();
+  //Serial.println("LCD - Set");
+  Serial.println("Initialized!!");
 }
 
+// For now loop just runs through the basic I/O eg:
+// plays a sound
+// print to lcd screen
+// grabss button input
+// get freq from speaker
 void loop() {
+  Serial.println("Loop Start");
   playNote(NOTE_C4,4);
   delay(2000);
   playNote(NOTE_G3,4);

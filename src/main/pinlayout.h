@@ -4,7 +4,7 @@
 #define SAMPLES 128   
 #define SAMPLING_FREQUENCY 2048 
 #define SERIAL_RATE 115200
-#define NOTE_LENGTH 1000
+#define NOTE_LENGTH 100000
 
 #define SIG_PIN 0
 #define SPEAKER 3
