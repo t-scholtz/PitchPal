@@ -25,8 +25,8 @@ int FOption[Sharp] = {NOTE_F1, NOTE_FS1, NOTE_F2, NOTE_FS2, NOTE_F3, NOTE_FS3, N
 int GOption[Sharp] = {NOTE_G1, NOTE_GS1, NOTE_G2, NOTE_GS2, NOTE_G3, NOTE_GS3, NOTE_G4, NOTE_GS4, NOTE_G5, NOTE_GS5, NOTE_G6, NOTE_GS6, NOTE_G7, NOTE_GS7};
 
 //This array is temporary but would make the others easy to find
-int SNotes[5][Sharp] = {*AOption, *COption, *DOption, *FOption, *GOption};//check if we need to add size to the outside when inizilizing or inside the array. If we can do it inside we should be able to do one list
-int NSNotes[2][noSharp] = {*BOption, *EOption};
+int SNotes[5] = {*AOption, *COption, *DOption, *FOption, *GOption};//check if we need to add size to the outside when inizilizing or inside the array. If we can do it inside we should be able to do one list
+int NSNotes[2] = {*BOption, *EOption};
 
 void setup() {
   Serial.begin(SERIAL_RATE);

@@ -44,8 +44,7 @@ double getMicFrequency(){
 
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
-      //do nothing ----------------- may need to optimise later -----We could try to take it out
-      //When we first tried this we were trying to calculate it and it was giving us problems with the mod calculations right??
+      //do nothing----THiNK ABOUT LATER
     }
   }
   //THESE three lines of code are completing the FFT calculations for us
@@ -82,17 +81,17 @@ int checkForButtonPress(){
   //Read from every channel and grab the value at that point of time
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
-      digitalWrite(controlPin[j], muxChannel[i][j]); //setting each set of pins line by line to read //IS THE control pin telling the pins where to read from???
+      digitalWrite(controlPin[j], muxChannel[i][j]); //setting each set of pins line by line to read
     }
-    buttons[i] = analogRead(SIG_PIN);//setting each button to a value of high or low
+    buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
   }
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
   int output = -1;
-  for(int i = 0; i<16 ; i++){ //I think this will count 17 buttons, same with the two forloops above, if you want to add first i think it is ++i(NOTE: look into sysntax)
+  for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
     if (buttons[i] > LOW ){
       flag++;
-      output = i; //is output for testing purposes?? //NOTE tell time when he is testing something to put a testing comment
+      output = i; //NOTE tell time when he is testing something to put a testing comment
     }
   }
   if (flag != 1) return -1;
