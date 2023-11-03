@@ -6,6 +6,7 @@ void printFreq(double freq);
 void lcdClear();
 void lcdPrint(String input);
 void playNote(int note, int length);
+void startUpAnim();
 
 
 #endif 
