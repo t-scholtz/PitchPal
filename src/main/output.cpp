@@ -5,20 +5,20 @@
 #include "pinlayout.h" 
 
 //setting up and testing LCD to have it's strings stored in specific adress
-//LCD will be a 16 by 2 line display
-LiquidCrystal_I2C lcd(0x27,20,4); 
+//LCD will be a 16 by 2 line display //FIXED THE LINE DISPLAY, were you testing??
+LiquidCrystal_I2C lcd(0x27,16,2); 
 
-void initializeLCD(){ //This function turns on the LCD and gives the welcome message
-  lcd.init();                      // initialize the lcd 
+void initializeLCD(){ //Turns on the LCD, gives the welcome message
+  lcd.init();    //lcd.begin(); do these two do differnt things? and did init come from the library?     // initialize the lcd 
   lcd.backlight();
   lcd.print("Welcome to");
   lcd.setCursor(0,1);
   lcd.print("Pitch Pale");
   delay(500); //gives 5 seconds before the system will start the button options
-  Serial.println("LCD setup done");
+  Serial.println("LCD setup done"); //Testing?
 }
 
-void printFreq(double freq){
+void printFreq(double freq){//this should be used for testing //I am going to write the ones for the final output
   lcd.clear();
   lcd.print("Freq is: ");
   lcd.print(freq);
@@ -26,6 +26,8 @@ void printFreq(double freq){
   lcd.setCursor(0,1);
   lcd.print("*\(^o^)/*");
 }
+
+void printCFreq(double freq, )
 
 void lcdPrint(String input){
   lcd.clear();

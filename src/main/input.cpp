@@ -9,8 +9,10 @@
 arduinoFFT FFT = arduinoFFT();
 unsigned int samplingPeriod;
 unsigned long microSeconds;
+
 double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
 double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+
 int muxChannel[16][4]={
   {0,0,0,0}, //channel 0
   {1,0,0,0}, //channel 1
@@ -30,7 +32,7 @@ int muxChannel[16][4]={
   {1,1,1,1}  //channel 15
 };
 
-void micSetup(){
+void micSetup(){ //This get's
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
 }
 
