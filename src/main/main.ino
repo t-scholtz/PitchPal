@@ -56,18 +56,27 @@ void setup() {
 // print to lcd screen
 // grabss button input
 // get freq from speaker
-void loop() {
+void loop() { //Test this out with the full circuit and then write the main loop
   Serial.println("Loop Start");
 
+  //testing loop
   playNote(NOTE_C4,4);
   delay(2000);
   playNote(NOTE_G3,4);
   double freq = getMicFrequency();
   printFreq(freq);
   delay(2000);
-  int buttonPressed =  checkForButtonPress();
-  String text = String(buttonPressed);
+  //int buttonPressed =  checkForButtonPress();
+
+  char text[10]; //creates location for the button number
+  int ButtonNum = checkForButtonPress()//get the button number
+  sprintf(text, ButtonNum); //test this out on the lcd
   lcdPrint(text);
   delay(2000);
 }
+
+//making the main loop we will need
+//void loop(){
+//
+//}
 
