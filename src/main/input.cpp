@@ -32,7 +32,7 @@ int muxChannel[16][4]={
   {1,1,1,1}  //channel 15
 };
 
-void micSetup(){ //This get's
+void micSetup(){ //This get's our time we need to wait before taking measurements
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
 }
 
@@ -41,9 +41,11 @@ double getMicFrequency(){
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
     vImag[i] = 0; //Makes imaginary term 0 always
+
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
-      //do nothing ----------------- may need to optimise later 
+      //do nothing ----------------- may need to optimise later -----We could try to take it out
+      //When we first tried this we were trying to calculate it and it was giving us problems with the mod calculations right??
     }
   }
   //THESE three lines of code are completing the FFT calculations for us
@@ -56,23 +58,22 @@ double getMicFrequency(){
   return(peak);   
 }
 
- /* 
-Modified on Nov 28, 2020
-Modified by MehranMaleki from Arduino Examples
-Home
-*/
+
 float getMuxInput(int channel){
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
+
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
-    digitalWrite(controlPin[i], muxChannel[channel][i]);
+    digitalWrite(controlPin[i], muxChannel[channel][i]); //first par controls the area to change //second par controls the value(high, low) to change first to
   }
+
   //read the value at the SIG pin
   int val = analogRead(SIG_PIN);
   //return the value
-  float voltage = (val * 5.0) / 1024.0;
-  return voltage;
+  float voltage = (val * 5.0) / 1024.0; 
+  return voltage; //Does this voltage give us the number for the input to translate?
 }
+
 
 //Will return an number -1 to 15 with -1 meaning 2 or buttons were detected being pressed at the same
 int checkForButtonPress(){
@@ -81,7 +82,8 @@ int checkForButtonPress(){
   //Read from every channel and grab the value at that point of time
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
-      digitalWrite(controlPin[j], muxChannel[i][j]);
+      digitalWrite(controlPin[j], muxChannel[i][j]); //what are you doing with control pit after you set it??
+      //DOES setting the control pin change what the SIG_PIN is reading?
     }
     buttons[i] = analogRead(SIG_PIN);
   }
