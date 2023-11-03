@@ -11,9 +11,27 @@
 #include "output.h" 
 #include "pitches.h"
 
+
+//note lists to choose from
+//A-1, normal on odd, sharp is on even
+int noSharp = 7;
+int Sharp = 14;
+int AOption[Sharp] = {NOTE_A1, NOTE_AS1, NOTE_A2, NOTE_AS2, NOTE_A3, NOTE_AS3, NOTE_A4, NOTE_AS4, NOTE_A5, NOTE_AS5, NOTE_A6, NOTE_AS6, NOTE_A7, NOTE_AS7};
+int BOption[noSharp] = {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7};
+int COption[Sharp] = {NOTE_C1, NOTE_CS1, NOTE_C2, NOTE_CS2, NOTE_C3, NOTE_CS3, NOTE_C4, NOTE_CS4, NOTE_C5, NOTE_CS5, NOTE_C6, NOTE_CS6, NOTE_C7, NOTE_CS7};
+int DOption[Sharp] = {NOTE_D1, NOTE_DS1, NOTE_D2, NOTE_DS2, NOTE_D3, NOTE_DS3, NOTE_D4, NOTE_DS4, NOTE_D5, NOTE_DS5, NOTE_D6, NOTE_DS6, NOTE_D7, NOTE_DS7};
+int EOption[noSharp] = {NOTE_E1, NOTE_E2, NOTE_E3, NOTE_E4, NOTE_E5, NOTE_E6, NOTE_E7};
+int FOption[Sharp] = {NOTE_F1, NOTE_FS1, NOTE_F2, NOTE_FS2, NOTE_F3, NOTE_FS3, NOTE_F4, NOTE_FS4, NOTE_F5, NOTE_FS5, NOTE_F6, NOTE_FS6, NOTE_F7, NOTE_FS7};
+int GOption[Sharp] = {NOTE_G1, NOTE_GS1, NOTE_G2, NOTE_GS2, NOTE_G3, NOTE_GS3, NOTE_G4, NOTE_GS4, NOTE_G5, NOTE_GS5, NOTE_G6, NOTE_GS6, NOTE_G7, NOTE_GS7};
+
+//This array is temporary but would make the others easy to find
+int SNotes[5][Sharp] = {AOption, COption, DOption, FOption, GOption};//check if we need to add size to the outside when inizilizing or inside the array. If we can do it inside we should be able to do one list
+int NSNotes[2][noSharp] = {BOption, EOption};
+
 void setup() {
   Serial.begin(SERIAL_RATE);
-  Serial.println("Initializing PitchPal");
+  Serial.println("Initializing PitchPal");//Testing 
+
   pinMode(MUX_PIN0, OUTPUT);
   pinMode(MUX_PIN1, OUTPUT);
   pinMode(MUX_PIN2, OUTPUT);
@@ -27,10 +45,17 @@ void setup() {
 
   micSetup();
   Serial.println("Mic - Set");
+<<<<<<< HEAD
   initializeLCD();
   Serial.println("LCD - Set");
   Serial.println("Initialized!!");
   startUpAnim();
+=======
+  
+  initializeLCD();
+  Serial.println("LCD - Set");
+  Serial.println("Initialized!!");// Once we know everything is working we need to set up the array for use
+>>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
 }
 
 // For now loop just runs through the basic I/O eg:
@@ -38,7 +63,15 @@ void setup() {
 // print to lcd screen
 // grabss button input
 // get freq from speaker
+<<<<<<< HEAD
 void loop() {
+=======
+void loop() { //Test this out with the full circuit and then write the main loop
+  Serial.println("Loop Start");
+
+  //testing loop
+  playNote(NOTE_C4,4);
+>>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
   delay(2000);
   // Serial.println("Loop Start");
   // playNote(NOTE_C4,4);
@@ -47,9 +80,24 @@ void loop() {
   double freq = getMicFrequency();
   printFreq(freq);
   delay(2000);
+<<<<<<< HEAD
   // int buttonPressed =  checkForButtonPress();
   // String text = String(buttonPressed);
   // lcdPrint(text);
   // delay(2000);
+=======
+  //int buttonPressed =  checkForButtonPress();
+
+  char text[10]; //creates location for the button number
+  int ButtonNum = checkForButtonPress()//get the button number
+  sprintf(text, ButtonNum); //test this out on the lcd
+  lcdPrint(text);
+  delay(2000);
+>>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
 }
+
+//making the main loop we will need
+//void loop(){
+//
+//}
 

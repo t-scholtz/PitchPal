@@ -12,6 +12,7 @@
 #endif
 
 //setting up and testing LCD to have it's strings stored in specific adress
+<<<<<<< HEAD
 //LCD will be a 16 by 2 line display
 LiquidCrystal_I2C lcd(0x27,16,2); 
 
@@ -25,10 +26,15 @@ uint8_t duck[8]  = {0x0,0xc,0x1d,0xf,0xf,0x6,0x0};
 uint8_t check[8] = {0x0,0x1,0x3,0x16,0x1c,0x8,0x0};
 uint8_t cross[8] = {0x0,0x1b,0xe,0x4,0xe,0x1b,0x0};
 uint8_t retarrow[8] = {	0x1,0x1,0x5,0x9,0x1f,0x8,0x4};
+=======
+//LCD will be a 16 by 2 line display //FIXED THE LINE DISPLAY, were you testing??
+LiquidCrystal_I2C lcd(0x27,16,2); 
+>>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
 
-void initializeLCD(){ //This function turns on the LCD and gives the welcome message
-  lcd.init();                      // initialize the lcd 
+void initializeLCD(){ //Turns on the LCD, gives the welcome message
+  lcd.init();    //lcd.begin(); do these two do differnt things? and did init come from the library?     // initialize the lcd 
   lcd.backlight();
+<<<<<<< HEAD
   lcd.createChar(0, bell);
   lcd.createChar(1, note);
   lcd.createChar(2, clock);
@@ -61,12 +67,42 @@ void startUpAnim(){
 }
 
 void printFreq(double freq){
+=======
+  lcd.print("Welcome to");
+  lcd.setCursor(0,1);
+  lcd.print("Pitch Pale");
+  delay(500); //gives 5 seconds before the system will start the button options
+  Serial.println("LCD setup done"); //Testing?
+}
+
+void printFreq(double freq){//this should be used for testing //I am going to write the ones for the final output
+>>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
   lcd.clear();
   lcd.print("Freq is: ");
   lcd.print(freq);
   lcd.print("Hz");
   lcd.setCursor(0,1);
   lcd.print("*\(^o^)/*");
+}
+
+void printCFreq(double freq, string note){//This will be printing on the left side of the lcd
+  lcd.setCursor(0,0);//prints the updating frequency
+  lcd.print("CF:");
+  lcd.print(freq)
+
+  lcd.setCursor(0,1);//prints the updating note relating to the frequency
+  lcd.print("CN:");
+  lcd.print(note); 
+}
+
+void printGFreq(double freq, string note){//This will be printing on the right side of the lcd
+  lcd.setCursor(8,0);//prints the goal frequency  //WE may need a bigger lcd or play around with these points
+  lcd.print("GF:");
+  lcd.print(freq)
+
+  lcd.setCursor(8,1);//prints the updating note relating to the frequency
+  lcd.print("GN:");
+  lcd.print(note); 
 }
 
 void lcdPrint(String input){
@@ -86,5 +122,5 @@ void playNote(int note, int length){ //this one should be relitivly simple
     // // the note's duration + 30% seems to work well:
     // int pauseBetweenNotes = noteDuration * 1.30;
     // delay(pauseBetweenNotes);
-    noTone(SPEAKER);
+    noTone(SPEAKER);//Does this stop the speaker?
 }
