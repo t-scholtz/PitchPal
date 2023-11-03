@@ -14,8 +14,8 @@
 
 //note lists to choose from
 //A-1, normal on odd, sharp is on even
-int noSharp = 7;
-int Sharp = 14;
+#define noSharp  7
+#define Sharp  14
 int AOption[Sharp] = {NOTE_A1, NOTE_AS1, NOTE_A2, NOTE_AS2, NOTE_A3, NOTE_AS3, NOTE_A4, NOTE_AS4, NOTE_A5, NOTE_AS5, NOTE_A6, NOTE_AS6, NOTE_A7, NOTE_AS7};
 int BOption[noSharp] = {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7};
 int COption[Sharp] = {NOTE_C1, NOTE_CS1, NOTE_C2, NOTE_CS2, NOTE_C3, NOTE_CS3, NOTE_C4, NOTE_CS4, NOTE_C5, NOTE_CS5, NOTE_C6, NOTE_CS6, NOTE_C7, NOTE_CS7};
@@ -25,8 +25,8 @@ int FOption[Sharp] = {NOTE_F1, NOTE_FS1, NOTE_F2, NOTE_FS2, NOTE_F3, NOTE_FS3, N
 int GOption[Sharp] = {NOTE_G1, NOTE_GS1, NOTE_G2, NOTE_GS2, NOTE_G3, NOTE_GS3, NOTE_G4, NOTE_GS4, NOTE_G5, NOTE_GS5, NOTE_G6, NOTE_GS6, NOTE_G7, NOTE_GS7};
 
 //This array is temporary but would make the others easy to find
-int SNotes[5][Sharp] = {AOption, COption, DOption, FOption, GOption};//check if we need to add size to the outside when inizilizing or inside the array. If we can do it inside we should be able to do one list
-int NSNotes[2][noSharp] = {BOption, EOption};
+int SNotes[5][Sharp] = {*AOption, *COption, *DOption, *FOption, *GOption};//check if we need to add size to the outside when inizilizing or inside the array. If we can do it inside we should be able to do one list
+int NSNotes[2][noSharp] = {*BOption, *EOption};
 
 void setup() {
   Serial.begin(SERIAL_RATE);
