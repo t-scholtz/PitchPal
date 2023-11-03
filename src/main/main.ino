@@ -45,17 +45,10 @@ void setup() {
 
   micSetup();
   Serial.println("Mic - Set");
-<<<<<<< HEAD
   initializeLCD();
   Serial.println("LCD - Set");
   Serial.println("Initialized!!");
   startUpAnim();
-=======
-  
-  initializeLCD();
-  Serial.println("LCD - Set");
-  Serial.println("Initialized!!");// Once we know everything is working we need to set up the array for use
->>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
 }
 
 // For now loop just runs through the basic I/O eg:
@@ -63,15 +56,7 @@ void setup() {
 // print to lcd screen
 // grabss button input
 // get freq from speaker
-<<<<<<< HEAD
 void loop() {
-=======
-void loop() { //Test this out with the full circuit and then write the main loop
-  Serial.println("Loop Start");
-
-  //testing loop
-  playNote(NOTE_C4,4);
->>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
   delay(2000);
   // Serial.println("Loop Start");
   // playNote(NOTE_C4,4);
@@ -80,20 +65,10 @@ void loop() { //Test this out with the full circuit and then write the main loop
   double freq = getMicFrequency();
   printFreq(freq);
   delay(2000);
-<<<<<<< HEAD
   // int buttonPressed =  checkForButtonPress();
   // String text = String(buttonPressed);
   // lcdPrint(text);
   // delay(2000);
-=======
-  //int buttonPressed =  checkForButtonPress();
-
-  char text[10]; //creates location for the button number
-  int ButtonNum = checkForButtonPress()//get the button number
-  sprintf(text, ButtonNum); //test this out on the lcd
-  lcdPrint(text);
-  delay(2000);
->>>>>>> 740fbb76a63e69f583b0d93e493f2ed34c0c2f09
 }
 
 //making the main loop we will need
