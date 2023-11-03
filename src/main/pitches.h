@@ -5,7 +5,10 @@
 #ifndef PITCHES_H
 #define PITCHES_H
 
-#define NOTE_B0 31
+//#define NOTE_B0 31
+//7 types of notes
+//1 sharp key  //We could make a normal button as well
+//7 Octaves
 #define NOTE_C1 33
 #define NOTE_CS1 35
 #define NOTE_D1 37
@@ -90,9 +93,9 @@
 #define NOTE_A7 3520
 #define NOTE_AS7 3729
 #define NOTE_B7 3951
-#define NOTE_C8 4186
-#define NOTE_CS8 4435
-#define NOTE_D8 4699
-#define NOTE_DS8 4978
+//#define NOTE_C8 4186
+//#define NOTE_CS8 4435
+//#define NOTE_D8 4699
+//#define NOTE_DS8 4978
 
 #endif

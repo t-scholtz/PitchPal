@@ -82,20 +82,19 @@ int checkForButtonPress(){
   //Read from every channel and grab the value at that point of time
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
-      digitalWrite(controlPin[j], muxChannel[i][j]); //what are you doing with control pit after you set it??
-      //DOES setting the control pin change what the SIG_PIN is reading?
+      digitalWrite(controlPin[j], muxChannel[i][j]); //setting each set of pins line by line to read //IS THE control pin telling the pins where to read from???
     }
-    buttons[i] = analogRead(SIG_PIN);
+    buttons[i] = analogRead(SIG_PIN);//setting each button to a value of high or low
   }
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
   int output = -1;
-  for(int i = 0; i<16 ; i++){
+  for(int i = 0; i<16 ; i++){ //I think this will count 17 buttons, same with the two forloops above, if you want to add first i think it is ++i(NOTE: look into sysntax)
     if (buttons[i] > LOW ){
       flag++;
-      output = i;
+      output = i; //is output for testing purposes?? //NOTE tell time when he is testing something to put a testing comment
     }
   }
   if (flag != 1) return -1;
-  return output;
+  return output;//return the button number
 }

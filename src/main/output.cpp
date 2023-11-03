@@ -64,5 +64,5 @@ void playNote(int note, int length){ //this one should be relitivly simple
     // // the note's duration + 30% seems to work well:
     // int pauseBetweenNotes = noteDuration * 1.30;
     // delay(pauseBetweenNotes);
-    noTone(SPEAKER);
+    noTone(SPEAKER);//Does this stop the speaker?
 }
