@@ -27,7 +27,25 @@ void printFreq(double freq){//this should be used for testing //I am going to wr
   lcd.print("*\(^o^)/*");
 }
 
-void printCFreq(double freq, )
+void printCFreq(double freq, string note){//This will be printing on the left side of the lcd
+  lcd.setCursor(0,0);//prints the updating frequency
+  lcd.print("CF:");
+  lcd.print(freq)
+
+  lcd.setCursor(0,1);//prints the updating note relating to the frequency
+  lcd.print("CN:");
+  lcd.print(note); 
+}
+
+void printGFreq(double freq, string note){//This will be printing on the right side of the lcd
+  lcd.setCursor(8,0);//prints the goal frequency  //WE may need a bigger lcd or play around with these points
+  lcd.print("GF:");
+  lcd.print(freq)
+
+  lcd.setCursor(8,1);//prints the updating note relating to the frequency
+  lcd.print("GN:");
+  lcd.print(note); 
+}
 
 void lcdPrint(String input){
   lcd.clear();
