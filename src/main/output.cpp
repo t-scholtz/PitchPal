@@ -56,7 +56,6 @@ void startUpAnim(){
       delay(500);
       lcd.clear();
     }
-
 }
 
 void printFreq(double freq){
