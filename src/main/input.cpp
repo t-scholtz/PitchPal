@@ -152,57 +152,57 @@ int checkForButtonPress(){
   return output;//return the button number
 }
 
-int confirmNote(int buttonN){
+// int confirmNote(int buttonN){
 
-  while(buttonN > -1){ //keep them here until a button of some type goes back
-    lcd.setCursor(0,1);//where we want to print
-    int buttonCheck = -2
-    while(1){//infinite loop unless a button is hit
-      buttonN = checkForButtonPress(); //this will give an updated value
-      if(buttonN != buttonCheck){
-        break;
-      }
-    }
-    if(buttonN > -1){//this is for error messaging
-      lcd.print("ERROR: > 1 hit");
-      buttonN = buttonCheck;
-      delay(500);
-      lcd.setCursor(0,1);
-      lcd.print("                "); //16 spaces to wipe the message
-    }
-  }
-  return buttonN
-}
+//   while(buttonN > -1){ //keep them here until a button of some type goes back
+//     lcd.setCursor(0,1);//where we want to print
+//     int buttonCheck = -2
+//     while(1){//infinite loop unless a button is hit
+//       buttonN = checkForButtonPress(); //this will give an updated value
+//       if(buttonN != buttonCheck){
+//         break;
+//       }
+//     }
+//     if(buttonN > -1){//this is for error messaging
+//       lcd.print("ERROR: > 1 hit");
+//       buttonN = buttonCheck;
+//       delay(500);
+//       lcd.setCursor(0,1);
+//       lcd.print("                "); //16 spaces to wipe the message
+//     }
+//   }
+//   return buttonN
+// }
 
-tuple<String, float> pickingANote(){ // returns the note and the freq we are using
-  //make prompt for user
-  lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print("pick a note!");
-  lcd.setCursor(0,1);
-  //we need to wait for them to pick some type of note 
-  int buttonNum = -2; //We can know when more than one or None are picked
+// tuple<String, float> pickingANote(){ // returns the note and the freq we are using
+//   //make prompt for user
+//   lcd.clear();
+//   lcd.setCursor(0,0);
+//   lcd.print("pick a note!");
+//   lcd.setCursor(0,1);
+//   //we need to wait for them to pick some type of note 
+//   int buttonNum = -2; //We can know when more than one or None are picked
 
-  while(buttonNum > -1){ //keep them here until a button of some type goes back
-    lcd.setCursor(0,1);//where we want to print
-    int buttonCheck = -2;
-    while(1){//infinite loop unless a button is hit
-      buttonNum = checkForButtonPress(); //this will give an updated value
-      if(buttonNum != buttonCheck){
-        break;
-      }
-    }
-    if(buttonNum > -1){//this is for error messaging
-      lcd.print("ERROR: > 1 hit");
-      buttonNum = buttonCheck;
-      delay(500);
-      lcd.setCursor(0,1);
-      lcd.print("                "); //16 spaces to wipe the message
-    }
-  }
+//   while(buttonNum > -1){ //keep them here until a button of some type goes back
+//     lcd.setCursor(0,1);//where we want to print
+//     int buttonCheck = -2;
+//     while(1){//infinite loop unless a button is hit
+//       buttonNum = checkForButtonPress(); //this will give an updated value
+//       if(buttonNum != buttonCheck){
+//         break;
+//       }
+//     }
+//     if(buttonNum > -1){//this is for error messaging
+//       lcd.print("ERROR: > 1 hit");
+//       buttonNum = buttonCheck;
+//       delay(500);
+//       lcd.setCursor(0,1);
+//       lcd.print("                "); //16 spaces to wipe the message
+//     }
+//   }
 
   
-}
+// }
 
 
 
