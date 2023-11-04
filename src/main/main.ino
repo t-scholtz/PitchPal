@@ -55,9 +55,5 @@ void loop() {
   // delay(2000);
 }
 
-//making the main loop we will need
-void loop(){
-  //stage One, choosing the Note
 
-}
 

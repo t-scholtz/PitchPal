@@ -3,6 +3,7 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h> 
 #include "input.h"  
+#include "output.h"  
 #include "pinlayout.h"
 #include "pitches.h"
 
@@ -16,7 +17,7 @@ double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real value
 double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
 int noteArray(int a, int b) {
-  int ar[][]={
+  int ar[12][7]={
 /*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
 /*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
 /*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7},
@@ -40,7 +41,7 @@ int noteArray(int a, int b) {
 }
 
 String noteStrArray(int a, int b) { 
-  String ar[][] = {//putting them here temporarly so that we can function calling them //I want 
+  String ar[12][7] = {//putting them here temporarly so that we can function calling them //I want 
 /*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
 /*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
 /*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"},
@@ -184,7 +185,7 @@ tuple<String, float> pickingANote(){ // returns the note and the freq we are usi
 
   while(buttonNum > -1){ //keep them here until a button of some type goes back
     lcd.setCursor(0,1);//where we want to print
-    int buttonCheck = -2
+    int buttonCheck = -2;
     while(1){//infinite loop unless a button is hit
       buttonNum = checkForButtonPress(); //this will give an updated value
       if(buttonNum != buttonCheck){
