@@ -132,8 +132,29 @@ int checkForButtonPress(){
   return output;//return the button number
 }
 
+int confirmNote(int buttonN){
 
-tuple<int, float> pickingANote(){ // returns the note and the freq we are using
+  while(buttonN > -1){ //keep them here until a button of some type goes back
+    lcd.setCursor(0,1);//where we want to print
+    int buttonCheck = -2
+    while(1){//infinite loop unless a button is hit
+      buttonN = checkForButtonPress(); //this will give an updated value
+      if(buttonN != buttonCheck){
+        break;
+      }
+    }
+    if(buttonN > -1){//this is for error messaging
+      lcd.print("ERROR: > 1 hit");
+      buttonN = buttonCheck;
+      delay(500);
+      lcd.setCursor(0,1);
+      lcd.print("                "); //16 spaces to wipe the message
+    }
+  }
+  return buttonN
+}
+
+tuple<String, float> pickingANote(){ // returns the note and the freq we are using
   //make prompt for user
   lcd.clear();
   lcd.setCursor(0,0);
