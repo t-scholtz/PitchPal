@@ -72,7 +72,6 @@ void loop() {
 }
 
 //making the main loop we will need
-//void loop(){
-//
-//}
+void loop(){
+}
 
