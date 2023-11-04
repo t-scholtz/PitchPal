@@ -65,8 +65,8 @@ String noteStrArray(int a, int b) {
 }
 
 
-int muxChannel[16][4]={
-  {0,0,0,0}, //channel 0
+int muxChannel(int a, int b){
+  int ar[16][4] = {{0,0,0,0}, //channel 0
   {1,0,0,0}, //channel 1
   {0,1,0,0}, //channel 2
   {1,1,0,0}, //channel 3
@@ -83,6 +83,16 @@ int muxChannel[16][4]={
   {0,1,1,1}, //channel 14
   {1,1,1,1}  //channel 15
 };
+   if(a>16 || a<0){
+    return " ";
+  }
+  if(b>4 || b<0){
+    return " ";
+  }
+  return ar[a][b];
+
+}
+
 
 void micSetup(){ //This get's our time we need to wait before taking measurements
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
@@ -115,7 +125,7 @@ float getMuxInput(int channel){
 
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
-    digitalWrite(controlPin[i], muxChannel[channel][i]); //first par controls the area to change //second par controls the value(high, low) to change first to
+    digitalWrite(controlPin[i], muxChannel(channel,i)); //first par controls the area to change //second par controls the value(high, low) to change first to
   }
 
   //read the value at the SIG pin
@@ -133,7 +143,7 @@ int checkForButtonPress(){
   //Read from every channel and grab the value at that point of time
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
-      digitalWrite(controlPin[j], muxChannel[i][j]); //setting each set of pins line by line to read
+      digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
   }
