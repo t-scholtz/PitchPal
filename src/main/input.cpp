@@ -6,7 +6,17 @@
 #include "pinlayout.h"
 #include "pitches.h"
 
-int noteArray[12][7] = {
+#define LOW 1.0
+
+arduinoFFT FFT = arduinoFFT();
+unsigned int samplingPeriod;
+unsigned long microSeconds;
+
+double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
+double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+
+int noteArray(int a, int b) {
+  int ar[][]={
 /*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
 /*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
 /*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7},
@@ -19,9 +29,18 @@ int noteArray[12][7] = {
 /*F#/Gb*/ {NOTE_FS1, NOTE_FS2, NOTE_FS3, NOTE_FS4, NOTE_FS5, NOTE_FS6, NOTE_FS7},
 /*G*/     {NOTE_G1, NOTE_G2, NOTE_G3, NOTE_G4, NOTE_G5, NOTE_G6, NOTE_G7},
 /*G#/Ab*/ {NOTE_GS1, NOTE_GS2, NOTE_GS3, NOTE_GS4, NOTE_GS5, NOTE_GS6, NOTE_GS7},
+  };
+  if(a>12 || a<0){
+    return -1;
+  }
+  if(b>7 || b<0){
+    return -1;
+  }
+  return ar[a][b];
 }
 
-String noteStrArray[12][7] = { //putting them here temporarly so that we can function calling them //I want 
+String noteStrArray(int a, int b) { 
+  String ar[][] = {//putting them here temporarly so that we can function calling them //I want 
 /*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
 /*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
 /*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"},
@@ -33,17 +52,17 @@ String noteStrArray[12][7] = { //putting them here temporarly so that we can fun
 /*F*/     {"F1", "F2", "F3", "F4", "F5", "F6", "F7"},
 /*F#/Gb*/ {"FS1", "FS2", "FS3", "FS4", "FS5", "FS6", "FS7"},
 /*G*/     {"G1", "G2", "G3", "G4", "G5", "G6", "G7"},
-/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"},
+/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"}
+  };
+   if(a>12 || a<0){
+    return " ";
+  }
+  if(b>7 || b<0){
+    return " ";
+  }
+  return ar[a][b];
 }
 
-#define LOW 1.0
-
-arduinoFFT FFT = arduinoFFT();
-unsigned int samplingPeriod;
-unsigned long microSeconds;
-
-double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
-double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
 int muxChannel[16][4]={
   {0,0,0,0}, //channel 0
