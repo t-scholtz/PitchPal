@@ -26,6 +26,20 @@ int noteArray[][] = {
 /*G#/Ab*/ {NOTE_GS1, NOTE_GS2, NOTE_GS3, NOTE_GS4, NOTE_GS5, NOTE_GS6, NOTE_GS7},
 }
 
+String noteStrArray[][] = {
+/*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
+/*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
+/*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"},
+/*C*/     {"C1", "C2", "C3", "C4", "C5", "C6", "C7"},
+/*C#Db*/  {"CS1", "CS2", "CS3", "CS4", "CS5", "CS6", "CS7"},
+/*D*/     {"D1", "D2", "D3", "D4", "D5", "D6", "D7"},
+/*D#Eb*/  {"DS1", "DS2", "DS3", "DS4", "DS5", "DS6", "DS7"},
+/*E*/     {"E1", "E2", "E3", "E4", "E5", "E6", "E7"},
+/*F*/     {"F1", "F2", "F3", "F4", "F5", "F6", "F7"},
+/*F#/Gb*/ {"FS1", "FS2", "FS3", "FS4", "FS5", "FS6", "FS7"},
+/*G*/     {"G1", "G2", "G3", "G4", "G5", "G6", "G7"},
+/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"},
+}
 
 
 void setup() {
@@ -48,7 +62,7 @@ void setup() {
   initializeLCD();
   Serial.println("LCD - Set");
   Serial.println("Initialized!!");
-  startUpAnim();
+  startUpAnim(); //Once this animation playes we set it up correctly 
 }
 
 // For now loop just runs through the basic I/O eg:
@@ -73,5 +87,7 @@ void loop() {
 
 //making the main loop we will need
 void loop(){
+  //stage One, choosing the Note
+
 }
 
