@@ -91,7 +91,7 @@ double getMicFrequency(){
 
 
 float getMuxInput(int channel){
-  int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
+  int controlPin[4] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
 
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
@@ -106,7 +106,7 @@ float getMuxInput(int channel){
 }
 
 
-//Will return an number -1 to 15 with -1 meaning 2 or buttons were detected being pressed at the same
+//Will return an number -1 to 15 with -1 meaning 2 or more buttons were detected being pressed at the same or when there was no button pressed
 int checkForButtonPress(){
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
   float buttons[16];
@@ -123,27 +123,47 @@ int checkForButtonPress(){
   for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
     if (buttons[i] > LOW ){
       flag++;
-      output = i; //NOTE tell time when he is testing something to put a testing comment
+      output = i;
     }
   }
-  if (flag != 1) return -1;
+  if (flag != 1){
+    return -1;}
+
   return output;//return the button number
 }
 
 
-float pickingANote(){
+tuple<int, float> pickingANote(){ // returns the note and the freq we are using
   //make prompt for user
-  lcd.clear()
-  lcd.setCursor(0,0)
-  lcd.print("pick a note!")
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("pick a note!");
+  lcd.setCursor(0,1);
   //we need to wait for them to pick some type of note 
+  int buttonNum = -2; //We can know when more than one or None are picked
+
+  while(buttonNum > -1){ //keep them here until a button of some type goes back
+    lcd.setCursor(0,1);//where we want to print
+    int buttonCheck = -2
+    while(1){//infinite loop unless a button is hit
+      buttonNum = checkForButtonPress(); //this will give an updated value
+      if(buttonNum != buttonCheck){
+        break;
+      }
+    }
+    if(buttonNum > -1){//this is for error messaging
+      lcd.print("ERROR: > 1 hit");
+      buttonNum = buttonCheck;
+      delay(500);
+      lcd.setCursor(0,1);
+      lcd.print("                "); //16 spaces to wipe the message
+    }
+  }
 
   
 }
 
-float pickingAFreq(){
 
-}
 
 
 
