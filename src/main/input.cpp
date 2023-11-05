@@ -160,10 +160,10 @@ int checkForButtonPress(){
   return output;//return the button number
 }
 
-int confirmNote(int buttonN){
+int confirmButton(int buttonN){
 
   while(buttonN > -1){ //keep them here until a button of some type goes back
-    lcd.setCursor(0,1);//where we want to print
+    lcdSetCursor(0,1);//where we want to print
     int buttonCheck = -2
     while(1){//infinite loop unless a button is hit
       buttonN = checkForButtonPress(); //this will give an updated value
@@ -172,11 +172,11 @@ int confirmNote(int buttonN){
       }
     }
     if(buttonN > -1){//this is for error messaging
-      lcd.print("ERROR: > 1 hit");
+      lcdPrint("ERROR: > 1 hit");
       buttonN = buttonCheck;
       delay(500);
-      lcd.setCursor(0,1);
-      lcd.print("                "); //16 spaces to wipe the message
+      lcdSetCursor(0,1);
+      lcdPrint("                "); //16 spaces to wipe the message
     }
   }
   return buttonN
@@ -184,13 +184,28 @@ int confirmNote(int buttonN){
 
 int pickingANote(){ // returns the note and the freq we are using
   //make prompt for user
-  lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print("pick a note!");
-  lcd.setCursor(0,1);
+  lcdClear();
+  lcdSetCursor(0,0);
+  lcdPrint("pick a note!");
+  lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
   int buttonNum = -2; //We can know when more than one or None are picked
-  buttonNum= confirmNote(buttonNum); //sets to the new button once it is correct
+  buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
+  
+  return buttonNum
+}
+
+int pickingAOctave(){ // returns the note and the freq we are using
+  //make prompt for user
+  lcdClear();
+  lcdSetCursor(0,0);
+  lcdPrint("pick an octave!");
+  lcdSetCursor(0,1);
+  //we need to wait for them to pick some type of note 
+  int buttonNum = -2; //We can know when more than one or None are picked
+  buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
+  
+  return buttonNum
 }
 
 
