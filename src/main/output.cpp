@@ -39,7 +39,6 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
   Serial.println("LCD setup done");
 }
 
-
 void startUpAnim(){
   int startMelody[] = {
   NOTE_C3, NOTE_D3, NOTE_E3, NOTE_C3, NOTE_G3, NOTE_B4, 0, NOTE_C4,0,0,0,0,0,0,0,0
