@@ -70,4 +70,19 @@ void loop() {
 }
 
 
+int freqAnalyse(int note){
+  //loop condition
+  int input = -1;
+  while(input <0){
+    //Get mic freq
+    double realFreq = double getMicFrequency();
+    double errorPerc = (note - realFreq)/realFreq;
+    //Compare real to desired noe
+    lcdPrint(errorPerc);
+    //Look for user input to cancle
+    input = checkForButtonPress();
+  }
+  return input;
+}
+
 
