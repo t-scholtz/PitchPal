@@ -41,9 +41,8 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
 
 void startUpAnim(){
   int startMelody[] = {
-  NOTE_C3, NOTE_D3, NOTE_E3, NOTE_C3, NOTE_G3, NOTE_B4, 0, NOTE_C4,0,0,0,0,0,0,0,0
-// };
-char pitchPal[] = {'p','i','t','c','h','P','a','l',' ',' ','b','e','t','a',' ','1',' '};
+  NOTE_C3, NOTE_D3, NOTE_E3, NOTE_C3, NOTE_G3, NOTE_B4, 0, NOTE_C4,0,0,0,0,0,0,0,0 };
+  char pitchPal[] = {'p','i','t','c','h','P','a','l',' ',' ','b','e','t','a',' ','1',' '};
     for(int i = 0;i<16;i++ ){
       lcd.setCursor( i+1,0);
       lcd.printByte(1);
@@ -73,6 +72,10 @@ void lcdPrint(String input){
 
 void lcdClear(){ 
   lcd.clear();
+}
+
+void lcdSetCur(int x, int y){
+   lcd.setCursor(x,y);
 }
 
 void playNote(int note, int length){ //this one should be relitivly simple 
