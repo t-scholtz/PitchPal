@@ -1,7 +1,8 @@
 #include <Arduino.h>
 #include <arduinoFFT.h>
 #include <Wire.h> 
-#include <LiquidCrystal_I2C.h> 
+#include <LiquidCrystal_I2C.h>
+#include <tuple>
 #include "input.h"  
 #include "output.h"  
 #include "pinlayout.h"
@@ -209,7 +210,11 @@ int pickingAOctave(){ // returns the note and the freq we are using
 }
 
 
-
+tuple<String, float, NULL> stageOneNote(int Note, int Octave){ //At this point we know we have both the note and octave and they HIT ENTER
+  String noteStr = noteStrArray(Note, Octave);
+  int noteFreq = noteArray(Note, Octave);
+  return make_tuple(noteStr, noteFreq, NULL);
+}
 
 
 
