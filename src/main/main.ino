@@ -32,7 +32,7 @@ void setup() {
   initializeLCD();
   Serial.println("LCD - Set");
   Serial.println("Initialized!!");
-  startUpAnim(); //Once this animation playes we set it up correctly 
+  //startUpAnim(); //Once this animation playes we set it up correctly 
 }
 
 // For now loop just runs through the basic I/O eg:
@@ -42,17 +42,17 @@ void setup() {
 // get freq from speaker
 void loop() {
   delay(2000);
-  // Serial.println("Loop Start");
-  // playNote(NOTE_C4,4);
-  // delay(2000);
-  // playNote(NOTE_G3,4);
+  Serial.println("Loop Start");
+  playNote(NOTE_C4,4);
+  delay(2000);
+  playNote(NOTE_G3,4);
   double freq = getMicFrequency();
   printFreq(freq);
   delay(2000);
-  // int buttonPressed =  checkForButtonPress();
-  // String text = String(buttonPressed);
-  // lcdPrint(text);
-  // delay(2000);
+  int buttonPressed =  checkForButtonPress();
+  String text = String(buttonPressed);
+  lcdPrint(text);
+  delay(2000);
 }
 
 

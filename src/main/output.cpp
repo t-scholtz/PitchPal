@@ -15,8 +15,6 @@
 //LCD will be a 16 by 2 line display
 LiquidCrystal_I2C lcd(0x27,16,2); 
 
-
-
 void initializeLCD(){ //This function turns on the LCD and gives the welcome message
   lcd.init();                      // initialize the lcd 
   lcd.backlight();
@@ -45,7 +43,7 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
 void startUpAnim(){
   int startMelody[] = {
   NOTE_C3, NOTE_D3, NOTE_E3, NOTE_C3, NOTE_G3, NOTE_B4, 0, NOTE_C4,0,0,0,0,0,0,0,0
-};
+// };
 char pitchPal[] = {'p','i','t','c','h','P','a','l',' ',' ','b','e','t','a',' ','1',' '};
     for(int i = 0;i<16;i++ ){
       lcd.setCursor( i+1,0);
@@ -82,9 +80,9 @@ void playNote(int note, int length){ //this one should be relitivly simple
     int noteDuration = NOTE_LENGTH / length;
     tone(SPEAKER, note, noteDuration);
     delay(noteDuration);
-    // // to distinguish the notes, set a minimum time between them.
-    // // the note's duration + 30% seems to work well:
-    // int pauseBetweenNotes = noteDuration * 1.30;
-    // delay(pauseBetweenNotes);
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
     noTone(SPEAKER);
 }
