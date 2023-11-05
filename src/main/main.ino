@@ -32,15 +32,29 @@ void setup() {
   initializeLCD();
   Serial.println("LCD - Set");
   Serial.println("Initialized!!");
-  //startUpAnim(); //Once this animation playes we set it up correctly 
 }
 
-// For now loop just runs through the basic I/O eg:
-// plays a sound
-// print to lcd screen
-// grabss button input
-// get freq from speaker
+int state = 0;
 void loop() {
+/* Main Loop for Project
+  Works by Storing system state in  state(intialzed above)
+  State 0 - will be start up animations
+  State 1 - Lets user select frequency
+  State 2 - Reocrds and prints Freq value
+*/
+  switch (state)
+  {
+  case 1:
+    break;
+
+  case 2:
+    break;
+  
+  case 0:
+  default:
+    startUpAnim();
+  }
+
   delay(2000);
   Serial.println("Loop Start");
   playNote(NOTE_C4,4);
