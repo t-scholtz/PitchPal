@@ -3,8 +3,18 @@
 #include <Wire.h> 
 
 #define A3 220
+#define SAMPLES 128   
+#define SAMPLING_FREQUENCY 2048 
+#define SERIAL_RATE 115200
+#define SIG_PIN 0
+
+#define MICROPHONE 14
 
 arduinoFFT FFT = arduinoFFT();
+unsigned int samplingPeriod;
+unsigned long microSeconds;
+double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
+double vImag[SAMPLES];
 
 void setup() {
     Serial.begin(SERIAL_RATE);
@@ -28,7 +38,10 @@ void loop(){
 
  // Find prak frequency and print peak
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
+  Serial.print("Mesured Frequency: ");
+  Serial.println(peak);
   double howClose= peak/A3;
+
   Serial.print("How close to note: ");
   Serial.println(howClose);
 }

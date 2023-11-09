@@ -13,6 +13,8 @@
 #define NOTE_B3 247
 #define NOTE_C4 262
 #define NOTE_B4 494
+#define SPEAKER 3
+#define NOTE_LENGTH 1000
 
 void setup() {
 }
@@ -23,4 +25,15 @@ void loop(){
         playNote(startMelody[i],4);
         delay(500);
         }
+}
+
+void playNote(int note, int length){ //this one should be relitivly simple 
+    int noteDuration = NOTE_LENGTH / length;
+    tone(SPEAKER, note, noteDuration);
+    delay(noteDuration);
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    noTone(SPEAKER);
 }
