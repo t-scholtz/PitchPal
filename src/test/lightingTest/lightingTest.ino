@@ -4,7 +4,7 @@
 #define HIGH 1
 #define RED 12
 #define YELLOW 13
-#define GREEN 14
+#define GREEN 2
 
 void setup() {
   pinMode(RED, OUTPUT);
