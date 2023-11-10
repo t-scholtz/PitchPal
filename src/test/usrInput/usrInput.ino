@@ -29,7 +29,6 @@ void loop(){
     int buttonPressed = checkForButtonPress();
     Serial.print("Button Pressed: ");
     Serial.println(buttonPressed);
-    delay(2000);
 }
 
 int muxChannel(int a, int b){
