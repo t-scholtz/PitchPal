@@ -7,7 +7,7 @@
 #define MUX_PIN1 8
 #define MUX_PIN2 9
 #define MUX_PIN3 10
-#define SIG_PIN 11
+#define SIG_PIN 0
 
 void setup() {
   Serial.begin(9600);
