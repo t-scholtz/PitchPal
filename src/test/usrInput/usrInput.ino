@@ -27,8 +27,8 @@ void setup() {
 
 void loop(){
     int buttonPressed = checkForButtonPress();
-    Serial.println("Button Pressed: ");
-    Serial.print(buttonPressed);
+    Serial.print("Button Pressed: ");
+    Serial.println(buttonPressed);
     delay(2000);
 }
 
@@ -67,6 +67,7 @@ int checkForButtonPress(){
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
       digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
+      delay(1000);
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
   }
