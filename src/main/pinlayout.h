@@ -9,6 +9,9 @@
 #define SPEAKER 3
 #define SDA A4
 #define SCL A5
+#define RED 12
+#define YELLOW 13
+#define GREEN 2
 #define ENABLE 6
 #define MUX_PIN0 7
 #define MUX_PIN1 8
