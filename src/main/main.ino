@@ -44,10 +44,11 @@ void loop() {
   switch (state)
   {
   case 1:
-    state = stateSelector;
- 
+    state = stateSelector();
   case 2:
     break;
+  case 3:
+    state = findingNote();
   
   case 0:
   default:
@@ -68,6 +69,11 @@ int stateSelector(){
   lcdClear();
   lcdPrint("Error detected in\ninput try again");
   return chosenState;
+}
+
+int findingNote(){
+    
+
 }
 
 int freqAnalyse(int note){

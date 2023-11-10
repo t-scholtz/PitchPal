@@ -9,5 +9,6 @@ void micSetup();
 double getMicFrequency();
 int checkForButtonPress();
 int waitForUserInput();
+String closestNote()
 
 #endif

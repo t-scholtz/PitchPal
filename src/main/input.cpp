@@ -19,9 +19,6 @@ double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary
 
 int noteArray(int a, int b) {
   int ar[12][7]={
-/*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
-/*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
-/*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7},
 /*C*/     {NOTE_C1, NOTE_C2, NOTE_C3, NOTE_C4, NOTE_C5, NOTE_C6, NOTE_C7},
 /*C#Db*/  {NOTE_CS1, NOTE_CS2, NOTE_CS3, NOTE_CS4, NOTE_CS5, NOTE_CS6, NOTE_CS7},
 /*D*/     {NOTE_D1, NOTE_D2, NOTE_D3, NOTE_D4, NOTE_D5, NOTE_D6, NOTE_D7},
@@ -31,6 +28,9 @@ int noteArray(int a, int b) {
 /*F#/Gb*/ {NOTE_FS1, NOTE_FS2, NOTE_FS3, NOTE_FS4, NOTE_FS5, NOTE_FS6, NOTE_FS7},
 /*G*/     {NOTE_G1, NOTE_G2, NOTE_G3, NOTE_G4, NOTE_G5, NOTE_G6, NOTE_G7},
 /*G#/Ab*/ {NOTE_GS1, NOTE_GS2, NOTE_GS3, NOTE_GS4, NOTE_GS5, NOTE_GS6, NOTE_GS7},
+/*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
+/*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
+/*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7}
   };
   if(a>12 || a<0){
     return -1;
@@ -43,9 +43,6 @@ int noteArray(int a, int b) {
 
 String noteStrArray(int a, int b) { 
   String ar[12][7] = {//putting them here temporarly so that we can function calling them //I want 
-/*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
-/*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
-/*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"},
 /*C*/     {"C1", "C2", "C3", "C4", "C5", "C6", "C7"},
 /*C#Db*/  {"CS1", "CS2", "CS3", "CS4", "CS5", "CS6", "CS7"},
 /*D*/     {"D1", "D2", "D3", "D4", "D5", "D6", "D7"},
@@ -54,7 +51,10 @@ String noteStrArray(int a, int b) {
 /*F*/     {"F1", "F2", "F3", "F4", "F5", "F6", "F7"},
 /*F#/Gb*/ {"FS1", "FS2", "FS3", "FS4", "FS5", "FS6", "FS7"},
 /*G*/     {"G1", "G2", "G3", "G4", "G5", "G6", "G7"},
-/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"}
+/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"},
+/*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
+/*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
+/*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"}
   };
    if(a>12 || a<0){
     return " ";
@@ -190,8 +190,26 @@ int waitForUserInput(){
   return output;//return the button number
 }
 
-int confirmButton(int buttonN){
+//work in progress = finds and returns the closed note to the given pitch as a freq
+String closestNote(){
+  //Listen for Freq 
+  double note = getMicFrequency();
+  //Search for the middle area
+  int x =12;
+  int y = 7;
+  bool found = false;
+  if (note > noteArray(x,y)) return "Outside range\nToo high pitch";
+  if (note < noteArray(0,0)) return "Outside range\nToo low pitch";
+  for(y=6;note < noteArray(x,y) && y>0;y--);
+  if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
 
+  }
+  y++;
+  for(x=0;note < noteArray(x,y)*1.03 && x>0;x++);
+
+}
+
+int confirmButton(int buttonN){
   while(buttonN > -1){ //keep them here until a button of some type goes back
     lcdSetCursor(0,1);//where we want to print
     int buttonCheck = -2
