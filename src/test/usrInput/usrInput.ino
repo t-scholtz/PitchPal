@@ -1,13 +1,13 @@
 #include <Arduino.h>
 
-#define LOW 1.0
+#define LOW 1000.0
 
 #define ENABLE 6
 #define MUX_PIN0 7
 #define MUX_PIN1 8
 #define MUX_PIN2 9
 #define MUX_PIN3 10
-#define SIG_PIN 0
+#define SIG_PIN 15
 
 void setup() {
   Serial.begin(9600);
@@ -66,24 +66,30 @@ int checkForButtonPress(){
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
       digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
-      delay(1000);
+      //delay(1000);
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-    Serial.print(analogRead(SIG_PIN)));
+    delay(20);
+    Serial.print(analogRead(SIG_PIN));
     Serial.print(" : ");
   }
   Serial.println("Done");
+  //delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
-  int output = -1;
+  int output = 0;
   for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
     if (buttons[i] > LOW ){
       flag++;
       output = i;
     }
   }
-  if (flag != 1){
-    return -1;}
+  if (flag == 1){
+    return output;
+    }
+  else if(flag > 1){
+    return -1;
+  }
 
-  return output;//return the button number
+  return -1;//return the button number
 }
