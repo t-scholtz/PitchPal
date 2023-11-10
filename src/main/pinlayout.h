@@ -9,12 +9,12 @@
 #define SPEAKER 3
 #define SDA A4
 #define SCL A5
-#define SIG_PIN 6
-#define ENABLE 7
-#define MUX_PIN0 8
-#define MUX_PIN1 9
-#define MUX_PIN2 10
-#define MUX_PIN3 11
+#define ENABLE 6
+#define MUX_PIN0 7
+#define MUX_PIN1 8
+#define MUX_PIN2 9
+#define MUX_PIN3 10
+#define SIG_PIN 11
 //analog pin 14 (A0)
 #define MICROPHONE 14
 

@@ -44,4 +44,5 @@ void loop(){
 
   Serial.print("How close to note: ");
   Serial.println(howClose);
+  delay(1000);
 }

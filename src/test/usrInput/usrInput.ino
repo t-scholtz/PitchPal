@@ -1,12 +1,13 @@
 #include <Arduino.h>
 
 #define LOW 1.0
-#define SIG_PIN 6
-#define ENABLE 7
-#define MUX_PIN0 8
-#define MUX_PIN1 9
-#define MUX_PIN2 10
-#define MUX_PIN3 11
+
+#define ENABLE 6
+#define MUX_PIN0 7
+#define MUX_PIN1 8
+#define MUX_PIN2 9
+#define MUX_PIN3 10
+#define SIG_PIN 11
 
 void setup() {
   Serial.begin(9600);
