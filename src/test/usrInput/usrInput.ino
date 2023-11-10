@@ -1,7 +1,8 @@
 #include <Arduino.h>
 
 #define LOW 1.0
-#define SIG_PIN 0
+#define SIG_PIN 6
+#define ENABLE 7
 #define MUX_PIN0 8
 #define MUX_PIN1 9
 #define MUX_PIN2 10
