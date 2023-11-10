@@ -17,12 +17,14 @@
 #define NOTE_LENGTH 1000
 
 void setup() {
+  Serial.begin(9600);
+  Serial.println("Starting");
 }
 
 void loop(){
-    int startMelody[] = { NOTE_C3, NOTE_D3, NOTE_E3, NOTE_C3, NOTE_G3, NOTE_B4, 0, NOTE_C4,0,0,0,0,0,0,0,0 };
+    int startMelody[] = { NOTE_C3, NOTE_D3, NOTE_E3, NOTE_G3, NOTE_B3, 0, NOTE_C4,0,0,0,0,0,0,0,0 };
      for(int i = 0;i<16;i++ ){
-        playNote(startMelody[i],4);
+        playNote(startMelody[i],6);
         delay(500);
         }
 }

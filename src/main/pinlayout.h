@@ -8,6 +8,8 @@
 
 #define SIG_PIN 0
 #define SPEAKER 3
+#define SDA A4
+#define SCL A5
 #define MUX_PIN0 8
 #define MUX_PIN1 9
 #define MUX_PIN2 10

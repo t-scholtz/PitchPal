@@ -35,7 +35,7 @@ void setup() {
 }
 
 void loop(){
-  char pitchPal[] = {'p','i','t','c','h','P','a','l',' ',' ','b','e','t','a',' ','1',' '};
+  char pitchPal[] = {'P','i','t','c','h','P','a','l',' ','b','e','t','a','<','3'};
     for(int i = 0;i<16;i++ ){
       lcd.setCursor( i+1,0);
       lcd.printByte(1);
