@@ -8,5 +8,6 @@ float getMuxInput(int channel);
 void micSetup();
 double getMicFrequency();
 int checkForButtonPress();
+int waitForUserInput();
 
 #endif

@@ -11,7 +11,6 @@
 #include "output.h" 
 #include "pitches.h"
 
-
 void setup() {
   Serial.begin(SERIAL_RATE);
   Serial.println("Initializing PitchPal");//Testing 
@@ -35,18 +34,18 @@ void setup() {
 }
 
 int state = 0;
+
 void loop() {
 /* Main Loop for Project
   Works by Storing system state in  state(intialzed above)
-  State 0 - will be start up animations
-  State 1 - Lets user select frequency
-  State 2 - Reocrds and prints Freq value
+  State 0 - Will be start up animations
+  State 1 - User Choses what state they want
 */
   switch (state)
   {
   case 1:
-    break;
-
+    state = stateSelector;
+ 
   case 2:
     break;
   
@@ -54,21 +53,22 @@ void loop() {
   default:
     startUpAnim();
   }
-
-  // delay(2000);
-  // Serial.println("Loop Start");
-  // playNote(NOTE_C4,4);
-  // delay(2000);
-  // playNote(NOTE_G3,4);
-  // double freq = getMicFrequency();
-  // printFreq(freq);
-  // delay(2000);
-  // int buttonPressed =  checkForButtonPress();
-  // String text = String(buttonPressed);
-  // lcdPrint(text);
-  // delay(2000);
 }
 
+//Temp Function to handle simple user input for now
+int stateSelector(){
+  int chosenState = 1;
+  lcdClear();
+  lcdPrint("1-Check Pitch\n2-Find Note 3-R")
+  delay(1000)
+  int button = waitForUserInput();
+  if(button == 0) return 1;
+  if(button == 1) return 2;
+  if(button == 2) return 0;
+  lcdClear();
+  lcdPrint("Error detected in\ninput try again");
+  return chosenState;
+}
 
 int freqAnalyse(int note){
   //loop condition

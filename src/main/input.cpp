@@ -157,7 +157,36 @@ int checkForButtonPress(){
   }
   if (flag != 1){
     return -1;}
+  return output;//return the button number
+}
 
+//Will wait for user input, and return 0-15 for valid iput, and -1 for invalid
+int waitForUserInput(){
+  int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
+  float buttons[16];
+  //condition varible waiting for usr input to be detected
+  bool stillWating = true;
+  while(stillWating){
+    //Read from every channel and grab the value at that point of time
+    for(int i = 0; i<16 ; i++){
+      for(int j = 0; j < 4; j ++){
+        digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
+      }
+      buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
+      if( analogRead(SIG_PIN) != LOW) stillWating = false;
+    }
+  }
+  //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
+  int flag = 0;
+  int output = -1;
+  for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
+    if (buttons[i] > LOW ){
+      flag++;
+      output = i;
+    }
+  }
+  if (flag != 1){
+    return -1;}
   return output;//return the button number
 }
 
