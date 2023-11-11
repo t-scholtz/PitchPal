@@ -143,25 +143,36 @@ int checkForButtonPress(){
   for(int i = 0; i<16 ; i++){
     for(int j = 0; j < 4; j ++){
       digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
+      //delay(1000);
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
+    delay(20);
+    Serial.print(analogRead(SIG_PIN));
+    Serial.print(" : ");
   }
+  Serial.println("Done");
+  //delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
-  int output = -1;
+  int output = 0;
   for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
     if (buttons[i] > LOW ){
       flag++;
       output = i;
     }
   }
-  if (flag != 1){
-    return -1;}
-  return output;//return the button number
+  if (flag == 1){
+    return output;
+    }
+  else if(flag > 1){
+    return -1;
+  }
+
+  return -1;//return the button number
 }
 
 //Will wait for user input, and return 0-15 for valid iput, and -1 for invalid
-int waitForUserInput(){
+int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPress and another making sure the button press is correct
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
   float buttons[16];
   //condition varible waiting for usr input to be detected
@@ -214,23 +225,12 @@ String closestNote(){
   return noteArray(x,y);
 }
 
-int confirmButton(int buttonN){
-  while(buttonN > -1){ //keep them here until a button of some type goes back
+int confirmButton(int buttonN){ //makes sure that the button press is correct
+    lcdClear();
     lcdSetCursor(0,1);//where we want to print
-    int buttonCheck = -2
-    while(1){//infinite loop unless a button is hit
-      buttonN = checkForButtonPress(); //this will give an updated value
-      if(buttonN != buttonCheck){
-        break;
-      }
-    }
-    if(buttonN > -1){//this is for error messaging
-      lcdPrint("ERROR: > 1 hit");
-      buttonN = buttonCheck;
-      delay(500);
-      lcdSetCursor(0,1);
-      lcdPrint("                "); //16 spaces to wipe the message
-    }
+    lcdPrint("Press and hold (:");
+  while(buttonN < 0){ //keep them here until a button of some type goes back
+    buttonN = checkForButtonPress(); //this will give an updated value
   }
   return buttonN
 }
@@ -242,20 +242,20 @@ int pickingANote(){ // returns the note and the freq we are using
   lcdPrint("pick a note!");
   lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
-  int buttonNum = -2; //We can know when more than one or None are picked
+  int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
   
   return buttonNum
 }
 
-int pickingAOctave(){ // returns the note and the freq we are using
+int pickingAOctave(){ // returns the Ocatave and the freq we are using
   //make prompt for user
   lcdClear();
   lcdSetCursor(0,0);
   lcdPrint("pick an octave!");
   lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
-  int buttonNum = -2; //We can know when more than one or None are picked
+  int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
   
   return buttonNum

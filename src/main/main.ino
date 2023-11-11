@@ -41,6 +41,13 @@ void loop() {
   State 0 - Will be start up animations
   State 1 - User Choses what state they want
 */
+  String goalNote = "!!!!!!"
+  int goalOctave = 0
+  String currentNote = "!!!!!!"
+  int currentOctave = 0
+  int currentState = 1
+
+
   switch (state)
   {
   case 1:
@@ -60,7 +67,7 @@ void loop() {
 int stateSelector(){
   int chosenState = 1;
   lcdClear();
-  lcdPrint("1-Check Pitch\n2-Find Note 3-R")
+  //lcdPrint("1-Check Pitch\n2-Find Note 3-R")
   delay(1000)
   int button = waitForUserInput();
   if(button == 0) return 1;
@@ -76,7 +83,7 @@ int findingNote(){
 
 }
 
-int freqAnalyse(int note){
+int freqAnalyse(int note){ //we want this to idealy be 1 or a small variation, Think about having this handle multuliple and checking the most frequent one
   //loop condition
   int input = -1;
   while(input <0){
