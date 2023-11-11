@@ -244,6 +244,12 @@ int pickingANote(){ // returns the note and the freq we are using
   //we need to wait for them to pick some type of note 
   int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
+
+  if(buttonNum == 12){//Back Button
+    return -1;
+  }else if(buttonNum > 12){ //Anything else
+    return -2;
+  }
   
   return buttonNum
 }
@@ -257,6 +263,16 @@ int pickingAOctave(){ // returns the Ocatave and the freq we are using
   //we need to wait for them to pick some type of note 
   int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
+
+  if(buttonNum > 7){
+    if(buttonNum == 12){//Back Button
+      return -1;
+    }else{ //Anything else
+      return -2;
+    }
+  }
+  
+  return buttonNum
   
   return buttonNum
 }
