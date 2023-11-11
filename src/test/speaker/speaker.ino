@@ -22,8 +22,8 @@ void setup() {
 }
 
 void loop(){
-    int startMelody[] = { NOTE_C3, NOTE_D3, NOTE_E3, NOTE_G3, NOTE_B3, 0, NOTE_C4,0,0,0,0,0,0,0,0 };
-     for(int i = 0;i<12;i++ ){
+    int startMelody[] = { NOTE_CS3, NOTE_G3, NOTE_E3, NOTE_A3, NOTE_B3, NOTE_AS3, NOTE_A3, NOTE_G3, NOTE_F3, NOTE_GS3, NOTE_AS3, NOTE_FS3, NOTE_GS3, NOTE_GS3 };
+     for(int i = 0;i<14;i++ ){
         playNote(startMelody[i],6);
         //delay(500);
         }
