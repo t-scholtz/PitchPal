@@ -1,7 +1,0 @@
-cat
-dog
-dog
-cat
-hippo
-cat
-hippo
