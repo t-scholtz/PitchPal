@@ -1,3 +1,5 @@
+//#include <MicroTuple.h>
+
 /*********************************************/
 /* Name of the program: */
 /* Author: Timothy Scholtz ; Thomoas Mahok */
@@ -10,7 +12,7 @@
 #include "input.h" 
 #include "output.h" 
 #include "pitches.h"
-#include <tuple>
+//#include <tuple>
 
 void setup() {
   Serial.begin(SERIAL_RATE);
@@ -55,8 +57,6 @@ void loop() {
   int currentNoteNum = 0;
   float currentNoteFREQ = 0;
 
-  tuple<String, float, NULL> N&O; //declaring the tuple we can use for notes and octaves
-
   int state = 1; //starting values
   int buttonInput = -1;
 
@@ -67,7 +67,7 @@ void loop() {
   case 1: //this will be the starting prompt
     starterState();
     buttonInput = confirmButton(buttonInput);
-    if(buttonInput == 13){state = 2}
+    if(buttonInput == 13){state = 2;}
 
   case 2: //this is the Note gathering state
     goalNoteNum = pickingANote();
@@ -92,9 +92,9 @@ void loop() {
     }
 
   case 4: //this is the confirming stage
-    N&O = stageOneNote(goalNoteNum, goalOctave);
-    goalNote = get<0>(N&O); //this is the notes string
-    goalNoteFREQ = get<1>(N&O);
+    //N&O = stageOneNote(goalNoteNum, goalOctave);
+    goalNote = noteStrArray(goalNoteNum, goalOctave);
+    goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
 
 
   default:
@@ -104,19 +104,19 @@ void loop() {
   }
 
 
-  "switch (state)
-  {
-  case 1:
-    state = stateSelector();
-  case 2:
-    break;
-  case 3:
-    state = findingNote();
+  // switch (state)
+  // {
+  // case 1:
+  //   state = stateSelector();
+  // case 2:
+  //   break;
+  // case 3:
+  //   state = findingNote();
   
-  case 0:
-  default:
-    startUpAnim();
-  }"
+  // case 0:
+  // default:
+  //   startUpAnim();
+  // }
 }
 
 //Temp Function to handle simple user input for now
@@ -124,11 +124,11 @@ int stateSelector(){
   int chosenState = 1;
   lcdClear();
   //lcdPrint("1-Check Pitch\n2-Find Note 3-R")
-  delay(1000)
+  delay(1000);
   int button = waitForUserInput();
-  if(button == 0) return 1;
-  if(button == 1) return 2;
-  if(button == 2) return 0;
+  if(button == 0){return 1;}
+  if(button == 1){return 2;}
+  if(button == 2){return 0;}
   lcdClear();
   lcdPrint("Error detected in\ninput try again");
   return chosenState;
@@ -139,19 +139,20 @@ int findingNote(){
 
 }
 
-int freqAnalyse(int note){ //we want this to idealy be 1 or a small variation, Think about having this handle multuliple and checking the most frequent one
-  //loop condition
-  int input = -1;
-  while(input <0){
-    //Get mic freq
-    double realFreq = double getMicFrequency();
-    double errorPerc = (note - realFreq)/realFreq;
-    //Compare real to desired noe
-    lcdPrint(errorPerc);
-    //Look for user input to cancle
-    input = checkForButtonPress();
-  }
-  return input;
-}
+// int freqAnalyse(int note){ //we want this to idealy be 1 or a small variation, Think about having this handle multuliple and checking the most frequent one
+//   //loop condition
+//   int input = -1;
+//   while(input <0){
+//     //Get mic freq
+//     double realFreq = double getMicFrequency();
+//     double errorPerc = (note - realFreq)/realFreq;
+//     String errorPercStr = to_string(errorPerc);
+//     //Compare real to desired noe
+//     lcdPrint(errorPercStr);
+//     //Look for user input to cancle
+//     input = checkForButtonPress();
+//   }
+//   return input;
+// }
 
 

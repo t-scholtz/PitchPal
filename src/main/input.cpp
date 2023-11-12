@@ -2,7 +2,7 @@
 #include <arduinoFFT.h>
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
-#include <tuple>
+//#include <tuple>
 #include "input.h"  
 #include "output.h"  
 #include "pinlayout.h"
@@ -203,42 +203,42 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
 
 //work in progress = finds and returns the closed note to the given pitch as a freq
 //If you don't understand how this works, its becuase it doens't
-String closestNote(){
-  //Listen for Freq 
-  double note = getMicFrequency();
-  //Search for the middle area
-  int x =12;
-  int y = 7;
-  bool found = false;
-  if (note > noteArray(x,y)) return "Outside range\nToo high pitch";
-  if (note < noteArray(0,0)) return "Outside range\nToo low pitch";
-  for(y=6;note < noteArray(x,y) && y>0;y--);
-  if(note<noteArray(y+1,0)){
-    if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
-        return noteArray(y,x);
-    }
-    return  noteArray(y+1,0);
-  }
-  y++;
+// String closestNote(){
+//   //Listen for Freq 
+//   double note = getMicFrequency();
+//   //Search for the middle area
+//   int x =12;
+//   int y = 7;
+//   bool found = false;
+//   if (note > noteArray(x,y)) return "Outside range\nToo high pitch";
+//   if (note < noteArray(0,0)) return "Outside range\nToo low pitch";
+//   for(y=6;note < noteArray(x,y) && y>0;y--);
+//   if(note<noteArray(y+1,0)){
+//     if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
+//         return noteArray(y,x);
+//     }
+//     return  noteArray(y+1,0);
+//   }
+//   y++;
 
-  for(x=0;note < noteArray(x,y)*1.03 && x>0;x++);
-  return noteArray(x,y);
-}
+//   for(x=0;note < noteArray(x,y)*1.03 && x>0;x++);
+//   return noteArray(x,y);
+// }
 
 int confirmButton(int buttonN){ //makes sure that the button press is correct
     //lcdClear();
-    lcdSetCursor(0,1);//where we want to print
+    lcdSetCur(0,1);//where we want to print
     lcdPrint("Press and hold (:");
   while(buttonN < 0){ //keep them here until a button of some type goes back
     buttonN = checkForButtonPress(); //this will give an updated value
   }
-  return buttonN
+  return buttonN;
 }
 
 int pickingANote(){ // returns the note and the freq we are using
   //make prompt for user
   lcdClear();
-  lcdSetCursor(0,0);
+  lcdSetCur(0,0);
   lcdPrint("pick a note!");
   //lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
@@ -251,13 +251,13 @@ int pickingANote(){ // returns the note and the freq we are using
     return -2;
   }
   
-  return buttonNum
+  return buttonNum;
 }
 
 int pickingAOctave(){ // returns the Ocatave and the freq we are using
   //make prompt for user
   lcdClear();
-  lcdSetCursor(0,0);
+  lcdSetCur(0,0);
   lcdPrint("pick an octave!");
   //lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
@@ -271,18 +271,15 @@ int pickingAOctave(){ // returns the Ocatave and the freq we are using
       return -2;
     }
   }
-  
-  return buttonNum
-  
-  return buttonNum
+  return buttonNum;
 }
 
 
-tuple<String, float, NULL> stageOneNote(int Note, int Octave){ //At this point we know we have both the note and octave and they HIT ENTER
-  String noteStr = noteStrArray(Note, Octave);
-  int noteFreq = noteArray(Note, Octave);
-  return make_tuple(noteStr, noteFreq, NULL);
-}
+// tuple<String, float, NULL> stageOneNote(int Note, int Octave){ //At this point we know we have both the note and octave and they HIT ENTER
+//   String noteStr = noteStrArray(Note, Octave);
+//   int noteFreq = noteArray(Note, Octave);
+//   return make_tuple(noteStr, noteFreq, NULL);
+// }
 
 
 

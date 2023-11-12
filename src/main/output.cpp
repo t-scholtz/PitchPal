@@ -57,10 +57,10 @@ void startUpAnim(){
 }
 
 void starterState(){
-  lcd.clear()
-  lcd.print("Press E to Start")
-  lce.setCursor(0,1);
-  lcd.print("Press B to End")
+  lcd.clear();
+  lcd.print("Press E to Start");
+  lcd.setCursor(0,1);
+  lcd.print("Press B to End");
 }
 
 void printFreq(double freq){
