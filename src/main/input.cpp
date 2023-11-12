@@ -226,7 +226,7 @@ String closestNote(){
 }
 
 int confirmButton(int buttonN){ //makes sure that the button press is correct
-    lcdClear();
+    //lcdClear();
     lcdSetCursor(0,1);//where we want to print
     lcdPrint("Press and hold (:");
   while(buttonN < 0){ //keep them here until a button of some type goes back
@@ -240,7 +240,7 @@ int pickingANote(){ // returns the note and the freq we are using
   lcdClear();
   lcdSetCursor(0,0);
   lcdPrint("pick a note!");
-  lcdSetCursor(0,1);
+  //lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
   int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
@@ -259,7 +259,7 @@ int pickingAOctave(){ // returns the Ocatave and the freq we are using
   lcdClear();
   lcdSetCursor(0,0);
   lcdPrint("pick an octave!");
-  lcdSetCursor(0,1);
+  //lcdSetCursor(0,1);
   //we need to wait for them to pick some type of note 
   int buttonNum = -1; //We can know when more than one or None are picked
   buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct

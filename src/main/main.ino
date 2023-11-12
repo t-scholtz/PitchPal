@@ -10,6 +10,7 @@
 #include "input.h" 
 #include "output.h" 
 #include "pitches.h"
+#include <tuple>
 
 void setup() {
   Serial.begin(SERIAL_RATE);
@@ -47,10 +48,12 @@ void loop() {
   String goalNote = "!!!!!!";//Initilize our goals
   int goalOctave = 0;
   int goalNoteNum = 0;
+  float goalNoteFREQ = 0;
 
   String currentNote = "!!!!!!";//Current ones uses to calculate
   int currentOctave = 0;
   int currentNoteNum = 0;
+  float currentNoteFREQ = 0;
 
   tuple<String, float, NULL> N&O; //declaring the tuple we can use for notes and octaves
 
@@ -68,7 +71,7 @@ void loop() {
 
   case 2: //this is the Note gathering state
     goalNoteNum = pickingANote();
-    if(goalNoteNum == -1){
+    if(goalNoteNum == -1){//Goes back
       state = 1;
     }else if(goalNoteNum == -2){
       tempNUMSTATE = state;
@@ -79,20 +82,24 @@ void loop() {
 
   case 3: //this is the OCTAVE gathering state
     goalOctave = pickingAOctave();
-    if(goalNoteNum == -1){
+    if(goalNoteNum == -1){ //Goes back
       state = 2;
     }else if(goalNoteNum == -2){
       tempNUMSTATE = state;
       state = 0; //ERROR OCCURED
     }else{
-      state = 3; //OCTAVE
+      state = 4; //OCTAVE
     }
 
-  
-  case 0:
+  case 4: //this is the confirming stage
+    N&O = stageOneNote(goalNoteNum, goalOctave);
+    goalNote = get<0>(N&O); //this is the notes string
+    goalNoteFREQ = get<1>(N&O);
+
+
   default:
-    lcdPrint("Error")
-    Serial.println("Error")
+    lcdPrint("Error");
+    Serial.println("Error");
     state = tempNUMSTATE;
   }
 
