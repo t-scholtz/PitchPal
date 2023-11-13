@@ -11,6 +11,12 @@ void startUpAnim();
 void starterState();
 void printFreq(double freq);
 void playNote(int note, int length);
+void stageTwoPrompt();
+void invalidPrompt();
+void noteExamplePrompt();
+void listeningPrompt();
+void updatingPrompt(double CFeqency, String CNote, double GFrequency, String GNote)
+void finisherPrompt();
 
 
 #endif 

@@ -14,5 +14,6 @@ String closestNote();
 int pickingANote();
 int pickingAOctave();
 int confirmButton(int buttonN);
+String noteFinder(double freqOfNote);
 
 #endif

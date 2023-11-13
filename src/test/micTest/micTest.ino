@@ -40,7 +40,7 @@ void loop(){
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
   Serial.print("Mesured Frequency: ");
   Serial.println(peak);
-  double howClose= peak/A3;
+  double howClose= peak/2093;
 
   Serial.print("How close to note: ");
   Serial.println(howClose);

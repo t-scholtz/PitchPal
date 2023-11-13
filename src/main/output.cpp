@@ -86,12 +86,65 @@ void lcdSetCur(int x, int y){
 }
 
 void playNote(int note, int length){ //this one should be relitivly simple 
-    int noteDuration = NOTE_LENGTH / length;
-    tone(SPEAKER, note, noteDuration);
-    delay(noteDuration);
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
-    int pauseBetweenNotes = noteDuration * 1.30;
-    delay(pauseBetweenNotes);
-    noTone(SPEAKER);
+  int noteDuration = NOTE_LENGTH / length;
+  tone(SPEAKER, note, noteDuration);
+  delay(noteDuration);
+  // to distinguish the notes, set a minimum time between them.
+  // the note's duration + 30% seems to work well:
+  int pauseBetweenNotes = noteDuration * 1.30;
+  delay(pauseBetweenNotes);
+  noTone(SPEAKER);
+}
+
+void stageTwoPrompt(){
+  lcd.clear();
+  String lcdPrintString = "You want to tune\nto" + goalNote +"?";
+  lcd.print(lcdPrintString);
+}
+
+void invalidPrompt(){
+  lcd.clear();
+  String lcdPrintString = "INVALID Press B\n to go back";
+  lcd.print(lcdPrintString);
+}
+
+void noteExamplePrompt(){
+  lcd.clear();
+  String lcdPrintString = "Example: press E\n to continue";
+  lcd.print(lcdPrintString);
+}
+
+void listeningPrompt(){ //it has been a while sense I made a c for loop so I may need to test this
+  lcd.clear();
+  String lcdPrintString = "Listening in: ";
+  lcd.print(lcdPrintString);
+  for(int i =0; i == 2; i++){
+    lcd.setCursor(14,1);
+    lcd.print(i+1)
+  }
+}
+
+void updatingPrompt(double CFeqency, String CNote, double GFrequency, String GNote){//what we are using to show the user how they are doing 
+  lcd.clear();
+  lcd.setCursor(0,0); //Current note
+  lcd.print("CN:");
+  lcd.print(CNote);
+
+  lcd.setCursor(8,0); //Goal note
+  lcd.print("GN:");
+  lcd.print(GNote);
+
+  lcd.setCursor(0,1); //Current Freq
+  lcd.print("CN:");
+  lcd.print(to_string(CFrequency));
+
+  lcd.setCursor(8,1); //Goal freq
+  lcd.print("GN:");
+  lcd.print(to_string(GFrequency));
+}
+
+void finisherPrompt(){
+  lcd.clear();
+  String lcdPrintString = "All done?\npress B to quit";
+  lcd.print(lcdPrintString);
 }

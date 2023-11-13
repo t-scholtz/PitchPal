@@ -99,7 +99,7 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
 }
 
-double getMicFrequency(){
+double getMicFrequency(){ //this takes reading from the microphone and returns to us a frequency
   for(int i = 0; i<SAMPLES; i++){
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
@@ -274,12 +274,47 @@ int pickingAOctave(){ // returns the Ocatave and the freq we are using
   return buttonNum;
 }
 
+String noteFinder(double freqOfNote){
+  int octavePosition = 0;
+  int notePosition = 0;
 
-// tuple<String, float, NULL> stageOneNote(int Note, int Octave){ //At this point we know we have both the note and octave and they HIT ENTER
-//   String noteStr = noteStrArray(Note, Octave);
-//   int noteFreq = noteArray(Note, Octave);
-//   return make_tuple(noteStr, noteFreq, NULL);
-// }
+  int ar[12][7]={
+/*C*/     {NOTE_C1, NOTE_C2, NOTE_C3, NOTE_C4, NOTE_C5, NOTE_C6, NOTE_C7},
+/*C#Db*/  {NOTE_CS1, NOTE_CS2, NOTE_CS3, NOTE_CS4, NOTE_CS5, NOTE_CS6, NOTE_CS7},
+/*D*/     {NOTE_D1, NOTE_D2, NOTE_D3, NOTE_D4, NOTE_D5, NOTE_D6, NOTE_D7},
+/*D#Eb*/  {NOTE_DS1, NOTE_DS2, NOTE_DS3, NOTE_DS4, NOTE_DS5, NOTE_DS6, NOTE_DS7},
+/*E*/     {NOTE_E1, NOTE_E2, NOTE_E3, NOTE_E4, NOTE_E5, NOTE_E6, NOTE_E7},
+/*F*/     {NOTE_F1, NOTE_F2, NOTE_F3, NOTE_F4, NOTE_F5, NOTE_F6, NOTE_F7},
+/*F#/Gb*/ {NOTE_FS1, NOTE_FS2, NOTE_FS3, NOTE_FS4, NOTE_FS5, NOTE_FS6, NOTE_FS7},
+/*G*/     {NOTE_G1, NOTE_G2, NOTE_G3, NOTE_G4, NOTE_G5, NOTE_G6, NOTE_G7},
+/*G#/Ab*/ {NOTE_GS1, NOTE_GS2, NOTE_GS3, NOTE_GS4, NOTE_GS5, NOTE_GS6, NOTE_GS7},
+/*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
+/*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
+/*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7}
+  };
+
+  for(int i = 1; i==6; i++){//going through all the notes values to determine location
+    if(ar[0][i] > freqOfNote){//check if the freq is less than or greater than the current note to find location
+      octavePosition = i-1;
+      break;
+    }
+  }
+  for(int i = 1; i==11; i++){//going through all the notes values to determine location
+    if(ar[i][octavePosition] > freqOfNote){//check if the freq is less than or greater than the current note to find location
+      lowerP = abs((ar[i-1][octavePosition]/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
+      higherP = abs((ar[i][octavePosition]/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
+      if(lowerP < higherP){
+        notePosition = i - 1
+      }else{
+        notePosition = i
+      }
+      break;
+    }
+  }
+
+  return noteStrArray(octavePosition, notePosition);
+}
+
 
 
 
