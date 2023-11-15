@@ -147,10 +147,10 @@ int checkForButtonPress(){
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
     delay(20);
-    Serial.print(analogRead(SIG_PIN));
-    Serial.print(" : ");
+    Serial.print(F(analogRead(SIG_PIN)));
+    Serial.print(F(" : "));
   }
-  Serial.println("Done");
+  Serial.println(F("Done"));
   //delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;

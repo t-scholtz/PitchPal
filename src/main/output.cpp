@@ -36,7 +36,7 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
   lcd.createChar(6, cross);
   lcd.createChar(7, retarrow);
   lcd.home();
-  Serial.println("LCD setup done");
+  Serial.println(F("LCD setup done"));
 }
 
 void startUpAnim(){
