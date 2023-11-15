@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <WString.h>
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include "output.h"  

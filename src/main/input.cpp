@@ -1,7 +1,11 @@
 #include <Arduino.h>
+#include <WString.h>
+#include <arduinoFFT.h>
 #include <arduinoFFT.h>
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
+
+
 //#include <tuple>
 #include "input.h"  
 #include "output.h"  
