@@ -55,8 +55,8 @@ void loop()
   double goalNoteFREQ = 0;
 
   String currentNote = "!!!!!!"; // Current ones uses to calculate
-  int currentOctave = 0;
-  int currentNoteNum = 0;
+  // int currentOctave = 0;
+  // int currentNoteNum = 0;
   double currentNoteFREQ = 0;
 
   int state = 1; // starting values
@@ -108,11 +108,11 @@ void loop()
     goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
     lcdClear();
     stageTwoPrompt(goalNote);
-    enterCheck = confirmButton(-1);
-    if (enterCheck == 13){
+    int input = confirmButton(-1);
+    if (input == 13){
       state = 5; // going forwards
     }
-    else if (enterCheck = 12){
+    else if (input = 12){
       state = 3; // going backwards
     }
     else{
@@ -136,9 +136,7 @@ void loop()
     //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
     timer = millis(); //we will change after 10 seconds from this point
     while((timer+15000) > millis()){//this should make it run for 
-      currentNoteFREQ = getMicFrequency();
-      currentNote = noteFinder(currentNoteFREQ);
-      updatingPrompt(goalNoteFREQ, goalNote, currentNoteFREQ, currentNote);
+      updatingPrompt(goalNoteFREQ, goalNote,  getMicFrequency(), noteFinder(currentNoteFREQ));
       if(currentNote == goalNote){
         //Make LED's do something crazy
         lcdClear();
