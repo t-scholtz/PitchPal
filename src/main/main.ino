@@ -60,8 +60,7 @@ void loop()
   double currentNoteFREQ = 0;
 
   int state = 1; // starting values
-  int buttonInput = -1;
-  int enterCheck;
+  int buttonInput;
 
   int tempNUMSTATE; // this is used if an inappropriate button was hit
 
@@ -108,11 +107,11 @@ void loop()
     goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
     lcdClear();
     stageTwoPrompt(goalNote);
-    enterCheck = confirmButton(-1);
-    if (enterCheck == 13){
+    buttonInput = confirmButton(-1);
+    if (buttonInput == 13){
       state = 5; // going forwards
     }
-    else if (enterCheck = 12){
+    else if (buttonInput = 12){
       state = 3; // going backwards
     }
     else{
@@ -123,11 +122,11 @@ void loop()
   case 5: // Playing the sound of the Note
     noteExamplePrompt();
     playNote(goalNoteFREQ, 10);
-    enterCheck = confirmButton(-1);
-    if (enterCheck == 13){
+    buttonInput = confirmButton(-1);
+    if (buttonInput == 13){
       state = 6; // going forwards
     }
-    else if (enterCheck = 12){
+    else if (buttonInput = 12){
       state = 4; // going backwards
     }
 
@@ -149,12 +148,12 @@ void loop()
     timer = millis();
     while((timer+5000) > millis()){
       finisherPrompt();
-      enterCheck = confirmButton(-1);
-      if (enterCheck == 13){
+      buttonInput = confirmButton(-1);
+      if (buttonInput == 13){
         state = 1; //ending
         break;
       }
-      else if(enterCheck > -1){
+      else if(buttonInput > -1){
         tempNUMSTATE = state;
       state = 0; // ERROR OCCURED
       }
@@ -164,20 +163,6 @@ void loop()
     Serial.println("Error");
     state = tempNUMSTATE;
   }
-
-  // switch (state)
-  // {
-  // case 1:
-  //   state = stateSelector();
-  // case 2:
-  //   break;
-  // case 3:
-  //   state = findingNote();
-
-  // case 0:
-  // default:
-  //   startUpAnim();
-  // }
 }
 
 // Temp Function to handle simple user input for now
