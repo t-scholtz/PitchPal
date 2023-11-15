@@ -301,12 +301,12 @@ String noteFinder(double freqOfNote){
   }
   for(int i = 1; i==11; i++){//going through all the notes values to determine location
     if(ar[i][octavePosition] > freqOfNote){//check if the freq is less than or greater than the current note to find location
-      lowerP = abs((ar[i-1][octavePosition]/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
-      higherP = abs((ar[i][octavePosition]/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
+      int lowerP = abs((ar[i-1][octavePosition]/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
+      int higherP = abs((ar[i][octavePosition]/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
       if(lowerP < higherP){
-        notePosition = i - 1
+        notePosition = i - 1;
       }else{
-        notePosition = i
+        notePosition = i;
       }
       break;
     }

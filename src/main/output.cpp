@@ -96,9 +96,9 @@ void playNote(int note, int length){ //this one should be relitivly simple
   noTone(SPEAKER);
 }
 
-void stageTwoPrompt(){
+void stageTwoPrompt(String goalN){
   lcd.clear();
-  String lcdPrintString = "You want to tune\nto" + goalNote +"?";
+  String lcdPrintString = "You want to tune\nto" + goalN +"?";
   lcd.print(lcdPrintString);
 }
 
@@ -120,7 +120,7 @@ void listeningPrompt(){ //it has been a while sense I made a c for loop so I may
   lcd.print(lcdPrintString);
   for(int i =0; i == 2; i++){
     lcd.setCursor(14,1);
-    lcd.print(i+1)
+    lcd.print(i+1);
   }
 }
 
@@ -136,11 +136,11 @@ void updatingPrompt(double CFeqency, String CNote, double GFrequency, String GNo
 
   lcd.setCursor(0,1); //Current Freq
   lcd.print("CN:");
-  lcd.print(to_string(CFrequency));
+  lcd.print("NEED");
 
   lcd.setCursor(8,1); //Goal freq
   lcd.print("GN:");
-  lcd.print(to_string(GFrequency));
+  lcd.print("NEED");
 }
 
 void finisherPrompt(){

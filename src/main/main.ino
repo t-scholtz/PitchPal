@@ -61,8 +61,11 @@ void loop()
 
   int state = 1; // starting values
   int buttonInput = -1;
+  int enterCheck;
 
   int tempNUMSTATE; // this is used if an inappropriate button was hit
+
+  long timer; //what we are gonna use for the millaseconds
 
   switch (state)
   {
@@ -104,12 +107,12 @@ void loop()
     goalNote = noteStrArray(goalNoteNum, goalOctave);
     goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
     lcdClear();
-    stageTwoPrompt();
+    stageTwoPrompt(goalNote);
     enterCheck = confirmButton(-1);
-    if (buttonNum == 13){
+    if (enterCheck == 13){
       state = 5; // going forwards
     }
-    else if (buttonNum = 12){
+    else if (enterCheck = 12){
       state = 3; // going backwards
     }
     else{
@@ -118,23 +121,24 @@ void loop()
     }
 
   case 5: // Playing the sound of the Note
-    noteExamplePrompt(goalNoteFREQ, 10);
+    noteExamplePrompt();
+    playNote(goalNoteFREQ, 10);
     enterCheck = confirmButton(-1);
-    if (buttonNum == 13){
+    if (enterCheck == 13){
       state = 6; // going forwards
     }
-    else if (buttonNum = 12){
+    else if (enterCheck = 12){
       state = 4; // going backwards
     }
 
   case 6: // Here is the big listening  //We have an issue that we need to look at with either the sample size or mabye just the arduino board. For voices it will be fine but I noticed that most correct tones are about .02 max .03 off until you get to the really high tones.
     listeningPrompt();
     //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
-    long timer = millis() //we will change after 10 seconds from this point
+    timer = millis(); //we will change after 10 seconds from this point
     while((timer+15000) > millis()){//this should make it run for 
       currentNoteFREQ = getMicFrequency();
       currentNote = noteFinder(currentNoteFREQ);
-      updatingPrompt();
+      updatingPrompt(goalNoteFREQ, goalNote, currentNoteFREQ, currentNote);
       if(currentNote == goalNote){
         //Make LED's do something crazy
         lcdClear();
@@ -142,15 +146,15 @@ void loop()
         delay(3000);
       }
     } 
-    long timer = millis()
+    timer = millis();
     while((timer+5000) > millis()){
       finisherPrompt();
       enterCheck = confirmButton(-1);
-      if (buttonNum == 13){
+      if (enterCheck == 13){
         state = 1; //ending
         break;
       }
-      else if(button > -1){
+      else if(enterCheck > -1){
         tempNUMSTATE = state;
       state = 0; // ERROR OCCURED
       }
