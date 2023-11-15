@@ -15,7 +15,7 @@ void stageTwoPrompt(String goalN);
 void invalidPrompt();
 void noteExamplePrompt();
 void listeningPrompt();
-void updatingPrompt(double CFeqency, String CNote, double GFrequency, String GNote);
+void updatingPrompt(String CNote,  String GNote);
 void finisherPrompt();
 
 

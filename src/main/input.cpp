@@ -1,7 +1,9 @@
 #include <Arduino.h>
+#include <WString.h>
 #include <arduinoFFT.h>
-#include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
+
+
 //#include <tuple>
 #include "input.h"  
 #include "output.h"  
@@ -147,7 +149,11 @@ int checkForButtonPress(){
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
     delay(20);
+<<<<<<< HEAD
 //    Serial.print(F(analogRead(SIG_PIN)));
+=======
+    Serial.print(analogRead(SIG_PIN));
+>>>>>>> 024792f3e0aea694bf062dcf5e1882540cb0591a
     Serial.print(F(" : "));
   }
   Serial.println(F("Done"));

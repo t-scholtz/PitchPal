@@ -8,6 +8,7 @@
 /*********************************************/
 
 #include <Arduino.h>
+#include <WString.h>
 #include "pinlayout.h"
 #include "input.h"
 #include "output.h"
@@ -17,7 +18,7 @@
 void setup()
 {
   Serial.begin(SERIAL_RATE);
-  Serial.println("Initializing PitchPal"); // Testing
+  Serial.println(F("Initializing PitchPal")); // Testing
 
   pinMode(MUX_PIN0, OUTPUT);
   pinMode(MUX_PIN1, OUTPUT);
@@ -28,14 +29,14 @@ void setup()
   digitalWrite(MUX_PIN1, LOW);
   digitalWrite(MUX_PIN2, LOW);
   digitalWrite(MUX_PIN3, LOW);
-  Serial.println("Pin layout - Set!");
+  Serial.println(F("Pin layout - Set!"));
 
   micSetup();
-  Serial.println("Mic - Set");
+  Serial.println(F("Mic - Set"));
   initializeLCD();
   startUpAnim();
-  Serial.println("LCD - Set");
-  Serial.println("Initialized!!");
+  Serial.println(F("LCD - Set"));
+  Serial.println(F("Initialized!!"));
 }
 
 void loop()
@@ -60,6 +61,7 @@ void loop()
   double currentNoteFREQ = 0;
 
   int state = 1; // starting values
+  int buttonInput;
 
   int tempNUMSTATE; // this is used if an inappropriate button was hit
 
@@ -106,11 +108,11 @@ void loop()
     goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
     lcdClear();
     stageTwoPrompt(goalNote);
-    int enterCheck = confirmButton(-1);
+    enterCheck = confirmButton(-1);
     if (enterCheck == 13){
       state = 5; // going forwards
     }
-    else if (enterCheck = 12){
+    else if (input = 12){
       state = 3; // going backwards
     }
     else{
@@ -121,11 +123,11 @@ void loop()
   case 5: // Playing the sound of the Note
     noteExamplePrompt();
     playNote(goalNoteFREQ, 10);
-    buttonInput = confirmButton(-1);
-    if (buttonInput == 13){
+    enterCheck = confirmButton(-1);
+    if (enterCheck == 13){
       state = 6; // going forwards
     }
-    else if (buttonInput = 12){
+    else if (enterCheck = 12){
       state = 4; // going backwards
     }
 
@@ -134,7 +136,7 @@ void loop()
     //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
     timer = millis(); //we will change after 10 seconds from this point
     while((timer+15000) > millis()){//this should make it run for 
-      //updatingPrompt(goalNoteFREQ, goalNote,  getMicFrequency(), noteFinder(currentNoteFREQ));
+      updatingPrompt(goalNoteFREQ, goalNote,  getMicFrequency(), noteFinder(currentNoteFREQ));
       if(currentNote == goalNote){
         //Make LED's do something crazy
         lcdClear();
@@ -145,21 +147,35 @@ void loop()
     timer = millis();
     while((timer+5000) > millis()){
       finisherPrompt();
-      buttonInput = confirmButton(-1);
-      if (buttonInput == 13){
+      enterCheck = confirmButton(-1);
+      if (enterCheck == 13){
         state = 1; //ending
         break;
       }
-      else if(buttonInput > -1){
+      else if(enterCheck > -1){
         tempNUMSTATE = state;
       state = 0; // ERROR OCCURED
       }
     }
   default:
     invalidPrompt();
-    Serial.println("Error");
+    Serial.println(F("Error"));
     state = tempNUMSTATE;
   }
+
+  // switch (state)
+  // {
+  // case 1:
+  //   state = stateSelector();
+  // case 2:
+  //   break;
+  // case 3:
+  //   state = findingNote();
+
+  // case 0:
+  // default:
+  //   startUpAnim();
+  // }
 }
 
 // Temp Function to handle simple user input for now
