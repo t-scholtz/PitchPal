@@ -8,6 +8,7 @@
 /*********************************************/
 
 #include <Arduino.h>
+#include <WString.h>
 #include "pinlayout.h"
 #include "input.h"
 #include "output.h"
@@ -61,6 +62,7 @@ void loop()
 
   int state = 1; // starting values
   int buttonInput;
+  int enterCheck;
 
   int tempNUMSTATE; // this is used if an inappropriate button was hit
 
