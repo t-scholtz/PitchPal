@@ -61,7 +61,8 @@ void loop()
   double currentNoteFREQ = 0;
 
   int state = 1; // starting values
-  int buttonInput;
+  int buttonInput = -1;
+  int enterCheck;
 
   int tempNUMSTATE; // this is used if an inappropriate button was hit
 
@@ -71,7 +72,7 @@ void loop()
   {
   case 1: // this will be the starting prompt
     starterState();
-    int buttonInput = confirmButton(buttonInput);
+    buttonInput = confirmButton(buttonInput);
     if (buttonInput == 13){
       state = 2;
     }
@@ -108,8 +109,8 @@ void loop()
     goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
     lcdClear();
     stageTwoPrompt(goalNote);
-    enterCheck = confirmButton(-1);
-    if (enterCheck == 13){
+    int input = confirmButton(-1);
+    if (input == 13){
       state = 5; // going forwards
     }
     else if (input = 12){
@@ -136,7 +137,7 @@ void loop()
     //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
     timer = millis(); //we will change after 10 seconds from this point
     while((timer+15000) > millis()){//this should make it run for 
-      updatingPrompt(goalNoteFREQ, goalNote,  getMicFrequency(), noteFinder(currentNoteFREQ));
+      updatingPrompt( goalNote,  noteFinder(currentNoteFREQ));
       if(currentNote == goalNote){
         //Make LED's do something crazy
         lcdClear();
