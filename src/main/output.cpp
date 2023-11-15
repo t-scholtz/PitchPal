@@ -36,7 +36,7 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
   lcd.createChar(6, cross);
   lcd.createChar(7, retarrow);
   lcd.home();
-  Serial.println(F("LCD setup done"));
+  Serial.println("LCD setup done");
 }
 
 void startUpAnim(){
@@ -96,9 +96,9 @@ void playNote(int note, int length){ //this one should be relitivly simple
   noTone(SPEAKER);
 }
 
-void stageTwoPrompt(String goalN){
+void stageTwoPrompt(String goalNote){
   lcd.clear();
-  String lcdPrintString = "You want to tune\nto" + goalN +"?";
+  String lcdPrintString = "You want to tune\nto" + goalNote +"?";
   lcd.print(lcdPrintString);
 }
 
