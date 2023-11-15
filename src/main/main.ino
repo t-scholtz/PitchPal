@@ -137,7 +137,7 @@ void loop()
     //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
     timer = millis(); //we will change after 10 seconds from this point
     while((timer+15000) > millis()){//this should make it run for 
-      updatingPrompt(goalNoteFREQ, goalNote,  getMicFrequency(), noteFinder(currentNoteFREQ));
+      updatingPrompt( goalNote,noteFinder(currentNoteFREQ));
       if(currentNote == goalNote){
         //Make LED's do something crazy
         lcdClear();

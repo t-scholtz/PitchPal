@@ -125,7 +125,7 @@ void listeningPrompt(){ //it has been a while sense I made a c for loop so I may
   }
 }
 
-void updatingPrompt(double CFeqency, String CNote, double GFrequency, String GNote){//what we are using to show the user how they are doing 
+void updatingPrompt( String CNote,  String GNote){//what we are using to show the user how they are doing 
   lcd.clear();
   lcd.setCursor(0,0); //Current note
   lcd.print("CN:");
