@@ -2,6 +2,7 @@
 #include <WString.h>
 #include <arduinoFFT.h>
 #include <LiquidCrystal_I2C.h>
+#include <string.h>
 
 
 //#include <tuple>
@@ -16,8 +17,23 @@ arduinoFFT FFT = arduinoFFT();
 unsigned int samplingPeriod;
 unsigned long microSeconds;
 
-double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
-double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+String noteToString(int note){
+  String ar[12]={
+/*C*/     "C",
+/*C#Db*/  "C#/Db",
+/*D*/     "D",
+/*D#Eb*/  "D#/Eb",
+/*E*/     "E", 
+/*F*/     "F", 
+/*F#/Gb*/ "F#/Gb",
+/*G*/     "G", 
+/*G#/Ab*/ "G#/Ab",
+/*A*/     "A",
+/*A#Bb*/  "A#/Bb",
+/*B*/     "B" 
+  };
+  return (ar[note]);
+}
 
 int noteArray(int a, int b) {
   int ar[12][7]={
@@ -96,12 +112,13 @@ int muxChannel(int a, int b){
 
 }
 
-
 void micSetup(){ //This get's our time we need to wait before taking measurements
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
 }
 
-double getMicFrequency(){ //this takes reading from the microphone and returns to us a frequency
+double getMicFrequency(){ 
+  double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
+  double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values//this takes reading from the microphone and returns to us a frequency
   for(int i = 0; i<SAMPLES; i++){
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
@@ -203,6 +220,101 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
   return output;//return the button number
 }
 
+
+//Will wait for user input will scrolling through text
+int waitScrollingText(String text){
+  int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
+  float buttons[16];
+  int textHead = 0;
+  int textLen = text.length()-8;
+  //condition varible waiting for usr input to be detected
+  bool stillWating = true;
+  while(stillWating){
+    //Read from every channel and grab the value at that point of time
+    for(int i = 0; i<16 ; i++){
+      for(int j = 0; j < 4; j ++){
+        digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
+      }
+      buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
+      if( analogRead(SIG_PIN) != LOW) stillWating = false;
+    }
+    String r = text.substring(textHead, 8);
+    lcdPrint(r,"");
+    textHead++;
+    if(textHead>=textLen) textHead = 0;
+  }
+//Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
+  int flag = 0;
+  int output = -1;
+  for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
+    if (buttons[i] > LOW ){
+      flag++;
+      output = i;
+    }
+  }
+  if (flag != 1){
+    return -1;}
+  return output;//return the button number
+}
+
+//Selects note Values
+//Retunr -1 if person want to canclle
+//Returns 0 - 11 if a correct not was chosen
+//Reutns Repeats if detects invalid input
+int selectNote(){
+  while(true){
+    lcdPrint("Select Note ", "Options 1-12");
+    delay(TEXT_DELAY);
+    int goalNoteNum = waitForUserInput();
+    if (goalNoteNum == 15){ // Goes back
+      lcdClear();
+      lcdPrint("Reseting Device","Stand By");
+      delay(TEXT_DELAY);
+      return -1;
+    }
+    else if (goalNoteNum != -1 && goalNoteNum<12 ){
+      lcdPrint("Selected :"+noteToString(goalNoteNum) , "Confirm :14");
+      delay(TEXT_DELAY);
+      int confirm = waitForUserInput();
+      if(confirm == 14){
+        return goalNoteNum;
+      }
+    }
+    else{
+      lcdPrint("input Error","Try again");
+      delay(TEXT_DELAY);
+    }
+  }
+  return 1;
+}
+
+int selectOctave(){
+  while(true){
+    lcdPrint("Select Octave ", "Options 1-8");
+    delay(TEXT_DELAY);
+    int goalOctNum = waitForUserInput();
+    if (goalOctNum == 15){ // Goes back
+      lcdClear();
+      lcdPrint("Reseting Device","Stand By");
+      delay(TEXT_DELAY);
+      return -1;
+    }
+    else if (goalOctNum != -1 && goalOctNum<8 ){
+      lcdPrint("Selected :"+goalOctNum , "Confirm :14");
+      delay(TEXT_DELAY);
+      int confirm = waitForUserInput();
+      if(confirm == 14){
+        return goalOctNum;
+      }
+    }
+    else{
+      lcdPrint("input Error","Try again");
+      delay(TEXT_DELAY);
+    }
+  }
+  return 1;
+}
+
 //work in progress = finds and returns the closed note to the given pitch as a freq
 //If you don't understand how this works, its becuase it doens't
 // String closestNote(){
@@ -227,84 +339,20 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
 //   return noteArray(x,y);
 // }
 
-int confirmButton(int buttonN){ //makes sure that the button press is correct
-    //lcdClear();
-    lcdSetCur(0,1);//where we want to print
-    lcdPrint("Press and hold (:");
-  while(buttonN < 0){ //keep them here until a button of some type goes back
-    buttonN = checkForButtonPress(); //this will give an updated value
-  }
-  return buttonN;
-}
-
-int pickingANote(){ // returns the note and the freq we are using
-  //make prompt for user
-  lcdClear();
-  lcdSetCur(0,0);
-  lcdPrint("pick a note!");
-  //lcdSetCursor(0,1);
-  //we need to wait for them to pick some type of note 
-  int buttonNum = -1; //We can know when more than one or None are picked
-  buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
-
-  if(buttonNum == 12){//Back Button
-    return -1;
-  }else if(buttonNum > 12){ //Anything else
-    return -2;
-  }
-  
-  return buttonNum;
-}
-
-int pickingAOctave(){ // returns the Ocatave and the freq we are using
-  //make prompt for user
-  lcdClear();
-  lcdSetCur(0,0);
-  lcdPrint("pick an octave!");
-  //lcdSetCursor(0,1);
-  //we need to wait for them to pick some type of note 
-  int buttonNum = -1; //We can know when more than one or None are picked
-  buttonNum= confirmButton(buttonNum); //sets to the new button once it is correct
-
-  if(buttonNum > 7){
-    if(buttonNum == 12){//Back Button
-      return -1;
-    }else{ //Anything else
-      return -2;
-    }
-  }
-  return buttonNum;
-}
-
 String noteFinder(double freqOfNote){
   int octavePosition = 0;
   int notePosition = 0;
 
-  int ar[12][7]={
-/*C*/     {NOTE_C1, NOTE_C2, NOTE_C3, NOTE_C4, NOTE_C5, NOTE_C6, NOTE_C7},
-/*C#Db*/  {NOTE_CS1, NOTE_CS2, NOTE_CS3, NOTE_CS4, NOTE_CS5, NOTE_CS6, NOTE_CS7},
-/*D*/     {NOTE_D1, NOTE_D2, NOTE_D3, NOTE_D4, NOTE_D5, NOTE_D6, NOTE_D7},
-/*D#Eb*/  {NOTE_DS1, NOTE_DS2, NOTE_DS3, NOTE_DS4, NOTE_DS5, NOTE_DS6, NOTE_DS7},
-/*E*/     {NOTE_E1, NOTE_E2, NOTE_E3, NOTE_E4, NOTE_E5, NOTE_E6, NOTE_E7},
-/*F*/     {NOTE_F1, NOTE_F2, NOTE_F3, NOTE_F4, NOTE_F5, NOTE_F6, NOTE_F7},
-/*F#/Gb*/ {NOTE_FS1, NOTE_FS2, NOTE_FS3, NOTE_FS4, NOTE_FS5, NOTE_FS6, NOTE_FS7},
-/*G*/     {NOTE_G1, NOTE_G2, NOTE_G3, NOTE_G4, NOTE_G5, NOTE_G6, NOTE_G7},
-/*G#/Ab*/ {NOTE_GS1, NOTE_GS2, NOTE_GS3, NOTE_GS4, NOTE_GS5, NOTE_GS6, NOTE_GS7},
-/*A*/     {NOTE_A1, NOTE_A2, NOTE_A3, NOTE_A4, NOTE_A5, NOTE_A6, NOTE_A7},
-/*A#Bb*/  {NOTE_AS1, NOTE_AS2, NOTE_AS3, NOTE_AS4, NOTE_AS5, NOTE_AS6, NOTE_AS7},
-/*B*/     {NOTE_B1, NOTE_B2, NOTE_B3, NOTE_B4, NOTE_B5, NOTE_B6, NOTE_B7}
-  };
-
   for(int i = 1; i==6; i++){//going through all the notes values to determine location
-    if(ar[0][i] > freqOfNote){//check if the freq is less than or greater than the current note to find location
+    if(noteArray(0, i) > freqOfNote){//check if the freq is less than or greater than the current note to find location
       octavePosition = i-1;
       break;
     }
   }
   for(int i = 1; i==11; i++){//going through all the notes values to determine location
-    if(ar[i][octavePosition] > freqOfNote){//check if the freq is less than or greater than the current note to find location
-      int lowerP = abs((ar[i-1][octavePosition]/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
-      int higherP = abs((ar[i][octavePosition]/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
+    if(noteArray(i,octavePosition) > freqOfNote){//check if the freq is less than or greater than the current note to find location
+      int lowerP = abs((noteArray(i-1,octavePosition)/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
+      int higherP = abs((noteArray(i,octavePosition)/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
       if(lowerP < higherP){
         notePosition = i - 1;
       }else{

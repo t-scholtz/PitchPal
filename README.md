@@ -6,13 +6,9 @@ An Arduino based project aimed at creating a reliable and user-friendly pitch/tu
 Musicians of all levels, from beginners to pros, desire pitch perfection, but traditional tuning methods are often inaccurate and time-consuming. In response, we're developing a user-friendly device that provides real-time pitch feedback, allowing users to select their desired pitch. This innovation enhances musical precision and empowers musicians, offering a valuable tool for the entire musical community. 
 
 ## Table of Contents
-- [Project Overview](#project-overview)
-- [To-Do List](#to-do-list)
-- [Road Map](#road-map)
-- [Technical Details](#technical-details)
-- [File Structure](#file-structure)
-- [Usage](#usage)
-- [Setup Instructions](#setup-instructions)
+- Update Print String {String be able to handle large sets of text, and automatically scroll through text as need}
+- Get state system working
+- Work out all relevant bugs
 
 ## To-Do List
 - [X] Learn Arduino basics.

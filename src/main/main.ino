@@ -13,12 +13,10 @@
 #include "input.h"
 #include "output.h"
 #include "pitches.h"
-// #include <tuple>
 
 void setup()
 {
   Serial.begin(SERIAL_RATE);
-  Serial.println(F("Initializing PitchPal")); // Testing
 
   pinMode(MUX_PIN0, OUTPUT);
   pinMode(MUX_PIN1, OUTPUT);
@@ -29,178 +27,168 @@ void setup()
   digitalWrite(MUX_PIN1, LOW);
   digitalWrite(MUX_PIN2, LOW);
   digitalWrite(MUX_PIN3, LOW);
-  Serial.println(F("Pin layout - Set!"));
 
   micSetup();
-  Serial.println(F("Mic - Set"));
   initializeLCD();
   startUpAnim();
-  Serial.println(F("LCD - Set"));
-  Serial.println(F("Initialized!!"));
 }
+
+int noteSelect = 0;
+int octaveSelect =1;
 
 void loop()
 {
   /* Main Loop for Project
-    Works by Storing system state in  state(intialzed above)
-    State 0 - Will be start up animations
-    State 1 - Start the Pitch pal
-    Buttons 0-11 are for notes and Octave
-    Button 12 Back Button
-    Button 13 Enter Button
-    Button 14 - 15 WildCard
+    State machine
+    case 1: Main Menu
+    case 2: Pitch Practice
+    csee 3: Play Note
+    case 4: Indentify Pitch
+    Defualt - Go to state 1
   */
-  String goalNote = "!!!!!!"; // Initilize our goals
-  int goalOctave = 0;
-  int goalNoteNum = 0;
-  double goalNoteFREQ = 0;
-
-  String currentNote = "!!!!!!"; // Current ones uses to calculate
-  // int currentOctave = 0;
-  // int currentNoteNum = 0;
-  double currentNoteFREQ = 0;
-
   int state = 1; // starting values
-  int buttonInput = -1;
-  int enterCheck;
-
-  int tempNUMSTATE; // this is used if an inappropriate button was hit
-
-  long timer; //what we are gonna use for the millaseconds
-
   switch (state)
   {
   case 1: // this will be the starting prompt
-    starterState();
-    buttonInput = confirmButton(buttonInput);
-    if (buttonInput == 13){
-      state = 2;
-    }
-
-  case 2: // this is the Note gathering state
-    goalNoteNum = pickingANote();
-    if (goalNoteNum == -1){ // Goes back
-      state = 1;
-    }
-    else if (goalNoteNum == -2){
-      tempNUMSTATE = state;
-      state = 0; // ERROR OCCURED
-    }
-    else{
-      state = 3; // OCTAVE
-    }
-
-  case 3: // this is the OCTAVE gathering state
-    goalOctave = pickingAOctave();
-    if (goalNoteNum == -1){ // Goes back
-      state = 2;
-    }
-    else if (goalNoteNum == -2){
-      tempNUMSTATE = state;
-      state = 0; // ERROR OCCURED
-    }
-    else{
-      state = 4; // OCTAVE
-    }
-
-  case 4: // this is the confirming stage //This is the start of Stage 2
-    // N&O = stageOneNote(goalNoteNum, goalOctave);
-    goalNote = noteStrArray(goalNoteNum, goalOctave);
-    goalNoteFREQ = noteArray(goalNoteNum, goalOctave);
-    lcdClear();
-    stageTwoPrompt(goalNote);
-    int input = confirmButton(-1);
-    if (input == 13){
-      state = 5; // going forwards
-    }
-    else if (input = 12){
-      state = 3; // going backwards
-    }
-    else{
-      tempNUMSTATE = state;
-      state = 0; // ERROR OCCURED
-    }
-
-  case 5: // Playing the sound of the Note
-    noteExamplePrompt();
-    playNote(goalNoteFREQ, 10);
-    enterCheck = confirmButton(-1);
-    if (enterCheck == 13){
-      state = 6; // going forwards
-    }
-    else if (enterCheck = 12){
-      state = 4; // going backwards
-    }
-
-  case 6: // Here is the big listening  //We have an issue that we need to look at with either the sample size or mabye just the arduino board. For voices it will be fine but I noticed that most correct tones are about .02 max .03 off until you get to the really high tones.
-    listeningPrompt();
-    //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
-    timer = millis(); //we will change after 10 seconds from this point
-    while((timer+15000) > millis()){//this should make it run for 
-      updatingPrompt( goalNote,  noteFinder(currentNoteFREQ));
-      if(currentNote == goalNote){
-        //Make LED's do something crazy
-        lcdClear();
-        lcdPrint("YOU DID IT\n!!Keep practing!!");
-        delay(3000);
-      }
-    } 
-    timer = millis();
-    while((timer+5000) > millis()){
-      finisherPrompt();
-      enterCheck = confirmButton(-1);
-      if (enterCheck == 13){
-        state = 1; //ending
-        break;
-      }
-      else if(enterCheck > -1){
-        tempNUMSTATE = state;
-      state = 0; // ERROR OCCURED
-      }
-    }
+    reset();
+    state = stateSelector();
+  case 2:
+    state = pitchPractice();
+  case 3: // Playing the sound of the Note
+    state = notePlaying();
+  case 4:
+    state = pitchFind();
+  // case 6: // Here is the big listening  //We have an issue that we need to look at with either the sample size or mabye just the arduino board. For voices it will be fine but I noticed that most correct tones are about .02 max .03 off until you get to the really high tones.
+  //   listeningPrompt();
+  //   //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
+  //   timer = millis(); //we will change after 10 seconds from this point
+  //   while((timer+15000) > millis()){//this should make it run for 
+  //     updatingPrompt( goalNote,  noteFinder(currentNoteFREQ));
+  //     if(currentNote == goalNote){
+  //       //Make LED's do something crazy
+  //       lcdClear();
+  //       lcdPrint("YOU DID IT\n!!Keep practing!!");
+  //       delay(3000);
+  //     }
+  //   } 
+  //   timer = millis();
+  //   while((timer+5000) > millis()){
+  //     finisherPrompt();
+  //     enterCheck = confirmButton(-1);
+  //     if (enterCheck == 13){
+  //       state = 1; //ending
+  //       break;
+  //     }
+  //     else if(enterCheck > -1){
+  //       tempNUMSTATE = state;
+  //     state = 0; // ERROR OCCURED
+  //     }
+  //   }
   default:
-    invalidPrompt();
-    Serial.println(F("Error"));
-    state = tempNUMSTATE;
+    state = 1;
   }
 
-  // switch (state)
-  // {
-  // case 1:
-  //   state = stateSelector();
-  // case 2:
-  //   break;
-  // case 3:
-  //   state = findingNote();
+}
 
-  // case 0:
-  // default:
-  //   startUpAnim();
-  // }
+
+void reset(){
+  noteSelect = 0;
+  octaveSelect =1;
+}
+
+int pitchFind(){
+
+}
+
+int notePlaying(){
+  lcdPrint("Play the","Note");
+  delay(TEXT_DELAY);
+  //Select Note, and if cancle chosen, do accordingly
+  noteSelect = selectNote();
+  if(noteSelect == -1){
+    return 1;
+  }
+  //Select Octave, and if cancle chosen, do accordingly
+  octaveSelect = selectOctave();
+  if(octaveSelect == -1){
+    return 1;
+  }
+  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
+  int button = -1;
+  int count = 0;
+  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
+  while(button == -1){
+    if(count>0) playNote(noteArray(noteSelect,octaveSelect), 500);
+    if(count > 4){ 
+      count = -4;
+      button = checkForButtonPress();
+      }
+    count++;
+  }
+  return 1;
+}
+
+int pitchPractice(){
+  lcdPrint("Pitch","Practice");
+  delay(TEXT_DELAY);
+  //Select Note, and if cancle chosen, do accordingly
+  noteSelect = selectNote();
+  if(noteSelect == -1){
+    return 1;
+  }
+  //Select Octave, and if cancle chosen, do accordingly
+  octaveSelect = selectOctave();
+  if(octaveSelect == -1){
+    return 1;
+  }
+  //Give feed back on performance
+  double freq = getMicFrequency();
+  int goal = noteArray(noteSelect,octaveSelect);
+  double close = freq/goal;
+  double diff = abs(1-close);
+  //These values will need to be adapted
+  if(close<0.95){
+    lcdPrint("Too flat","Any button exit");
+  }
+  else if(close>1.10){
+    lcdPrint("Too Sharp","Any button exit");
+  }
+  else{
+    lcdPrint("Sounds Good","Any button exit");
+  }
+  if(checkForButtonPress()!=-1){
+    return 1;
+  }
+  return 1;
 }
 
 // Temp Function to handle simple user input for now
 int stateSelector()
 {
   int chosenState = 1;
-  lcdClear();
-  // lcdPrint("1-Check Pitch\n2-Find Note 3-R")
-  delay(1000);
-  int button = waitForUserInput();
+  delay(TEXT_DELAY);
+  int button = waitScrollingText("1 - pitch practice 2 - find note 3 - play listen note 15 - reset");
   if (button == 0)
-  {
-    return 1;
-  }
-  if (button == 1)
   {
     return 2;
   }
+  if (button == 1)
+  {
+    return 3;
+  }
   if (button == 2)
   {
+    return 4;
+  }
+  if( button == 3){
+
+    return 6;
+  }
+  if( button == 15){
     return 0;
   }
   lcdClear();
-  lcdPrint("Error detected in\ninput try again");
+  lcdPrint("Error detected in","input try again");
   return chosenState;
 }
 
@@ -208,18 +196,3 @@ int findingNote()
 {
 }
 
-// int freqAnalyse(int note){ //we want this to idealy be 1 or a small variation, Think about having this handle multuliple and checking the most frequent one
-//   //loop condition
-//   int input = -1;
-//   while(input <0){
-//     //Get mic freq
-//     double realFreq = double getMicFrequency();
-//     double errorPerc = (note - realFreq)/realFreq;
-//     String errorPercStr = to_string(errorPerc);
-//     //Compare real to desired noe
-//     lcdPrint(errorPercStr);
-//     //Look for user input to cancle
-//     input = checkForButtonPress();
-//   }
-//   return input;
-// }
