@@ -3,9 +3,6 @@
 #include <arduinoFFT.h>
 #include <LiquidCrystal_I2C.h>
 #include <string.h>
-
-
-//#include <tuple>
 #include "input.h"  
 #include "output.h"  
 #include "pinlayout.h"
@@ -186,7 +183,6 @@ int checkForButtonPress(){
   else if(flag > 1){
     return -1;
   }
-
   return -1;//return the button number
 }
 
@@ -321,11 +317,7 @@ int selectOctave(){
 //   //Listen for Freq 
 //   double note = getMicFrequency();
 //   //Search for the middle area
-//   int x =12;
-//   int y = 7;
-//   bool found = false;
-//   if (note > noteArray(x,y)) return "Outside range\nToo high pitch";
-//   if (note < noteArray(0,0)) return "Outside range\nToo low pitch";
+//   
 //   for(y=6;note < noteArray(x,y) && y>0;y--);
 //   if(note<noteArray(y+1,0)){
 //     if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
@@ -340,14 +332,17 @@ int selectOctave(){
 // }
 
 String noteFinder(double freqOfNote){
-  int octavePosition = 0;
-  int notePosition = 0;
-
-  for(int i = 1; i==6; i++){//going through all the notes values to determine location
-    if(noteArray(0, i) > freqOfNote){//check if the freq is less than or greater than the current note to find location
-      octavePosition = i-1;
-      break;
-    }
+  int x =12;
+  int y = 7;
+  bool found = false;
+  if (freqOfNote > noteArray(x,y)) return "Too High";
+  if (freqOfNote < noteArray(0,0)) return "Too Low";
+  for(y=6;note < noteArray(x,y) && y>0;y--);
+    if(freqOfNote<noteArray(y+1,0)){
+      if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
+          return noteArray(y,x);
+      }
+      return  noteArray(y+1,0);
   }
   for(int i = 1; i==11; i++){//going through all the notes values to determine location
     if(noteArray(i,octavePosition) > freqOfNote){//check if the freq is less than or greater than the current note to find location

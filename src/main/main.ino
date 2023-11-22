@@ -1,5 +1,3 @@
-// #include <MicroTuple.h>
-
 /*********************************************/
 /* Name of the program: */
 /* Author: Timothy Scholtz ; Thomoas Mahok */
@@ -36,9 +34,7 @@ void setup()
 int noteSelect = 0;
 int octaveSelect =1;
 
-void loop()
-{
-  /* Main Loop for Project
+/* Main Loop for Project
     State machine
     case 1: Main Menu
     case 2: Pitch Practice
@@ -46,62 +42,45 @@ void loop()
     case 4: Indentify Pitch
     Defualt - Go to state 1
   */
+void loop()
+{
   int state = 1; // starting values
   switch (state)
   {
-  case 1: // this will be the starting prompt
+  case 1: // this will be the starting prompt - gives a rolling help messeage of user options
     reset();
     state = stateSelector();
-  case 2:
+  case 2: //user cho0se note and get feed back
     state = pitchPractice();
-  case 3: // Playing the sound of the Note
+  case 3: //user chooses a note and speaker plays it
     state = notePlaying();
-  case 4:
+  case 4: //Listens to user audio and determines what note is being played - [Not confident it works]
     state = pitchFind();
-  // case 6: // Here is the big listening  //We have an issue that we need to look at with either the sample size or mabye just the arduino board. For voices it will be fine but I noticed that most correct tones are about .02 max .03 off until you get to the really high tones.
-  //   listeningPrompt();
-  //   //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
-  //   timer = millis(); //we will change after 10 seconds from this point
-  //   while((timer+15000) > millis()){//this should make it run for 
-  //     updatingPrompt( goalNote,  noteFinder(currentNoteFREQ));
-  //     if(currentNote == goalNote){
-  //       //Make LED's do something crazy
-  //       lcdClear();
-  //       lcdPrint("YOU DID IT\n!!Keep practing!!");
-  //       delay(3000);
-  //     }
-  //   } 
-  //   timer = millis();
-  //   while((timer+5000) > millis()){
-  //     finisherPrompt();
-  //     enterCheck = confirmButton(-1);
-  //     if (enterCheck == 13){
-  //       state = 1; //ending
-  //       break;
-  //     }
-  //     else if(enterCheck > -1){
-  //       tempNUMSTATE = state;
-  //     state = 0; // ERROR OCCURED
-  //     }
-  //   }
   default:
     state = 1;
   }
-
 }
-
-
+//resets user prefrances
 void reset(){
   noteSelect = 0;
   octaveSelect =1;
 }
 
+//trys to determine what note is being played
 int pitchFind(){
-
+  double freq;
+  while(true){
+    freq = getMicFrequency();
+    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
+    if(checkForButtonPress !=-1){
+      return 1;
+    }
+  }
 }
 
+//user selects note and audio is plated
 int notePlaying(){
-  lcdPrint("Play the","Note");
+  lcdPrint("Play Note","");
   delay(TEXT_DELAY);
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
@@ -192,7 +171,4 @@ int stateSelector()
   return chosenState;
 }
 
-int findingNote()
-{
-}
 

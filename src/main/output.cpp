@@ -56,15 +56,6 @@ void startUpAnim(){
     }
 }
 
-void printFreq(double freq){
-  lcd.clear();
-  lcd.print("Freq is: ");
-  lcd.print(freq);
-  lcd.print("Hz");
-  lcd.setCursor(0,1);
-  lcd.print("*\(^o^)/*");
-}
-
 void lcdPrint(String A, String B){
   lcd.clear();
   lcd.print(A);
