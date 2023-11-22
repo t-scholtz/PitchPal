@@ -6,6 +6,8 @@
 #define SERIAL_RATE 115200
 #define NOTE_LENGTH 1000
 
+#define TEXT_DELAY 2000
+
 #define SPEAKER 3
 #define SDA A4
 #define SCL A5
@@ -21,5 +23,11 @@
 //analog pin 14 (A0)
 #define MICROPHONE 14
 
+
+// Button Purposes
+// 0-12 Notes and numbers
+// 13 - Yes
+// 14 - No
+// 15 - Reset
 
 #endif

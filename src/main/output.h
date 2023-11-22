@@ -5,18 +5,12 @@ void initializeLCD();
 void printFreq(double freq);
 void lcdClear();
 void lcdSetCur(int x, int y);
-void lcdPrint(String input);
+void lcdPrint(String A, String B);
 void playNote(int note, int length);
 void startUpAnim();
 void starterState();
 void printFreq(double freq);
 void playNote(int note, int length);
-void stageTwoPrompt(String goalN);
-void invalidPrompt();
-void noteExamplePrompt();
-void listeningPrompt();
-void updatingPrompt(String CNote,  String GNote);
-void finisherPrompt();
 
 
 #endif 

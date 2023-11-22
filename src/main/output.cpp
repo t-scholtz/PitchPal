@@ -52,16 +52,8 @@ void startUpAnim(){
         lcd.print(pitchPal[j]);
       }
       playNote(startMelody[i],4);
-      delay(500);
       lcd.clear();
     }
-}
-
-void starterState(){
-  lcd.clear();
-  lcd.print("Press E to Start");
-  lcd.setCursor(0,1);
-  lcd.print("Press B to End");
 }
 
 void printFreq(double freq){
@@ -73,9 +65,11 @@ void printFreq(double freq){
   lcd.print("*\(^o^)/*");
 }
 
-void lcdPrint(String input){
+void lcdPrint(String A, String B){
   lcd.clear();
-  lcd.print(input);
+  lcd.print(A);
+  lcd.setCursor(0, 1);
+  lcd.print(B);
 }
 
 void lcdClear(){ 
@@ -97,55 +91,3 @@ void playNote(int note, int length){ //this one should be relitivly simple
   noTone(SPEAKER);
 }
 
-void stageTwoPrompt(String goalNote){
-  lcd.clear();
-  String lcdPrintString = "You want to tune\nto" + goalNote +"?";
-  lcd.print(lcdPrintString);
-}
-
-void invalidPrompt(){
-  lcd.clear();
-  String lcdPrintString = "INVALID Press B\n to go back";
-  lcd.print(lcdPrintString);
-}
-
-void noteExamplePrompt(){
-  lcd.clear();
-  String lcdPrintString = "Example: press E\n to continue";
-  lcd.print(lcdPrintString);
-}
-
-void listeningPrompt(){ //it has been a while sense I made a c for loop so I may need to test this
-  lcd.clear();
-  String lcdPrintString = "Listening in: ";
-  lcd.print(lcdPrintString);
-  for(int i =0; i == 2; i++){
-    lcd.setCursor(14,1);
-    lcd.print(i+1);
-  }
-}
-
-void updatingPrompt( String CNote,  String GNote){//what we are using to show the user how they are doing 
-  lcd.clear();
-  lcd.setCursor(0,0); //Current note
-  lcd.print("CN:");
-  lcd.print(CNote);
-
-  lcd.setCursor(8,0); //Goal note
-  lcd.print("GN:");
-  lcd.print(GNote);
-
-  lcd.setCursor(0,1); //Current Freq
-  lcd.print("CN:");
-  lcd.print("NEED");
-
-  lcd.setCursor(8,1); //Goal freq
-  lcd.print("GN:");
-  lcd.print("NEED");
-}
-
-void finisherPrompt(){
-  lcd.clear();
-  String lcdPrintString = "All done?\npress B to quit";
-  lcd.print(lcdPrintString);
-}
