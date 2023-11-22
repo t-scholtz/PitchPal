@@ -32,7 +32,7 @@ void setup()
 }
 
 int noteSelect = 0;
-int octaveSelect =1;
+int octaveSelect =0;
 
 /* Main Loop for Project
     State machine
@@ -63,19 +63,79 @@ void loop()
 //resets user prefrances
 void reset(){
   noteSelect = 0;
-  octaveSelect =1;
+  octaveSelect =0;
 }
 
-//trys to determine what note is being played
-int pitchFind(){
-  double freq;
-  while(true){
-    freq = getMicFrequency();
-    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
-    if(checkForButtonPress !=-1){
+// Prints menu of options and wait for user input
+int stateSelector()
+{
+  //Rolling text of options, whilst waiting for user to press a button. Can change string as nessary if we update options, just update switch below to match
+  int button = waitScrollingText("1 - pitch practice 2 - play listen note 3 - find note 3 15 - reset");
+  if (button == 0)
+  {
+    return 2; // Pitch Practice
+  }
+  if (button == 1)
+  {
+    return 3; //Play note auiod 
+  }
+  if (button == 2)
+  {
+    return 4; // Detect note being played
+  }
+  if( button == 3){
+
+    return 6;
+  }
+  if( button == 15){
+    return 0;
+  }
+  lcdClear();
+  lcdPrint("Error detected in","input try again");
+  return 1;
+}
+
+//Core function of Project
+//Select note, listen to note give feed back
+//TO DO - implement fancy outputs
+int pitchPractice(){
+  lcdPrint("Pitch","Practice");
+  delay(TEXT_DELAY);
+  //Select Note, and if cancle chosen, do accordingly
+  noteSelect = selectNote();
+  if(noteSelect == -1){
+    return 1;
+  }
+  //Select Octave, and if cancle chosen, do accordingly
+  octaveSelect = selectOctave();
+  if(octaveSelect == -1){
+    return 1;
+  }
+  //Give feed back on performance
+  double freq = getMicFrequency();
+  int goal = noteArray(noteSelect,octaveSelect);
+  while(freq){
+  //close is a ratio between actural note and desired note
+  //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
+  //This somewhat takes into considerations differences in higher and lower pitchs, eg
+  //if Execetd is 40, but actual 60, close is %150 which is really off due to a diff of 20Hz
+  //if Execetd is 440, but actual 460, close is %104 which is really close due to a diff of 20Hz
+    double close = freq/goal;
+    //These values will need to be adapted
+    if(close<0.93){
+      lcdPrint("Too flat","Any button exit");
+    }
+    else if(close>1.10){
+      lcdPrint("Too Sharp","Any button exit");
+    }
+    else{
+      lcdPrint("Sounds Good","Any button exit");
+    }
+    if(checkForButtonPress()!=-1){
       return 1;
     }
   }
+  return 1;
 }
 
 //user selects note and audio is plated
@@ -107,68 +167,21 @@ int notePlaying(){
   return 1;
 }
 
-int pitchPractice(){
-  lcdPrint("Pitch","Practice");
-  delay(TEXT_DELAY);
-  //Select Note, and if cancle chosen, do accordingly
-  noteSelect = selectNote();
-  if(noteSelect == -1){
-    return 1;
+//trys to determine what note is being played
+int pitchFind(){
+  double freq;
+  while(true){
+    freq = getMicFrequency();
+    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
+    if(checkForButtonPress !=-1){
+      return 1;
+    }
   }
-  //Select Octave, and if cancle chosen, do accordingly
-  octaveSelect = selectOctave();
-  if(octaveSelect == -1){
-    return 1;
-  }
-  //Give feed back on performance
-  double freq = getMicFrequency();
-  int goal = noteArray(noteSelect,octaveSelect);
-  double close = freq/goal;
-  double diff = abs(1-close);
-  //These values will need to be adapted
-  if(close<0.95){
-    lcdPrint("Too flat","Any button exit");
-  }
-  else if(close>1.10){
-    lcdPrint("Too Sharp","Any button exit");
-  }
-  else{
-    lcdPrint("Sounds Good","Any button exit");
-  }
-  if(checkForButtonPress()!=-1){
-    return 1;
-  }
-  return 1;
 }
 
-// Temp Function to handle simple user input for now
-int stateSelector()
-{
-  int chosenState = 1;
-  delay(TEXT_DELAY);
-  int button = waitScrollingText("1 - pitch practice 2 - find note 3 - play listen note 15 - reset");
-  if (button == 0)
-  {
-    return 2;
-  }
-  if (button == 1)
-  {
-    return 3;
-  }
-  if (button == 2)
-  {
-    return 4;
-  }
-  if( button == 3){
 
-    return 6;
-  }
-  if( button == 15){
-    return 0;
-  }
-  lcdClear();
-  lcdPrint("Error detected in","input try again");
-  return chosenState;
-}
+
+
+
 
 

@@ -311,53 +311,26 @@ int selectOctave(){
   return 1;
 }
 
-//work in progress = finds and returns the closed note to the given pitch as a freq
-//If you don't understand how this works, its becuase it doens't
-// String closestNote(){
-//   //Listen for Freq 
-//   double note = getMicFrequency();
-//   //Search for the middle area
-//   
-//   for(y=6;note < noteArray(x,y) && y>0;y--);
-//   if(note<noteArray(y+1,0)){
-//     if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
-//         return noteArray(y,x);
-//     }
-//     return  noteArray(y+1,0);
-//   }
-//   y++;
-
-//   for(x=0;note < noteArray(x,y)*1.03 && x>0;x++);
-//   return noteArray(x,y);
-// }
-
+//Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
-  int x =12;
-  int y = 7;
+  int noteIndex =12;
+  int octIndex = 7;
   bool found = false;
-  if (freqOfNote > noteArray(x,y)) return "Too High";
+  //check if note is inside of possible range, may want to make edge cases more inclusive though
+  if (freqOfNote > noteArray(noteIndex,octIndex)) return "Too High";
   if (freqOfNote < noteArray(0,0)) return "Too Low";
-  for(y=6;freqOfNote < noteArray(x,y) && y>0;y--);
-    if(freqOfNote<noteArray(y+1,0)){
-      if((freqOfNote - noteArray(y,x)) > (freqOfNote - noteArray(y+1,0))){
-          return noteStrArray(y,x);
-      }
-      return  noteStrArray(y+1,0);
+  //Loop from the highest octave of C to the lowest octave of C, to find which octave the note is in
+  for(octIndex=7;freqOfNote > noteArray(0,octIndex)*0.98 && octIndex>0;octIndex--);
+  //loop from C to B and find between wich notes output exists
+  for(noteIndex=0;freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<12;noteIndex++);
+  //Find which one is closer and returns note + confidnece score
+  if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
+    return noteStrArray(noteIndex,octIndex) + " " +int(freqOfNote/noteArray(noteIndex,octIndex)) + "%";
   }
-  for(int i = 1; i==11; i++){//going through all the notes values to determine location
-    if(noteArray(i,y) > freqOfNote){//check if the freq is less than or greater than the current note to find location
-      int lowerP = abs((noteArray(i-1,y)/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
-      int higherP = abs((noteArray(i,y)/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
-      if(lowerP < higherP){
-        x = i - 1;
-      }else{
-        x = i;
-      }
-      break;
-    }
+  else{
+    return  noteStrArray(noteIndex,octIndex-1) + " " +int(noteArray(noteIndex,octIndex-1)/freqOfNote) + "%";
   }
-
-  return noteStrArray(y, x);
+  
 }
 
 
