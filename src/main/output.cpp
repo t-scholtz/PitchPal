@@ -76,7 +76,7 @@ void playNote(int note, int length){ //this one should be relitivly simple
   tone(SPEAKER, note, noteDuration);
   delay(noteDuration);
   // to distinguish the notes, set a minimum time between them.
-  // the note's duration + 30% seems to work well:
+  // the note's duratiopren + 30% seems to work well:
   int pauseBetweenNotes = noteDuration * 1.30;
   delay(pauseBetweenNotes);
   noTone(SPEAKER);
