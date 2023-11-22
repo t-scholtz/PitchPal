@@ -12,7 +12,7 @@ double getMicFrequency();
 int checkForButtonPress();
 int waitForUserInput();
 int waitScrollingText(String text);
-String noteFinder();
+String noteFinder(double freqOfNote);
 int selectNote();
 int selectOctave();
 #endif

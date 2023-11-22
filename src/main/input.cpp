@@ -337,27 +337,27 @@ String noteFinder(double freqOfNote){
   bool found = false;
   if (freqOfNote > noteArray(x,y)) return "Too High";
   if (freqOfNote < noteArray(0,0)) return "Too Low";
-  for(y=6;note < noteArray(x,y) && y>0;y--);
+  for(y=6;freqOfNote < noteArray(x,y) && y>0;y--);
     if(freqOfNote<noteArray(y+1,0)){
-      if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
-          return noteArray(y,x);
+      if((freqOfNote - noteArray(y,x)) > (freqOfNote - noteArray(y+1,0))){
+          return noteStrArray(y,x);
       }
-      return  noteArray(y+1,0);
+      return  noteStrArray(y+1,0);
   }
   for(int i = 1; i==11; i++){//going through all the notes values to determine location
-    if(noteArray(i,octavePosition) > freqOfNote){//check if the freq is less than or greater than the current note to find location
-      int lowerP = abs((noteArray(i-1,octavePosition)/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
-      int higherP = abs((noteArray(i,octavePosition)/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
+    if(noteArray(i,y) > freqOfNote){//check if the freq is less than or greater than the current note to find location
+      int lowerP = abs((noteArray(i-1,y)/freqOfNote) - 1); //we are checking to see if the one below it or above it is closer to the frequency they are outputing
+      int higherP = abs((noteArray(i,y)/freqOfNote) - 1);//we subtract one and take the absolute value to see who is closer to 0
       if(lowerP < higherP){
-        notePosition = i - 1;
+        x = i - 1;
       }else{
-        notePosition = i;
+        x = i;
       }
       break;
     }
   }
 
-  return noteStrArray(octavePosition, notePosition);
+  return noteStrArray(y, x);
 }
 
 
