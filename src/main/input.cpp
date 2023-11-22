@@ -230,7 +230,7 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
 int confirmButton(int buttonN){ //makes sure that the button press is correct
     //lcdClear();
     lcdSetCur(0,1);//where we want to print
-    lcdPrint("Press and hold (:");
+    lcdPrint("Press and hold");
   while(buttonN < 0){ //keep them here until a button of some type goes back
     buttonN = checkForButtonPress(); //this will give an updated value
   }
