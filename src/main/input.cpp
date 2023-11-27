@@ -311,6 +311,8 @@ int selectOctave(){
   return 1;
 }
 
+
+//EDGE CASE - if value is inbetween 2 rows
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
   int noteIndex =12;
