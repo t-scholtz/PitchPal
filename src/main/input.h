@@ -14,4 +14,5 @@ int waitForUserInput();
 int waitScrollingText(String text);
 int selectNote();
 int selectOctave();
+String noteFinder(double freqOfNote);
 #endif

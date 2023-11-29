@@ -33,7 +33,7 @@ void setup()
 
 int noteSelect = 0;
 int octaveSelect =0;
-
+int state = 1; // starting values
 /* Main Loop for Project
     State machine
     case 1: Main Menu
@@ -44,20 +44,24 @@ int octaveSelect =0;
   */
 void loop()
 {
-  int state = 1; // starting values
   switch (state)
   {
   case 1: // this will be the starting prompt - gives a rolling help messeage of user options
     reset();
     state = stateSelector();
+    break;
   case 2: //user cho0se note and get feed back
     state = pitchPractice();
+    break;
   case 3: //user chooses a note and speaker plays it
     state = notePlaying();
+    break;
   case 4: //Listens to user audio and determines what note is being played - [Not confident it works]
     state = pitchFind();
+    break;
   default:
     state = 1;
+    break;
   }
 }
 //resets user prefrances
@@ -122,10 +126,10 @@ int pitchPractice(){
   //if Execetd is 440, but actual 460, close is %104 which is really close due to a diff of 20Hz
     double close = freq/goal;
     //These values will need to be adapted
-    if(close<0.93){
+    if(close<0.95){
       lcdPrint("Too flat","Any button exit");
     }
-    else if(close>1.10){
+    else if(close>1.08){
       lcdPrint("Too Sharp","Any button exit");
     }
     else{
@@ -157,9 +161,9 @@ int notePlaying(){
   int count = 0;
   //For exery 3 cycles, spends 3 playing audio, and one checking for user input
   while(button == -1){
-    if(count>0) playNote(noteArray(noteSelect,octaveSelect), 500);
-    if(count > 4){ 
-      count = -4;
+    playNote(noteArray(noteSelect,octaveSelect), 8);
+    if(count > 3){ 
+      count = 0;
       button = checkForButtonPress();
       }
     count++;
@@ -173,7 +177,7 @@ int pitchFind(){
   while(true){
     freq = getMicFrequency();
     lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
-    if(checkForButtonPress !=-1){
+    if(checkForButtonPress() !=-1){
       return 1;
     }
   }

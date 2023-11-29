@@ -7,7 +7,6 @@
 #include "output.h"  
 #include "pinlayout.h"
 #include "pitches.h"
-
 #define LOW 1.0
 
 arduinoFFT FFT = arduinoFFT();
@@ -162,11 +161,12 @@ int checkForButtonPress(){
       //delay(1000);
     }
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-    delay(20);
+    //delay(20);
+
     Serial.print(analogRead(SIG_PIN));
-    Serial.print(F(" : "));
+    Serial.print(" : ");
   }
-  Serial.println(F("Done"));
+  Serial.println("Done");
   //delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
@@ -199,7 +199,7 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
         digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-      if( analogRead(SIG_PIN) != LOW) stillWating = false;
+      if( analogRead(SIG_PIN) > LOW) stillWating = false;
     }
   }
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
@@ -228,13 +228,13 @@ int waitScrollingText(String text){
   while(stillWating){
     //Read from every channel and grab the value at that point of time
     for(int i = 0; i<16 ; i++){
-      for(int j = 0; j < 4; j ++){
+      for(int j = 0; j < 4; j ++){  
         digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-      if( analogRead(SIG_PIN) != LOW) stillWating = false;
+      if( analogRead(SIG_PIN) > LOW) stillWating = false;
     }
-    String r = text.substring(textHead, 8);
+    String r = text.substring(textHead, textHead+8);
     lcdPrint(r,"");
     textHead++;
     if(textHead>=textLen) textHead = 0;
@@ -263,7 +263,6 @@ int selectNote(){
     delay(TEXT_DELAY);
     int goalNoteNum = waitForUserInput();
     if (goalNoteNum == 15){ // Goes back
-      lcdClear();
       lcdPrint("Reseting Device","Stand By");
       delay(TEXT_DELAY);
       return -1;
@@ -290,7 +289,6 @@ int selectOctave(){
     delay(TEXT_DELAY);
     int goalOctNum = waitForUserInput();
     if (goalOctNum == 15){ // Goes back
-      lcdClear();
       lcdPrint("Reseting Device","Stand By");
       delay(TEXT_DELAY);
       return -1;
@@ -304,7 +302,7 @@ int selectOctave(){
       }
     }
     else{
-      lcdPrint("input Error","Try again");
+      lcdPrint("Input Error Detected","Try again");
       delay(TEXT_DELAY);
     }
   }
