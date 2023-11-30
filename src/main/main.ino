@@ -1,5 +1,3 @@
-// #include <MicroTuple.h>
-
 /*********************************************/
 /* Name of the program: */
 /* Author: Timothy Scholtz ; Thomoas Mahok */
@@ -34,11 +32,9 @@ void setup()
 }
 
 int noteSelect = 0;
-int octaveSelect =1;
-
-void loop()
-{
-  /* Main Loop for Project
+int octaveSelect =0;
+int state = 1; // starting values
+/* Main Loop for Project
     State machine
     case 1: Main Menu
     case 2: Pitch Practice
@@ -46,88 +42,66 @@ void loop()
     case 4: Indentify Pitch
     Defualt - Go to state 1
   */
-  int state = 1; // starting values
+void loop()
+{
   switch (state)
   {
-  case 1: // this will be the starting prompt
+  case 1: // this will be the starting prompt - gives a rolling help messeage of user options
     reset();
     state = stateSelector();
-  case 2:
+    break;
+  case 2: //user cho0se note and get feed back
     state = pitchPractice();
-  case 3: // Playing the sound of the Note
+    break;
+  case 3: //user chooses a note and speaker plays it
     state = notePlaying();
-  case 4:
+    break;
+  case 4: //Listens to user audio and determines what note is being played - [Not confident it works]
     state = pitchFind();
-  // case 6: // Here is the big listening  //We have an issue that we need to look at with either the sample size or mabye just the arduino board. For voices it will be fine but I noticed that most correct tones are about .02 max .03 off until you get to the really high tones.
-  //   listeningPrompt();
-  //   //have it listen for 10 seconds and show option to be done for 1 check of 5 seconds
-  //   timer = millis(); //we will change after 10 seconds from this point
-  //   while((timer+15000) > millis()){//this should make it run for 
-  //     updatingPrompt( goalNote,  noteFinder(currentNoteFREQ));
-  //     if(currentNote == goalNote){
-  //       //Make LED's do something crazy
-  //       lcdClear();
-  //       lcdPrint("YOU DID IT\n!!Keep practing!!");
-  //       delay(3000);
-  //     }
-  //   } 
-  //   timer = millis();
-  //   while((timer+5000) > millis()){
-  //     finisherPrompt();
-  //     enterCheck = confirmButton(-1);
-  //     if (enterCheck == 13){
-  //       state = 1; //ending
-  //       break;
-  //     }
-  //     else if(enterCheck > -1){
-  //       tempNUMSTATE = state;
-  //     state = 0; // ERROR OCCURED
-  //     }
-  //   }
+    break;
   default:
     state = 1;
+    break;
   }
-
 }
-
-
+//resets user prefrances
 void reset(){
   noteSelect = 0;
-  octaveSelect =1;
+  octaveSelect =0;
 }
 
-int pitchFind(){
+// Prints menu of options and wait for user input
+int stateSelector()
+{
+  //Rolling text of options, whilst waiting for user to press a button. Can change string as nessary if we update options, just update switch below to match
+  int button = waitScrollingText("1 - pitch practice 2 - play listen note 3 - find note 3 15 - reset");
+  if (button == 0)
+  {
+    return 2; // Pitch Practice
+  }
+  if (button == 1)
+  {
+    return 3; //Play note auiod 
+  }
+  if (button == 2)
+  {
+    return 4; // Detect note being played
+  }
+  if( button == 3){
 
-}
-
-int notePlaying(){
-  lcdPrint("Play the","Note");
-  delay(TEXT_DELAY);
-  //Select Note, and if cancle chosen, do accordingly
-  noteSelect = selectNote();
-  if(noteSelect == -1){
-    return 1;
+    return 6;
   }
-  //Select Octave, and if cancle chosen, do accordingly
-  octaveSelect = selectOctave();
-  if(octaveSelect == -1){
-    return 1;
+  if( button == 15){
+    return 0;
   }
-  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
-  int button = -1;
-  int count = 0;
-  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
-  while(button == -1){
-    if(count>0) playNote(noteArray(noteSelect,octaveSelect), 500);
-    if(count > 4){ 
-      count = -4;
-      button = checkForButtonPress();
-      }
-    count++;
-  }
+  lcdClear();
+  lcdPrint("Error detected in","input try again");
   return 1;
 }
 
+//Core function of Project
+//Select note, listen to note give feed back
+//TO DO - implement fancy outputs
 int pitchPractice(){
   lcdPrint("Pitch","Practice");
   delay(TEXT_DELAY);
@@ -144,20 +118,26 @@ int pitchPractice(){
   //Give feed back on performance
   double freq = getMicFrequency();
   int goal = noteArray(noteSelect,octaveSelect);
-  double close = freq/goal;
-  double diff = abs(1-close);
-  //These values will need to be adapted
-  if(close<0.95){
-    lcdPrint("Too flat","Any button exit");
-  }
-  else if(close>1.10){
-    lcdPrint("Too Sharp","Any button exit");
-  }
-  else{
-    lcdPrint("Sounds Good","Any button exit");
-  }
-  if(checkForButtonPress()!=-1){
-    return 1;
+  while(freq){
+  //close is a ratio between actural note and desired note
+  //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
+  //This somewhat takes into considerations differences in higher and lower pitchs, eg
+  //if Execetd is 40, but actual 60, close is %150 which is really off due to a diff of 20Hz
+  //if Execetd is 440, but actual 460, close is %104 which is really close due to a diff of 20Hz
+    double close = freq/goal;
+    //These values will need to be adapted
+    if(close<0.95){
+      lcdPrint("Too flat","Any button exit");
+    }
+    else if(close>1.08){
+      lcdPrint("Too Sharp","Any button exit");
+    }
+    else{
+      lcdPrint("Sounds Good","Any button exit");
+    }
+    if(checkForButtonPress()!=-1){
+      return 1;
+    }
   }
   return 1;
 }
@@ -166,33 +146,42 @@ int pitchPractice(){
 int stateSelector()
 {
   int chosenState = 1;
-  delay(TEXT_DELAY);//?? why is there a delay here?
-  int button = waitScrollingText("2 - pitch practice   3 - find note   4 - play listen note   5 - reset");//2 pitch practice, 3 play note for example, pitch find
+  delay(TEXT_DELAY);
+  int button = waitScrollingText("1 - pitch practice 2 - find note 3 - play listen note 15 - reset");
   if (button == 0)
   {
     return 2;
   }
-  if (button == 1)
-  {
-    return 3;
+  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
+  int button = -1;
+  int count = 0;
+  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
+  while(button == -1){
+    playNote(noteArray(noteSelect,octaveSelect), 8);
+    if(count > 3){ 
+      count = 0;
+      button = checkForButtonPress();
+      }
+    count++;
   }
-  if (button == 2)
-  {
-    return 4;
-  }
-  if( button == 3){
-
-    return 6;
-  }
-  if( button == 15){
-    return 0;
-  }
-  lcdClear();
-  lcdPrint("Error detected in","input try again");
-  return chosenState;
+  return 1;
 }
 
-int findingNote()
-{
+//trys to determine what note is being played
+int pitchFind(){
+  double freq;
+  while(true){
+    freq = getMicFrequency();
+    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
+    if(checkForButtonPress() !=-1){
+      return 1;
+    }
+  }
 }
+
+
+
+
+
+
 
