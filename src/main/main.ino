@@ -166,8 +166,8 @@ int pitchPractice(){
 int stateSelector()
 {
   int chosenState = 1;
-  delay(TEXT_DELAY);
-  int button = waitScrollingText("1 - pitch practice 2 - find note 3 - play listen note 15 - reset");
+  delay(TEXT_DELAY);//?? why is there a delay here?
+  int button = waitScrollingText("2 - pitch practice   3 - find note   4 - play listen note   5 - reset");//2 pitch practice, 3 play note for example, pitch find
   if (button == 0)
   {
     return 2;

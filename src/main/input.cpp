@@ -315,30 +315,6 @@ int selectOctave(){
   return 1;
 }
 
-//work in progress = finds and returns the closed note to the given pitch as a freq
-//If you don't understand how this works, its becuase it doens't
-// String closestNote(){
-//   //Listen for Freq 
-//   double note = getMicFrequency();
-//   //Search for the middle area
-//   int x =12;
-//   int y = 7;
-//   bool found = false;
-//   if (note > noteArray(x,y)) return "Outside range\nToo high pitch";
-//   if (note < noteArray(0,0)) return "Outside range\nToo low pitch";
-//   for(y=6;note < noteArray(x,y) && y>0;y--);
-//   if(note<noteArray(y+1,0)){
-//     if((note - noteArray(y,x)) > (note - noteArray(y+1,0))){
-//         return noteArray(y,x);
-//     }
-//     return  noteArray(y+1,0);
-//   }
-//   y++;
-
-//   for(x=0;note < noteArray(x,y)*1.03 && x>0;x++);
-//   return noteArray(x,y);
-// }
-
 int confirmButton(int buttonN){ //makes sure that the button press is correct
     //lcdClear();
     lcdSetCur(0,1);//where we want to print
