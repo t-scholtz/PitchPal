@@ -64,7 +64,7 @@ void loop()
     break;
   }
 }
-//resets user prefrances
+//resets user prefrances to pick again
 void reset(){
   noteSelect = 0;
   octaveSelect =0;
@@ -74,7 +74,8 @@ void reset(){
 int stateSelector()
 {
   //Rolling text of options, whilst waiting for user to press a button. Can change string as nessary if we update options, just update switch below to match
-  int button = waitScrollingText("1 - pitch practice 2 - play listen note 3 - find note 3 15 - reset");
+  //TO-DO check with tim if all these are all correct
+  int button = waitScrollingText("1 - pitch practice  2 - play listen note   3 - find note   16 - reset");
   if (button == 0)
   {
     return 2; // Pitch Practice
@@ -87,15 +88,15 @@ int stateSelector()
   {
     return 4; // Detect note being played
   }
-  if( button == 3){
+  if( button == 3){ //I DONT think we need this?? 
 
     return 6;
   }
-  if( button == 15){
-    return 0;
+  if( button == 15){//RESET
+    return 1;
   }
   lcdClear();
-  lcdPrint("Error detected in","input try again");
+  lcdPrint("Error detected in","input try again");//SHOULD we loop it back up to have them choose again or reset???
   return 1;
 }
 
@@ -103,8 +104,9 @@ int stateSelector()
 //Select note, listen to note give feed back
 //TO DO - implement fancy outputs
 int pitchPractice(){
-  lcdPrint("Pitch","Practice");
+  lcdPrint("Pitch","Practice");//prompt message 
   delay(TEXT_DELAY);
+  
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
   if(noteSelect == -1){
@@ -115,9 +117,10 @@ int pitchPractice(){
   if(octaveSelect == -1){
     return 1;
   }
+  int goal = noteArray(noteSelect,octaveSelect); //This is our GOAL
+
   //Give feed back on performance
   double freq = getMicFrequency();
-  int goal = noteArray(noteSelect,octaveSelect);
   while(freq){
   //close is a ratio between actural note and desired note
   //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
@@ -128,41 +131,19 @@ int pitchPractice(){
     //These values will need to be adapted
     if(close<0.95){
       lcdPrint("Too flat","Any button exit");
+      delay(TEXT_DELAY);//Temp, should we keep these or have a delay at some spot??
     }
     else if(close>1.08){
       lcdPrint("Too Sharp","Any button exit");
+      delay(TEXT_DELAY);//Temp
     }
     else{
       lcdPrint("Sounds Good","Any button exit");
+      delay(TEXT_DELAY);//Temp
     }
     if(checkForButtonPress()!=-1){
       return 1;
     }
-  }
-  return 1;
-}
-
-// Temp Function to handle simple user input for now
-int stateSelector()
-{
-  int chosenState = 1;
-  delay(TEXT_DELAY);
-  int button = waitScrollingText("1 - pitch practice 2 - find note 3 - play listen note 15 - reset");
-  if (button == 0)
-  {
-    return 2;
-  }
-  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
-  int button = -1;
-  int count = 0;
-  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
-  while(button == -1){
-    playNote(noteArray(noteSelect,octaveSelect), 8);
-    if(count > 3){ 
-      count = 0;
-      button = checkForButtonPress();
-      }
-    count++;
   }
   return 1;
 }

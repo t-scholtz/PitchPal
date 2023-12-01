@@ -262,7 +262,7 @@ int selectNote(){
     lcdPrint("Select Note ", "Options 1-12");
     delay(TEXT_DELAY);
     int goalNoteNum = waitForUserInput();
-    if (goalNoteNum == 15){ // Goes back
+    if (goalNoteNum == 15){ //RESET
       lcdPrint("Reseting Device","Stand By");
       delay(TEXT_DELAY);
       return -1;
