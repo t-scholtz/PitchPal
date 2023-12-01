@@ -309,15 +309,6 @@ int selectOctave(){
   return 1;
 }
 
-<<<<<<< HEAD
-int confirmButton(int buttonN){ //makes sure that the button press is correct
-    //lcdClear();
-    lcdSetCur(0,1);//where we want to print
-    lcdPrint("Press and hold (:");
-  while(buttonN < 0){ //keep them here until a button of some type goes back
-    buttonN = checkForButtonPress(); //this will give an updated value
-=======
-
 //EDGE CASE - if value is inbetween 2 rows
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
@@ -334,7 +325,6 @@ String noteFinder(double freqOfNote){
   //Find which one is closer and returns note + confidnece score
   if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
     return noteStrArray(noteIndex,octIndex) + " " +int(freqOfNote/noteArray(noteIndex,octIndex)) + "%";
->>>>>>> 9af2b84f3bc06900befdf0663838dcc45b1f6c4c
   }
   else{
     return  noteStrArray(noteIndex,octIndex-1) + " " +int(noteArray(noteIndex,octIndex-1)/freqOfNote) + "%";
