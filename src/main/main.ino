@@ -148,6 +148,46 @@ int pitchPractice(){
   return 1;
 }
 
+int notePlaying(){
+  lcdPrint("Play Note","");
+  delay(TEXT_DELAY);
+  //Select Note, and if cancle chosen, do accordingly
+  noteSelect = selectNote();
+  if(noteSelect == -1){
+    return 1;
+  }
+  //Select Octave, and if cancle chosen, do accordingly
+  octaveSelect = selectOctave();
+  if(octaveSelect == -1){
+    return 1;
+  }
+  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
+  int button = -1;
+  int count = 0;
+  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
+  while(button == -1){
+    playNote(noteArray(noteSelect,octaveSelect), 8);
+    if(count > 3){ 
+      count = 0;
+      button = checkForButtonPress();
+      }
+    count++;
+  }
+  return 1;
+}
+
+//trys to determine what note is being played
+int pitchFind(){
+  double freq;
+  while(true){
+    freq = getMicFrequency();
+    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
+    if(checkForButtonPress() !=-1){
+      return 1;
+    }
+  }
+}
+
 //trys to determine what note is being played
 int pitchFind(){
   double freq;
