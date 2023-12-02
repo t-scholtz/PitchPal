@@ -28,7 +28,7 @@ void setup()
 
   micSetup();
   initializeLCD();
-  startUpAnim();
+  //startUpAnim();
 }
 
 int noteSelect = 0;

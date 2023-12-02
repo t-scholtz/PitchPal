@@ -232,17 +232,17 @@ int waitScrollingText(){
   lcdPrint("1 - pitch practice ","waiting for ");
   while(stillWaiting){
     messageCount += 1;
-    if(messageCount == 100){
+    if(messageCount == 150){
       
      lcdPrint("2 - play listen notet","input");
     }
-    else if(messageCount ==200){
+    else if(messageCount ==300){
        lcdPrint("3 - find note ","waiting for ");
     }
-     else if(messageCount == 300){
-       lcdPrint("5 - reset","input");
+     else if(messageCount == 450){
+       lcdPrint("15 - reset","input");
     }
-     else if(messageCount >400){
+     else if(messageCount >600){
        lcdPrint("1 - pitch practice ","waiting for ");
        messageCount =0;
     }
@@ -253,7 +253,7 @@ int waitScrollingText(){
         digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-      if( analogRead(SIG_PIN) > LOW){ stillWaiting = false;
+      if( buttons[i] > LOW){ stillWaiting = false;
     }
   }
   }
@@ -271,7 +271,7 @@ int waitScrollingText(){
     return -1;}
   return output;//return the button number
 }
-}
+
 
 //Selects note Values
 //Retunr -1 if person want to canclle
