@@ -201,7 +201,7 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
         digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-      if( analogRead(SIG_PIN) > LOW) stillWating = false;
+      if( buttons[i] > LOW) stillWating = false;
     }
   }
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
