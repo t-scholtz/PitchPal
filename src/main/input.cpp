@@ -232,18 +232,6 @@ int waitScrollingText(){
   lcdPrint("1 - pitch practice ","waiting for ");
   while(stillWaiting){
     messageCount += 1;
-
-<<<<<<< HEAD
-    if(messageCount > 100){
-      String r = text.substring(textHead, textHead+15);
-      //Serial.println(r);
-      delay(5);
-      lcdPrint(r,"waiting");
-      delay(5);
-      textHead++;
-      if(textHead>=textLen){ textHead = 0;}
-      messageCount = 0;
-=======
     if(messageCount == 100){
       
      lcdPrint("2 - play listen notet","input");
@@ -257,7 +245,6 @@ int waitScrollingText(){
      else if(messageCount >400){
        lcdPrint("1 - pitch practice ","waiting for ");
        messageCount =0;
->>>>>>> a49190a03e886b7ad7a701a35c357d1dc582b99f
     }
 
     //Read from every channel and grab the value at that point of time
@@ -267,10 +254,6 @@ int waitScrollingText(){
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
       if( analogRead(SIG_PIN) > LOW){ stillWaiting = false;
-<<<<<<< HEAD
-      //Serial.println("button pressed");}
-=======
->>>>>>> a49190a03e886b7ad7a701a35c357d1dc582b99f
     }
   }
   }
