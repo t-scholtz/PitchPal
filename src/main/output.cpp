@@ -42,7 +42,7 @@ void initializeLCD(){ //This function turns on the LCD and gives the welcome mes
 
 void startUpAnim(){
   int startMelody[] = {
-  NOTE_C3, NOTE_D3, NOTE_E3, NOTE_G3, NOTE_B3, 0, NOTE_C4,NOTE_C4,0,0,0,0,0,0,0 };
+  NOTE_C3, NOTE_D3, NOTE_E3, NOTE_G3, NOTE_B3, 0, NOTE_C4,NOTE_C4,NOTE_C4,0,0,0,0,0,0 };
   char pitchPal[] = {'P','i','t','c','h','P','a','l',' ','b','e','t','a',' ','1'};
     for(int i = 0;i<16;i++ ){
       lcd.setCursor( i+1,0);
@@ -51,7 +51,7 @@ void startUpAnim(){
       for(int j = 0; j<i;j++){
         lcd.print(pitchPal[j]);
       }
-      playNote(startMelody[i],4);
+      playNote(startMelody[i],5);
       lcd.clear();
     }
 }
