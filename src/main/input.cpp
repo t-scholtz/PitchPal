@@ -324,7 +324,7 @@ String noteFinder(double freqOfNote){
   //octIndex starts at 6, 
   //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
   //octIndex -= 1, will the lowest index be 1 or 0 in C++??
-  for(octIndex=6; freqOfNote <S noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+  for(octIndex=6; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
   
   //loop from C to B and find between wich notes output exists
   //starts from C, the first note in a octave
