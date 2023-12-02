@@ -233,7 +233,7 @@ int waitScrollingText(String text){
   while(stillWaiting){
     messageCount += 1;
 
-    if(messageCount > 50){
+    if(messageCount > 100){
       String r = text.substring(textHead, textHead+15);
       Serial.println(r);
       delay(5);
