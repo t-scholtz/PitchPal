@@ -113,6 +113,7 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 }
 
 double getMicFrequency(){ 
+  Serial.println("mic freq started");
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values//this takes reading from the microphone and returns to us a frequency
   for(int i = 0; i<SAMPLES; i++){
@@ -132,6 +133,7 @@ double getMicFrequency(){
 
  // Find prak frequency and print peak
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
+  Serial.println("mic freq done");
   return(peak);   
 }
 
