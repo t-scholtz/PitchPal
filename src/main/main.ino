@@ -105,6 +105,7 @@ int stateSelector()
 //Select note, listen to note give feed back
 //TO DO - implement fancy outputs
 int pitchPractice(){
+  lcdClear();
   lcdPrint("Pitch","Practice");
   delay(TEXT_DELAY);
   //Select Note, and if cancle chosen, do accordingly
