@@ -168,19 +168,14 @@ int notePlaying(){
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
   if(octaveSelect == -1){
-    //lcdPrint("OCTAVE E","");
-    //delay(TEXT_DELAY);
     return 1;
   }
 
   int button = -1;
   while(button != 1){
-    lcdPrint("WHILE LOOP","");
-    delay(TEXT_DELAY);
-
     lcdPrint("Playing: "+ noteToString(noteSelect) + String(octaveSelect), "Press 1 to exit");
     delay(TEXT_DELAY);
-    playNote(noteArray(noteSelect,octaveSelect), 2);
+    playNote(noteArray(noteSelect,octaveSelect), 1);
     button = waitForUserInput();
   }
   return 1;

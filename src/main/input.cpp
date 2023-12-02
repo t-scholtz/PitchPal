@@ -230,6 +230,8 @@ int waitScrollingText(){
   bool stillWaiting = true;
   int messageCount = 0;
   lcdPrint("1 - pitch practice ","waiting for ");
+  delay(TEXT_DELAY);
+  
   while(stillWaiting){
     messageCount += 1;
     if(messageCount == 150){
