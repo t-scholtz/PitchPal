@@ -162,24 +162,24 @@ int notePlaying(){
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
   if(noteSelect == -1){
-    lcdPrint("NOTE E","");
-    delay(TEXT_DELAY);
+    //lcdPrint("NOTE E","");
+    //delay(TEXT_DELAY);
     return 1;
   }
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
-  lcdPrint("OCTAVE PASS","");
-  delay(TEXT_DELAY);
+  //lcdPrint("OCTAVE PASS","");
+  //delay(TEXT_DELAY);
 
   if(octaveSelect == -1){
-    lcdPrint("OCTAVE E","");
-    delay(TEXT_DELAY);
+    //lcdPrint("OCTAVE E","");
+    //delay(TEXT_DELAY);
     return 1;
   }
   int button = -1;
   while(button != 1){
-    lcdPrint("WHILE LOOP","");
-    delay(TEXT_DELAY);
+    //lcdPrint("WHILE LOOP","");
+    //delay(TEXT_DELAY);
 
     String TestNote = noteStrArray(noteSelect,octaveSelect);
     lcdPrint(TestNote,"TESTING NOTE");
