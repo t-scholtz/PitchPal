@@ -229,6 +229,7 @@ int waitScrollingText(String text){
   //condition varible waiting for usr input to be detected
   bool stillWaiting = true;
   int messageCount = 0;
+  
   while(stillWaiting){
     messageCount += 1;
 
