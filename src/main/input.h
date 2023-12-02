@@ -11,7 +11,7 @@ void micSetup();
 double getMicFrequency();
 int checkForButtonPress();
 int waitForUserInput();
-int waitScrollingText(String text);
+int waitScrollingText();
 int selectNote();
 int selectOctave();
 String noteFinder(double freqOfNote);

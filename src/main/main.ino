@@ -76,7 +76,7 @@ void reset(){
 int stateSelector()
 {
   //Rolling text of options, whilst waiting for user to press a button. Can change string as nessary if we update options, just update switch below to match
-  int button = waitScrollingText("1 - pitch practice 2 - play listen note 3 - find note 3 15 - reset");
+  int button = waitScrollingText();
   if (button == 0)
   {
     return 2; // Pitch Practice
@@ -131,7 +131,7 @@ int pitchPractice(){
 
   int goal = noteArray(noteSelect,octaveSelect);
   while(freq){
-    //Serial.println(freq);
+    Serial.println(freq);
   //close is a ratio between actural note and desired note
   //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
   //This somewhat takes into considerations differences in higher and lower pitchs, eg
