@@ -76,7 +76,7 @@ void reset(){
 int stateSelector()
 {
   //Rolling text of options, whilst waiting for user to press a button. Can change string as nessary if we update options, just update switch below to match
-  int button = waitScrollingText("1 - pitch practice 2 - play listen note 3 - find note 3 15 - reset");
+  int button = waitScrollingText();
   if (button == 0)
   {
     return 2; // Pitch Practice

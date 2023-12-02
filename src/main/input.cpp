@@ -220,30 +220,32 @@ int waitForUserInput(){ //ASK tim if this one is needed, we have checkButtonPres
 
 
 //Will wait for user input will scrolling through text
-int waitScrollingText(String text){
+int waitScrollingText(){
 
   //Initialize 
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
   float buttons[16];
-  int textHead = 0;
-  int textLen = text.length()-8;
 
   //condition varible waiting for usr input to be detected
   bool stillWaiting = true;
   int messageCount = 0;
-
+  lcdPrint("1 - pitch practice ","waiting for ");
   while(stillWaiting){
     messageCount += 1;
 
-    if(messageCount > 100){
-      String r = text.substring(textHead, textHead+15);
-      Serial.println(r);
-      delay(5);
-      lcdPrint(r,"waiting");
-      delay(5);
-      textHead++;
-      if(textHead>=textLen){ textHead = 0;}
-      messageCount = 0;
+    if(messageCount == 100){
+      
+     lcdPrint("2 - play listen notet","input");
+    }
+    else if(messageCount ==200){
+       lcdPrint("3 - find note ","waiting for ");
+    }
+     else if(messageCount == 300){
+       lcdPrint("5 - reset","input");
+    }
+     else if(messageCount >400){
+       lcdPrint("1 - pitch practice ","waiting for ");
+       messageCount =0;
     }
 
     //Read from every channel and grab the value at that point of time
@@ -253,10 +255,10 @@ int waitScrollingText(String text){
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
       if( analogRead(SIG_PIN) > LOW){ stillWaiting = false;
-      Serial.println("button pressed");}
     }
-    delay(1);
   }
+  }
+  
 //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
   int output = -1;
