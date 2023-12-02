@@ -55,30 +55,6 @@ int noteArray(int a, int b) {
   return ar[a][b];
 }
 
-String noteStrArray(int a, int b) { 
-  String ar[12][7] = {//putting them here temporarly so that we can function calling them //I want 
-/*C*/     {"C1", "C2", "C3", "C4", "C5", "C6", "C7"},
-/*C#Db*/  {"CS1", "CS2", "CS3", "CS4", "CS5", "CS6", "CS7"},
-/*D*/     {"D1", "D2", "D3", "D4", "D5", "D6", "D7"},
-/*D#Eb*/  {"DS1", "DS2", "DS3", "DS4", "DS5", "DS6", "DS7"},
-/*E*/     {"E1", "E2", "E3", "E4", "E5", "E6", "E7"},
-/*F*/     {"F1", "F2", "F3", "F4", "F5", "F6", "F7"},
-/*F#/Gb*/ {"FS1", "FS2", "FS3", "FS4", "FS5", "FS6", "FS7"},
-/*G*/     {"G1", "G2", "G3", "G4", "G5", "G6", "G7"},
-/*G#/Ab*/ {"GS1", "GS2", "GS3", "GS4", "GS5", "GS6", "GS7"},
-/*A*/     {"A1", "A2", "A3", "A4", "A5", "A6", "A7"},
-/*A#Bb*/  {"AS1", "AS2", "AS3", "AS4","AS5", "AS6", "AS7"},
-/*B*/     {"B1", "B2", "B3", "B4", "B5", "B6", "B7"}
-  };
-   if(a>12 || a<0){
-    return " ";
-  }
-  if(b>7 || b<0){
-    return " ";
-  }
-  return ar[a][b];
-}
-
 
 int muxChannel(int a, int b){
   int ar[16][4] = {{0,0,0,0}, //channel 0
@@ -114,8 +90,17 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 
 double getMicFrequency(){ 
   //Serial.println("mic freq started");
+  lcdPrint("Made it past", "1");
+  delay(TEXT_DELAY);
+
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
-  double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values//this takes reading from the microphone and returns to us a frequency
+  lcdPrint("Made it past", "2");
+  delay(TEXT_DELAY);
+
+  double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
+  lcdPrint("Made it past", "3");
+  delay(TEXT_DELAY);
+
   for(int i = 0; i<SAMPLES; i++){
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
@@ -123,6 +108,8 @@ double getMicFrequency(){
 
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
+      lcdPrint("Made it past", "4");
+      delay(TEXT_DELAY);
       //do nothing----THiNK ABOUT LATER
     }
   }
@@ -231,7 +218,7 @@ int waitScrollingText(){
   int messageCount = 0;
   lcdPrint("1 - pitch practice ","waiting for ");
   delay(TEXT_DELAY);
-  
+
   while(stillWaiting){
     messageCount += 1;
     if(messageCount == 150){
@@ -358,18 +345,18 @@ String noteFinder(double freqOfNote){
   //Find which one is closer and returns note + confidnece score
   if(noteIndex==12){
     if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(0,octIndex+1))){
-      return noteStrArray(noteIndex-1,octIndex) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
+      return  noteToString(noteIndex-1) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
     }
     else{
-      return  noteStrArray(0,octIndex+1) + " " +int(noteArray(0,octIndex+1)/freqOfNote) + "%";
+      return  noteToString(0) + " " +int(noteArray(0,octIndex+1)/freqOfNote) + "%";
     }
   }//This is checking our edge case
   else{
     if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
-      return noteStrArray(noteIndex-1,octIndex) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
+      return noteToString(noteIndex-1) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
     }
     else{
-      return  noteStrArray(noteIndex,octIndex) + " " +int(noteArray(noteIndex,octIndex)/freqOfNote) + "%";
+      return  noteToString(0) + " " +int(noteArray(noteIndex,octIndex)/freqOfNote) + "%";
     }
   }//This checks normally 
   

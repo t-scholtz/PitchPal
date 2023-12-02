@@ -111,12 +111,14 @@ int pitchPractice(){
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
   //Serial.println("Note: " + String(noteSelect));
+
   if(noteSelect == -1){
     return 1;
   }
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
   //Serial.println("Ocatave: " + String(octaveSelect));
+
   if(octaveSelect == -1){
     return 1;
   }
@@ -129,7 +131,12 @@ int pitchPractice(){
   lcdPrint("Made it past", "");
   delay(TEXT_DELAY);
 
+
   int goal = noteArray(noteSelect,octaveSelect);
+
+  lcdPrint("Made it past", "Part 2");
+  delay(TEXT_DELAY);
+  
   while(freq){
     //Serial.println(freq);
   //close is a ratio between actural note and desired note
