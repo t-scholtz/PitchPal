@@ -234,6 +234,7 @@ int waitScrollingText(String text){
 
     if(messageCount == 30){
       String r = text.substring(textHead, textHead+16);
+      Serial.print(r);
       lcdPrint(r,"Waiting for input");
       textHead++;
       if(textHead>=textLen){ textHead = 0;}
