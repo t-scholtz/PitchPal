@@ -75,13 +75,11 @@ int checkForButtonPress(){
       Serial.print(analogRead(SIG_PIN));
       Serial.print(" : ");
     }
-<<<<<<< HEAD
-=======
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low //JUST WITNISSED IN THE SHORT TIME FOR THREE LINES THE ANALOG READ CAN BE DRAMATICALLY DIFFERNT
     delay(40);
     Serial.print(analogRead(SIG_PIN));
     Serial.print(" : ");
->>>>>>> d9e61cd82833b558e15325b650af92e32ba20dac
+
   }
   Serial.println("Done");
   delay(1000);
