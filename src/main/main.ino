@@ -131,7 +131,7 @@ int pitchPractice(){
 
   int goal = noteArray(noteSelect,octaveSelect);
   while(freq){
-    Serial.println(freq);
+    //Serial.println(freq);
   //close is a ratio between actural note and desired note
   //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
   //This somewhat takes into considerations differences in higher and lower pitchs, eg
