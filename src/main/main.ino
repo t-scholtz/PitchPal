@@ -162,24 +162,23 @@ int notePlaying(){
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
   if(noteSelect == -1){
+    lcdPrint("NOTE E","");
+    delay(TEXT_DELAY);
     return 1;
   }
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
   if(octaveSelect == -1){
+    lcdPrint("OCTAVE E","");
+    delay(TEXT_DELAY);
     return 1;
   }
-  lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press any to exit");
   int button = -1;
-  int count = 0;
-  //For exery 3 cycles, spends 3 playing audio, and one checking for user input
-  while(button == -1){
-    playNote(noteArray(noteSelect,octaveSelect), 8);
-    if(count > 3){ 
-      count = 0;
-      button = checkForButtonPress();
-      }
-    count++;
+  while(button != 1){
+    lcdPrint("Playing: "+noteStrArray(noteSelect,octaveSelect), "Press 1 to exit");
+    delay(TEXT_DELAY);
+    playNote(noteArray(noteSelect,octaveSelect), 2);
+    button = waitForUserInput();
   }
   return 1;
 }
