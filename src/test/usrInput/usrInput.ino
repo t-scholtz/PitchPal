@@ -63,15 +63,17 @@ int checkForButtonPress(){
   int controlPin[] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
   float buttons[16];
   //Read from every channel and grab the value at that point of time
-  for(int i = 0; i<16 ; i++){
-    for(int j = 0; j < 4; j ++){
-      digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
-      //delay(1000);
+  for(int h = 0; h<2 ; h++){
+    for(int i = h; i<16 ; i+=2){
+      for(int j = 0; j < 4; j ++){
+        digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
+        //delay(1000);
+      }
+      buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
+      delay(20);
+      Serial.print(analogRead(SIG_PIN));
+      Serial.print(" : ");
     }
-    buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-    delay(20);
-    Serial.print(analogRead(SIG_PIN));
-    Serial.print(" : ");
   }
   Serial.println("Done");
   //delay(1000);
