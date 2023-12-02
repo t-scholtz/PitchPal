@@ -110,13 +110,13 @@ int pitchPractice(){
   delay(TEXT_DELAY);
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
-  Serial.println("Note: " + String(noteSelect));
+  //Serial.println("Note: " + String(noteSelect));
   if(noteSelect == -1){
     return 1;
   }
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
-  Serial.println("Ocatave: " + String(octaveSelect));
+  //Serial.println("Ocatave: " + String(octaveSelect));
   if(octaveSelect == -1){
     return 1;
   }
@@ -125,9 +125,13 @@ int pitchPractice(){
   delay(TEXT_DELAY);
   //Give feed back on performance
   double freq = getMicFrequency();
+  
+  lcdPrint("Made it past", "");
+  delay(TEXT_DELAY);
+
   int goal = noteArray(noteSelect,octaveSelect);
   while(freq){
-    Serial.println(freq);
+    //Serial.println(freq);
   //close is a ratio between actural note and desired note
   //if I wanted 440hz, but got 220, close would be 50%, and conversly if I got 880, input would be 150%
   //This somewhat takes into considerations differences in higher and lower pitchs, eg

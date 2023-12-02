@@ -113,7 +113,7 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 }
 
 double getMicFrequency(){ 
-  Serial.println("mic freq started");
+  //Serial.println("mic freq started");
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values//this takes reading from the microphone and returns to us a frequency
   for(int i = 0; i<SAMPLES; i++){
@@ -133,7 +133,7 @@ double getMicFrequency(){
 
  // Find prak frequency and print peak
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
-  Serial.println("mic freq done");
+  //Serial.println("mic freq done");
   return(peak);   
 }
 
@@ -165,10 +165,10 @@ int checkForButtonPress(){
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
     //delay(20);
 
-    Serial.println(analogRead(SIG_PIN));
-    Serial.println(" : ");
+    //Serial.println(analogRead(SIG_PIN));
+    //Serial.println(" : ");
   }
-  Serial.println("Done");
+  //Serial.println("Done");
   //delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
@@ -237,7 +237,7 @@ int waitScrollingText(String text){
 
     if(messageCount > 100){
       String r = text.substring(textHead, textHead+15);
-      Serial.println(r);
+      //Serial.println(r);
       delay(5);
       lcdPrint(r,"waiting");
       delay(5);
@@ -253,7 +253,7 @@ int waitScrollingText(String text){
       }
       buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
       if( analogRead(SIG_PIN) > LOW){ stillWaiting = false;
-      Serial.println("button pressed");}
+      //Serial.println("button pressed");}
     }
     delay(1);
   }
@@ -269,6 +269,7 @@ int waitScrollingText(String text){
   if (flag != 1){
     return -1;}
   return output;//return the button number
+}
 }
 
 //Selects note Values
