@@ -19,7 +19,7 @@
 #define MUX_PIN1 8
 #define MUX_PIN2 9
 #define MUX_PIN3 10
-#define SIG_PIN 11
+#define SIG_PIN 15
 //analog pin 14 (A0)
 #define MICROPHONE 14
 

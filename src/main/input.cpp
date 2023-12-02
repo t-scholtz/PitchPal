@@ -163,8 +163,8 @@ int checkForButtonPress(){
     buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
     //delay(20);
 
-    Serial.print(analogRead(SIG_PIN));
-    Serial.print(" : ");
+    Serial.println(analogRead(SIG_PIN));
+    Serial.println(" : ");
   }
   Serial.println("Done");
   //delay(1000);
@@ -229,14 +229,15 @@ int waitScrollingText(String text){
   //condition varible waiting for usr input to be detected
   bool stillWaiting = true;
   int messageCount = 0;
-  
+
   while(stillWaiting){
     messageCount += 1;
 
-    if(messageCount == 30){
-      String r = text.substring(textHead, textHead+16);
-      Serial.print(r);
-      lcdPrint(r,"Waiting for input");
+    if(messageCount == 50){
+      String r = text.substring(textHead, textHead+12);
+      Serial.println(r);
+      lcdPrint(r,"");
+      delay(TEXT_DELAY);
       textHead++;
       if(textHead>=textLen){ textHead = 0;}
       messageCount = 0;
@@ -274,6 +275,7 @@ int selectNote(){
     lcdPrint("Select Note ", "Options 1-12");
     delay(TEXT_DELAY);
     int goalNoteNum = waitForUserInput();
+
     if (goalNoteNum == 15){ //RESET
       lcdPrint("Reseting Device","Stand By");
       delay(TEXT_DELAY);
@@ -300,13 +302,14 @@ int selectOctave(){
     lcdPrint("Select Octave ", "Options 1-8");
     delay(TEXT_DELAY);
     int goalOctNum = waitForUserInput();
+
     if (goalOctNum == 15){ // Goes back
       lcdPrint("Reseting Device","Stand By");
       delay(TEXT_DELAY);
       return -1;
     }
     else if (goalOctNum != -1 && goalOctNum<8 ){
-      lcdPrint("Selected :"+goalOctNum , "Confirm :14");
+      lcdPrint("Selected :" + String(goalOctNum) , "Confirm :14");
       delay(TEXT_DELAY);
       int confirm = waitForUserInput();
       if(confirm == 14){

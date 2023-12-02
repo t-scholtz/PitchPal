@@ -110,14 +110,19 @@ int pitchPractice(){
   delay(TEXT_DELAY);
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
+  Serial.println("Note: " + String(noteSelect));
   if(noteSelect == -1){
     return 1;
   }
   //Select Octave, and if cancle chosen, do accordingly
   octaveSelect = selectOctave();
+  Serial.println("Ocatave: " + String(octaveSelect));
   if(octaveSelect == -1){
     return 1;
   }
+
+  lcdPrint("Listening", "");
+  delay(TEXT_DELAY);
   //Give feed back on performance
   double freq = getMicFrequency();
   int goal = noteArray(noteSelect,octaveSelect);
