@@ -188,18 +188,6 @@ int pitchFind(){
   }
 }
 
-//trys to determine what note is being played
-int pitchFind(){
-  double freq;
-  while(true){
-    freq = getMicFrequency();
-    lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
-    if(checkForButtonPress() !=-1){
-      return 1;
-    }
-  }
-}
-
 
 
 

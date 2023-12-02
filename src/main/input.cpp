@@ -309,36 +309,45 @@ int selectOctave(){
   return 1;
 }
 
-<<<<<<< HEAD
-int confirmButton(int buttonN){ //makes sure that the button press is correct
-    //lcdClear();
-    lcdSetCur(0,1);//where we want to print
-    lcdPrint("Press and hold (:");
-  while(buttonN < 0){ //keep them here until a button of some type goes back
-    buttonN = checkForButtonPress(); //this will give an updated value
-=======
-
 //EDGE CASE - if value is inbetween 2 rows
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
-  int noteIndex =12;
-  int octIndex = 7;
+  int noteIndex =11;
+  int octIndex = 6;
   bool found = false;
+
   //check if note is inside of possible range, may want to make edge cases more inclusive though
   if (freqOfNote > noteArray(noteIndex,octIndex)) return "Too High";
   if (freqOfNote < noteArray(0,0)) return "Too Low";
+
   //Loop from the highest octave of C to the lowest octave of C, to find which octave the note is in
-  for(octIndex=7;freqOfNote > noteArray(0,octIndex)*0.98 && octIndex>0;octIndex--);
+  //octIndex starts at 6, 
+  //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
+  //octIndex -= 1, will the lowest index be 1 or 0 in C++??
+  for(octIndex=6; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+  
   //loop from C to B and find between wich notes output exists
-  for(noteIndex=0;freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<12;noteIndex++);
+  //starts from C, the first note in a octave
+  //will make sure freqNote never dips under the 
+  for(noteIndex=0; freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<13; noteIndex++); //it is 13 SO if it becomes 12 we know it's the edge case between octaves
+  
   //Find which one is closer and returns note + confidnece score
-  if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
-    return noteStrArray(noteIndex,octIndex) + " " +int(freqOfNote/noteArray(noteIndex,octIndex)) + "%";
->>>>>>> 9af2b84f3bc06900befdf0663838dcc45b1f6c4c
-  }
+  if(noteIndex==12){
+    if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(0,octIndex+1))){
+      return noteStrArray(noteIndex-1,octIndex) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
+    }
+    else{
+      return  noteStrArray(0,octIndex+1) + " " +int(noteArray(0,octIndex+1)/freqOfNote) + "%";
+    }
+  }//This is checking our edge case
   else{
-    return  noteStrArray(noteIndex,octIndex-1) + " " +int(noteArray(noteIndex,octIndex-1)/freqOfNote) + "%";
-  }
+    if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
+      return noteStrArray(noteIndex-1,octIndex) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
+    }
+    else{
+      return  noteStrArray(noteIndex,octIndex) + " " +int(noteArray(noteIndex,octIndex)/freqOfNote) + "%";
+    }
+  }//This checks normally 
   
 }
 

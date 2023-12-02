@@ -2,6 +2,7 @@
 
 #define LOW 1000.0
 
+
 #define ENABLE 6
 #define MUX_PIN0 7
 #define MUX_PIN1 8
@@ -74,18 +75,29 @@ int checkForButtonPress(){
       Serial.print(analogRead(SIG_PIN));
       Serial.print(" : ");
     }
+<<<<<<< HEAD
+=======
+    buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low //JUST WITNISSED IN THE SHORT TIME FOR THREE LINES THE ANALOG READ CAN BE DRAMATICALLY DIFFERNT
+    delay(40);
+    Serial.print(analogRead(SIG_PIN));
+    Serial.print(" : ");
+>>>>>>> d9e61cd82833b558e15325b650af92e32ba20dac
   }
   Serial.println("Done");
-  //delay(1000);
+  delay(1000);
   //Flag will count how many channels have high value - more than one indicates that 2 or more buttons pressed at same time which will return -1
   int flag = 0;
   int output = 0;
   for(int i = 0; i<16 ; i++){//runs 16 times, stops at 16
+  delay(100);
+  Serial.println(buttons[i]);
     if (buttons[i] > LOW ){
       flag++;
       output = i;
     }
   }
+  Serial.println("OUTPUT: ");
+  Serial.println(flag);
   if (flag == 1){
     return output;
     }
