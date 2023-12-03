@@ -191,8 +191,9 @@ int pitchFind(){
   double freq;
   while(true){
     freq = getMicFrequency();
-    Serial.println("Passed micFreq");
+    //Serial.println("Passed micFreq");
     lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
+    delay(200);
     
     if(checkForButtonPress() != -1){
       return 1;

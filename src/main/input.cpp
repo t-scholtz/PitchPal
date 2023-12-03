@@ -314,32 +314,34 @@ String noteFinder(double freqOfNote){
   //octIndex starts at 6, 
   //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
   //octIndex -= 1, will the lowest index be 1 or 0 in C++??
-  for(octIndex=4; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+  for(octIndex=4; freqOfNote < noteArray(0,octIndex)*0.95 && octIndex>-1; octIndex--);
     Serial.println(octIndex);
 
   
   //loop from C to B and find between wich notes output exists
   //starts from C, the first note in a octave
   //will make sure freqNote never dips under the 
-  for(noteIndex=0; freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<13; noteIndex++); //it is 13 SO if it becomes 12 we know it's the edge case between octaves
+  for(noteIndex=0; freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<12; noteIndex++); //it is 13 SO if it becomes 12 we know it's the edge case between octaves
     Serial.println(noteIndex);
   //Find which one is closer and returns note + confidnece score
-  if(noteIndex==12){
-    if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(0,octIndex+1))){
-      return  noteToString(noteIndex-1) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
-    }
-    else{
-      return  noteToString(0) + " " +int(noteArray(0,octIndex+1)/freqOfNote) + "%";
-    }
-  }//This is checking our edge case
+  // if(noteIndex==12){
+  //   if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(0,octIndex+1))){
+  //     Serial.println("B");
+  //     return  noteToString(noteIndex) + " " +int(freqOfNote/noteArray(noteIndex,octIndex)) + "%";//Need to look how this gets printed out with an integer
+  //   }
+  //   else{
+  //     Serial.println("C");
+  //     return  noteToString(1) + " " +int(noteArray(0,octIndex+1)/freqOfNote) + "%";
+  //   }
+  // }//This is checking our edge case
+  // else{
+  if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
+    return noteToString(noteIndex-1) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
+  }
   else{
-    if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(noteIndex,octIndex))){
-      return noteToString(noteIndex-1) + " " +int(freqOfNote/noteArray(noteIndex-1,octIndex)) + "%";//Need to look how this gets printed out with an integer
-    }
-    else{
-      return  noteToString(0) + " " +int(noteArray(noteIndex,octIndex)/freqOfNote) + "%";
-    }
-  }//This checks normally 
+    return  noteToString(noteIndex-1) + " " +int(noteArray(noteIndex-1,octIndex)/freqOfNote) + "%";
+  }
+//This checks normally 
   
 }
 
