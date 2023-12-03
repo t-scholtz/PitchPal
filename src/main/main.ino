@@ -58,7 +58,6 @@ void loop()
     break;
   case 4: //Listens to user audio and determines 
           //what note is being played
-    Serial.println("HERE");
     state = pitchFind();
     break;
   default:
@@ -126,8 +125,6 @@ int pitchPractice(){
 
   int goal = noteArray(noteSelect,octaveSelect);
 
-  Serial.println("AFTER NOTE ARRAY");
-
   while(freq){
     //Serial.println(freq);
   //close is a ratio between actural note and desired note
@@ -136,8 +133,6 @@ int pitchPractice(){
   //if Execetd is 40, but actual 60, close is %150 which is really off due to a diff of 20Hz
   //if Execetd is 440, but actual 460, close is %104 which is really close due to a diff of 20Hz
     float close = freq/goal;
-    //These values will need to be adapted
-    Serial.println("Before check");
 
     if(close<0.95){
       lcdPrint("Too flat","Any button exit");
@@ -161,7 +156,6 @@ int pitchPractice(){
 
 //user selects note and audio is plated
 int notePlaying(){
-  lcdPrint("Play Note","");
   delay(TEXT_DELAY);
   //Select Note, and if cancle chosen, do accordingly
   noteSelect = selectNote();
