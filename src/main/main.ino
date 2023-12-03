@@ -187,12 +187,13 @@ int notePlaying(){
 
 //trys to determine what note is being played
 int pitchFind(){
+  delay(TEXT_DELAY);
   double freq;
   while(true){
     freq = getMicFrequency();
     Serial.println("Passed micFreq");
     lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
-    delay(TEXT_DELAY);
+    
     if(checkForButtonPress() != -1){
       return 1;
     }

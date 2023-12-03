@@ -300,6 +300,8 @@ int selectOctave(){
 //EDGE CASE - if value is inbetween 2 rows
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
+  Serial.println("frec:");
+  Serial.println(freqOfNote);
   int noteIndex =11;
   int octIndex = 4;
   bool found = false;
@@ -313,12 +315,14 @@ String noteFinder(double freqOfNote){
   //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
   //octIndex -= 1, will the lowest index be 1 or 0 in C++??
   for(octIndex=4; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+    Serial.println(octIndex);
+
   
   //loop from C to B and find between wich notes output exists
   //starts from C, the first note in a octave
   //will make sure freqNote never dips under the 
   for(noteIndex=0; freqOfNote > noteArray(noteIndex,octIndex) && noteIndex<13; noteIndex++); //it is 13 SO if it becomes 12 we know it's the edge case between octaves
-  
+    Serial.println(noteIndex);
   //Find which one is closer and returns note + confidnece score
   if(noteIndex==12){
     if(abs(1-freqOfNote/noteArray(noteIndex-1,octIndex))>abs(1-freqOfNote/noteArray(0,octIndex+1))){
