@@ -83,19 +83,12 @@ int muxChannel(int a, int b){
 
 
 double getMicFrequency(){ 
-<<<<<<< HEAD
-<<<<<<< HEAD
   //Serial.println("mic freq started");
-
-=======
-  
-=======
->>>>>>> 8fe28ed (cleaned up)
   Serial.println("mic freq started");
   arduinoFFT FFT = arduinoFFT();
   unsigned int samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY));
   unsigned long microSeconds;
->>>>>>> 8d38341 (re-added main)
+
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
