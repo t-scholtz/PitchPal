@@ -45,7 +45,7 @@ int noteArray(int a, int b) {
   if(a>12 || a<0){
     return -1;
   }
-  if(b>7 || b<0){
+  if(b>6 || b<0){
     return -1;
   }
   return ar[a][b];
@@ -272,7 +272,7 @@ int selectNote(){
 
 int selectOctave(){
   while(true){
-    lcdPrint("Select Octave ", "Options 1-8");
+    lcdPrint("Select Octave ", "Options 1-6");
     delay(TEXT_DELAY);
     int goalOctNum = waitForUserInput();
 
@@ -281,8 +281,8 @@ int selectOctave(){
       delay(TEXT_DELAY);
       return -1;
     }
-    else if (goalOctNum != -1 && goalOctNum<8 ){
-      lcdPrint("Selected :" + String(goalOctNum) , "Confirm :14");
+    else if (goalOctNum != -1 && goalOctNum<4 ){
+      lcdPrint("Selected :" + String(goalOctNum+1) , "Confirm :14");
       delay(TEXT_DELAY);
       int confirm = waitForUserInput();
       if(confirm == 14){
@@ -301,7 +301,7 @@ int selectOctave(){
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
   int noteIndex =11;
-  int octIndex = 6;
+  int octIndex = 4;
   bool found = false;
 
   //check if note is inside of possible range, may want to make edge cases more inclusive though
@@ -312,7 +312,7 @@ String noteFinder(double freqOfNote){
   //octIndex starts at 6, 
   //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
   //octIndex -= 1, will the lowest index be 1 or 0 in C++??
-  for(octIndex=6; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+  for(octIndex=4; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
   
   //loop from C to B and find between wich notes output exists
   //starts from C, the first note in a octave
