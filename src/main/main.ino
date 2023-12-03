@@ -158,6 +158,7 @@ int pitchPractice(){
     if(checkForButtonPress()!=-1){
       return 1;
     }
+    freq = getMicFrequency();
   }
   return 1;
 }
