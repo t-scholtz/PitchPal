@@ -45,7 +45,7 @@ int noteArray(int a, int b) {
   if(a>12 || a<0){
     return -1;
   }
-  if(b>7 || b<0){
+  if(b>6 || b<0){
     return -1;
   }
   return ar[a][b];
@@ -280,7 +280,7 @@ int selectNote(){
 
 int selectOctave(){
   while(true){
-    lcdPrint("Select Octave ", "Options 1-8");
+    lcdPrint("Select Octave ", "Options 1-6");
     delay(TEXT_DELAY);
     int goalOctNum = waitForUserInput();
 
@@ -289,8 +289,8 @@ int selectOctave(){
       delay(TEXT_DELAY);
       return -1;
     }
-    else if (goalOctNum != -1 && goalOctNum<8 ){
-      lcdPrint("Selected :" + String(goalOctNum) , "Confirm :14");
+    else if (goalOctNum != -1 && goalOctNum<6 ){
+      lcdPrint("Selected :" + String(goalOctNum+1) , "Confirm :14");
       delay(TEXT_DELAY);
       int confirm = waitForUserInput();
       if(confirm == 14){
