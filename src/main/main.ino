@@ -154,11 +154,9 @@ int pitchPractice(){
       lcdPrint("Sounds Good","Any button exit");
       delay(TEXT_DELAY);
     }
-    Serial.println("BEFORE BUTTON PRESS");
     if(checkForButtonPress()!=-1){
       return 1;
     }
-    Serial.println("AFTER check");
     freq = getMicFrequency();
   }
   return 1;
