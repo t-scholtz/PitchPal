@@ -27,7 +27,7 @@ void setup()
   digitalWrite(MUX_PIN3, LOW);
 
   initializeLCD();
-  //startUpAnim();
+  startUpAnim();
 }
 
 int noteSelect = 0;

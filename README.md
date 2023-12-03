@@ -6,42 +6,33 @@ An Arduino based project aimed at creating a reliable and user-friendly pitch/tu
 Musicians of all levels, from beginners to pros, desire pitch perfection, but traditional tuning methods are often inaccurate and time-consuming. In response, we're developing a user-friendly device that provides real-time pitch feedback, allowing users to select their desired pitch. This innovation enhances musical precision and empowers musicians, offering a valuable tool for the entire musical community. 
 
 ## Table of Contents
-- Update Print String {String be able to handle large sets of text, and automatically scroll through text as need}
-- Get state system working
-- Work out all relevant bugs
+- Directory Contents
+- Setup Intructions
+- Usage
 
-## To-Do List
-- [X] Learn Arduino basics.
-- [X] Set up meeting and project roadmap.
-- [X] Plan out project structure and create organisation scheme.
-- [X] Learn about input/output processing in gernal.
-- [X] Implement user interface for pitch selection.
-- [X] Create audio playback functionality.
-- [X] Develop pitch feedback system with LED grid.
-- [ ] Write user manual.
-- [ ] Test and debug the device.
-
-## Road Map
-* Organise Meeting
-* Create Road Map
-* Phase 2 (Due date: 11/11/2023 by 5 pm) 
-* Phase 3 (Due date: 12/2/2023 by 5 pm) 
-
-
+## Project Contents
+This project directory consists of two main folders:
+**src**
+This directory contains two sub directories, main and test. Main contains all of the code for this project, and test contains a series of tests, each designed to test a specific part of the project
+**examples**
+This directory contains several code exeherts and examples from external sources, along with some notes of where the code was obtained, and how it is used.
 
 
 ## Setup Instructions
 Follow these steps to set up the Pitch Tuner Arduino Project:
 
-1. **Hardware Assembly:**
-   - stuff
-   - plug in
+1. **Download Relavant Libaries:**
+   - WString
+   - arduinoFFT
+   - LiquidCrystal_I2C
+   - Wire
 
-2. **Usage**
+2. **Hardware Setup**
+   - turn on
+   
+3. **Complie and upload**
    - turn on
 
-
-## Miscellaneous
-Random stuff goes here
-
+## Useage
+After successfully setting up the project, you should be greeted with a short start up animation.
 
