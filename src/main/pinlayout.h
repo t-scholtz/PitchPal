@@ -1,7 +1,7 @@
 #ifndef PINLAYOUT_H
 #define PINLAYOUT_H
 
-#define SAMPLES 128   
+#define SAMPLES 64   
 #define SAMPLING_FREQUENCY 2048 
 #define SERIAL_RATE 115200
 #define NOTE_LENGTH 1000
