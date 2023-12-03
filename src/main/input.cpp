@@ -83,18 +83,23 @@ int muxChannel(int a, int b){
 
 
 double getMicFrequency(){ 
+<<<<<<< HEAD
+<<<<<<< HEAD
   //Serial.println("mic freq started");
+
+=======
+  
+=======
+>>>>>>> 8fe28ed (cleaned up)
   Serial.println("mic freq started");
   arduinoFFT FFT = arduinoFFT();
   unsigned int samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY));
   unsigned long microSeconds;
-
+>>>>>>> 8d38341 (re-added main)
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
   for(int i = 0; i<SAMPLES; i++){
-    Serial.println("loop run");
-    Serial.println(i);
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
     vImag[i] = 0; //Makes imaginary term 0 always
@@ -103,36 +108,20 @@ double getMicFrequency(){
       //do nothing----THiNK ABOUT LATER
     }
   }
-  //THESE three lines of code are completing the FFT calculations for us
-  //Serial.println("Windowing");
-
   FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
-  Serial.println("compute");
-
   FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
-  Serial.println("Complex");
-
   FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
-
- // Find prak frequency and print peak
-  Serial.println("Peak");
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
-  //Serial.println("mic freq done");
-  Serial.println("DONE!!");
   return(peak);   
 }
 
 float getMuxInput(int channel){
   int controlPin[4] = {MUX_PIN0, MUX_PIN1, MUX_PIN2, MUX_PIN3};
-
   //loop through the 4 sig
   for(int i = 0; i < 4; i ++){
     digitalWrite(controlPin[i], muxChannel(channel,i)); //first par controls the area to change //second par controls the value(high, low) to change first to
   }
-
-  //read the value at the SIG pin
   int val = analogRead(SIG_PIN);
-  //return the value
   float voltage = (val * 5.0) / 1024.0; 
   return voltage; //Does this voltage give us the number for the input to translate?
 }
@@ -147,11 +136,7 @@ int checkForButtonPress(){
       digitalWrite(controlPin[j], muxChannel(i,j)); //setting each set of pins line by line to read
       //delay(1000);
     }
-    buttons[i] = analogRead(SIG_PIN);//setting each button signifier to a value of high or low
-    //delay(20);
-
-    //Serial.println(analogRead(SIG_PIN));
-    //Serial.println(" : ");
+    buttons[i] = analogRead(SIG_PIN);
   }
   //Serial.println("Done");
   //delay(1000);
@@ -213,24 +198,26 @@ int waitScrollingText(){
 
   //condition varible waiting for usr input to be detected
   bool stillWaiting = true;
+  String wait = "waiting for ";
+  String input="   input";
   int messageCount = 0;
-  lcdPrint("1 - pitch practice ","waiting for ");
+  lcdPrint("1 - pitch practice ",wait);
   delay(TEXT_DELAY);
 
   while(stillWaiting){
     messageCount += 1;
     if(messageCount == 150){
       
-     lcdPrint("2 - play listen notet","input");
+     lcdPrint("2 - play listen notet",input);
     }
     else if(messageCount ==300){
-       lcdPrint("3 - find note ","waiting for ");
+       lcdPrint("3 - find note ",wait);
     }
      else if(messageCount == 450){
-       lcdPrint("15 - reset","input");
+       lcdPrint("15 - reset",input);
     }
      else if(messageCount >600){
-       lcdPrint("1 - pitch practice ","waiting for ");
+       lcdPrint("1 - pitch practice ",wait);
        messageCount =0;
     }
 
