@@ -89,27 +89,24 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 }
 
 double getMicFrequency(){ 
-  //Serial.println("mic freq started");
-  lcdPrint("Made it past", "1");
-  delay(TEXT_DELAY);
+  Serial.println("mic freq started");
+
 
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
-  lcdPrint("Made it past", "2");
-  delay(TEXT_DELAY);
+ 
 
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
-  lcdPrint("Made it past", "3");
-  delay(TEXT_DELAY);
+
 
   for(int i = 0; i<SAMPLES; i++){
+     Serial.println("loop run");
+    Serial.println(i);
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
     vImag[i] = 0; //Makes imaginary term 0 always
 
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
-      lcdPrint("Made it past", "4");
-      delay(TEXT_DELAY);
       //do nothing----THiNK ABOUT LATER
     }
   }
