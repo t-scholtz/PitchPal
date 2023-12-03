@@ -58,6 +58,7 @@ void loop()
     break;
   case 4: //Listens to user audio and determines 
           //what note is being played
+    Serial.println("HERE");
     state = pitchFind();
     break;
   default:
@@ -88,15 +89,11 @@ int stateSelector()
   {
     return 4; // Detect note being played
   }
-  if( button == 3){
-
-    return 6;
-  }
   if( button == 15){
     return 0;
   }
-  lcdClear();
-  lcdPrint("Error detected in","input try again");
+  lcdPrint("Error detected","input try again");
+  delay(TEXT_DELAY);
   return 1;
 }
 
@@ -193,8 +190,10 @@ int pitchFind(){
   double freq;
   while(true){
     freq = getMicFrequency();
+    Serial.println("Passed micFreq");
     lcdPrint("Note: "+noteFinder(freq) ,"Any button exit");
-    if(checkForButtonPress() !=-1){
+    delay(TEXT_DELAY);
+    if(checkForButtonPress() != -1){
       return 1;
     }
   }
