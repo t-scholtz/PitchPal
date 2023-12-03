@@ -83,19 +83,10 @@ int muxChannel(int a, int b){
 
 
 double getMicFrequency(){ 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  //Serial.println("mic freq started");
-
-=======
-  
-=======
->>>>>>> 8fe28ed (cleaned up)
   Serial.println("mic freq started");
   arduinoFFT FFT = arduinoFFT();
   unsigned int samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY));
   unsigned long microSeconds;
->>>>>>> 8d38341 (re-added main)
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
@@ -289,7 +280,7 @@ int selectOctave(){
       delay(TEXT_DELAY);
       return -1;
     }
-    else if (goalOctNum != -1 && goalOctNum<6 ){
+    else if (goalOctNum != -1 && goalOctNum<4 ){
       lcdPrint("Selected :" + String(goalOctNum+1) , "Confirm :14");
       delay(TEXT_DELAY);
       int confirm = waitForUserInput();
@@ -309,7 +300,7 @@ int selectOctave(){
 //Tries to find the closest match to given frequency, with a perentage of confindence
 String noteFinder(double freqOfNote){
   int noteIndex =11;
-  int octIndex = 6;
+  int octIndex = 4;
   bool found = false;
 
   //check if note is inside of possible range, may want to make edge cases more inclusive though
@@ -320,7 +311,7 @@ String noteFinder(double freqOfNote){
   //octIndex starts at 6, 
   //(check if current freq is greater than C7 with range of error AND make sure we dont go to an incorrect index) checks if still true
   //octIndex -= 1, will the lowest index be 1 or 0 in C++??
-  for(octIndex=6; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
+  for(octIndex=4; freqOfNote < noteArray(0,octIndex)*0.98 && octIndex>-1; octIndex--);
   
   //loop from C to B and find between wich notes output exists
   //starts from C, the first note in a octave
