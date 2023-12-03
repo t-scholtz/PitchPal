@@ -26,7 +26,6 @@ void setup()
   digitalWrite(MUX_PIN2, LOW);
   digitalWrite(MUX_PIN3, LOW);
 
-  micSetup();
   initializeLCD();
   //startUpAnim();
 }
