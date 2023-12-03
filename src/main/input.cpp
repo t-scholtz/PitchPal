@@ -9,10 +9,6 @@
 #include "pitches.h"
 #define LOW 1000.0
 
-arduinoFFT FFT = arduinoFFT();
-unsigned int samplingPeriod;
-unsigned long microSeconds;
-
 String noteToString(int note){
   String ar[12]={
 /*C*/     "C",
@@ -89,11 +85,18 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 }
 
 double getMicFrequency(){ 
+<<<<<<< HEAD
   //Serial.println("mic freq started");
 
+=======
+  
+  Serial.println("mic freq started");
+  arduinoFFT FFT = arduinoFFT();
+  unsigned int samplingPeriod;
+  unsigned long microSeconds;
+>>>>>>> 8d38341 (re-added main)
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
-
 
   for(int i = 0; i<SAMPLES; i++){
     Serial.println("loop run");
@@ -101,7 +104,6 @@ double getMicFrequency(){
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
     vImag[i] = 0; //Makes imaginary term 0 always
-
     //remaining wait time between samples if necessary
     while(micros() < (microSeconds+samplingPeriod)){
       //do nothing----THiNK ABOUT LATER
