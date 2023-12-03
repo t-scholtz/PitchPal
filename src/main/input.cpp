@@ -89,17 +89,14 @@ void micSetup(){ //This get's our time we need to wait before taking measurement
 }
 
 double getMicFrequency(){ 
-  Serial.println("mic freq started");
-
+  //Serial.println("mic freq started");
 
   double vReal[SAMPLES]; //creates vector/array of size SAMPLES to hold real values
- 
-
   double vImag[SAMPLES]; // creates vector/array of size SAMPLES to hold imaginary values
 
 
   for(int i = 0; i<SAMPLES; i++){
-     Serial.println("loop run");
+    Serial.println("loop run");
     Serial.println(i);
     microSeconds = micros();   //Returns the amound of micro seconds sense the arduino boatd stated to run
     vReal[i] = analogRead(MICROPHONE);  //Reads the value from analog pin 14 (A0), quantize it and save it as a real term.
@@ -111,13 +108,21 @@ double getMicFrequency(){
     }
   }
   //THESE three lines of code are completing the FFT calculations for us
+  //Serial.println("Windowing");
+
   FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+  Serial.println("compute");
+
   FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
+  Serial.println("Complex");
+
   FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
 
  // Find prak frequency and print peak
+  Serial.println("Peak");
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
   //Serial.println("mic freq done");
+  Serial.println("DONE!!");
   return(peak);   
 }
 

@@ -127,16 +127,11 @@ int pitchPractice(){
   delay(TEXT_DELAY);
   //Give feed back on performance
   double freq = getMicFrequency();
-  
-  lcdPrint("Made it past", "");
-  delay(TEXT_DELAY);
-
 
   int goal = noteArray(noteSelect,octaveSelect);
 
-  lcdPrint("Made it past", "Part 2");
-  delay(TEXT_DELAY);
-  
+  Serial.println("AFTER NOTE ARRAY");
+
   while(freq){
     //Serial.println(freq);
   //close is a ratio between actural note and desired note
@@ -144,20 +139,27 @@ int pitchPractice(){
   //This somewhat takes into considerations differences in higher and lower pitchs, eg
   //if Execetd is 40, but actual 60, close is %150 which is really off due to a diff of 20Hz
   //if Execetd is 440, but actual 460, close is %104 which is really close due to a diff of 20Hz
-    double close = freq/goal;
+    float close = freq/goal;
     //These values will need to be adapted
+    Serial.println("Before check");
+
     if(close<0.95){
       lcdPrint("Too flat","Any button exit");
+      delay(TEXT_DELAY);
     }
     else if(close>1.08){
       lcdPrint("Too Sharp","Any button exit");
+      delay(TEXT_DELAY);
     }
     else{
       lcdPrint("Sounds Good","Any button exit");
+      delay(TEXT_DELAY);
     }
+    Serial.println("BEFORE BUTTON PRESS");
     if(checkForButtonPress()!=-1){
       return 1;
     }
+    Serial.println("AFTER check");
     freq = getMicFrequency();
   }
   return 1;
