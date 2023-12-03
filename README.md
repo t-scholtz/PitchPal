@@ -12,9 +12,9 @@ Musicians of all levels, from beginners to pros, desire pitch perfection, but tr
 
 ## Project Contents
 This project directory consists of two main folders:
-**src**
+** src **
 This directory contains two sub directories, main and test. Main contains all of the code for this project, and test contains a series of tests, each designed to test a specific part of the project
-**examples**
+** examples **
 This directory contains several code exeherts and examples from external sources, along with some notes of where the code was obtained, and how it is used.
 
 
@@ -28,11 +28,15 @@ Follow these steps to set up the Pitch Tuner Arduino Project:
    - Wire
 
 2. **Hardware Setup**
-   - turn on
+   - Ensure that all components are connected, and that there are no loose wires
+   - Plug Arduino into a power source
    
 3. **Complie and upload**
-   - turn on
+   - Compile code using an Arduino compbatible comipler
+   - Upload code to device
+
 
 ## Useage
 After successfully setting up the project, you should be greeted with a short start up animation.
+From here the user should be able to just follow on screen prompts in order to use the device.
 
